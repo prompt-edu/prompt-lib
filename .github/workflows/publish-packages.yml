@@ -15,13 +15,6 @@ jobs:
     runs-on: ubuntu-latest
     outputs:
       version: ${{ steps.extract_version.outputs.VERSION }}
-    strategy:
-      matrix:
-        include:
-          - name: "prompt-shared-state"
-            path: "prompt-shared-state"
-          - name: "prompt-ui-components"
-            path: "prompt-ui-components"
     
     steps:
       - name: Check out repository
@@ -36,40 +29,30 @@ jobs:
           echo "VERSION=$VERSION" >> "$GITHUB_OUTPUT"
           echo "Publishing version: $VERSION"
 
-      - name: Validate ${{ matrix.name }} version matches release tag
+      - name: Validate prompt-ui-components version matches release tag
         run: |
           RELEASE_VERSION="${{ steps.extract_version.outputs.VERSION }}"
           
           # Check package version
-          PACKAGE_VERSION=$(node -p "require('./${{ matrix.path }}/package.json').version")
+          PACKAGE_VERSION=$(node -p "require('./prompt-ui-components/package.json').version")
           if [ "$PACKAGE_VERSION" != "$RELEASE_VERSION" ]; then
-            echo "❌ ERROR: Version mismatch in ${{ matrix.name }}!"
+            echo "❌ ERROR: Version mismatch in prompt-ui-components!"
             echo "   Release tag version: $RELEASE_VERSION"
             echo "   Package.json version: $PACKAGE_VERSION"
             echo ""
-            echo "Please update the version in ${{ matrix.path }}/package.json to match the release tag."
+            echo "Please update the version in prompt-ui-components/package.json to match the release tag."
             echo "Expected: \"version\": \"$RELEASE_VERSION\""
             exit 1
           fi
           
-          echo "✅ ${{ matrix.name }} version matches release tag: $RELEASE_VERSION"
+          echo "✅ prompt-ui-components version matches release tag: $RELEASE_VERSION"
 
   publish:
     needs: validate
     runs-on: ubuntu-latest
-    strategy:
-      matrix:
-        include:
-          - name: "prompt-shared-state"
-            path: "prompt-shared-state"
-            npm_name: "@tumaet/prompt-shared-state"
-          - name: "prompt-ui-components"
-            path: "prompt-ui-components"
-            npm_name: "@tumaet/prompt-ui-components"
-
     defaults:
       run:
-        working-directory: ${{ matrix.path }}
+        working-directory: prompt-ui-components
 
     steps:
       - name: Check out repository
@@ -90,15 +73,15 @@ jobs:
         env:
           NPM_AUTH_TOKEN: ${{ secrets.NPM_AUTH_TOKEN }}
 
-      - name: Install dependencies for ${{ matrix.name }}
+      - name: Install dependencies
         run: yarn install
 
-      - name: Build ${{ matrix.name }}
+      - name: Build package
         run: yarn build
 
-      - name: Publish ${{ matrix.npm_name }} to npm
+      - name: Publish @tumaet/prompt-ui-components to npm
         env:
           NPM_AUTH_TOKEN: ${{ secrets.NPM_AUTH_TOKEN }}
         run: |
-          echo "Publishing ${{ matrix.npm_name }} to npm..."
+          echo "Publishing @tumaet/prompt-ui-components to npm..."
           yarn npm publish
