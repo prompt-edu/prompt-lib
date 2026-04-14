@@ -404,8 +404,8 @@ As a member of the AET team, contribute changes by opening a pull request. Once 
 
 Publishing is triggered by creating a **GitHub Release**. The steps are:
 
-1. Update the version in both `prompt-shared-state/package.json` and `prompt-ui-components/package.json` to the same value (or run `bump-version` via the manual GitHub Actions workflow).
-2. Create a GitHub Release with the tag `v{version}` (e.g., `v1.2.3`).
-3. The publish workflow automatically validates the version and publishes both packages to npm.
+1. Update the version in `prompt-ui-components/package.json` so it matches the release tag.
+2. Create a GitHub Release with the tag `v{version}` (for example, `v1.2.3`).
+3. The publish workflow validates the version and publishes `@tumaet/prompt-ui-components` to npm.
 
 See the [root README](../README.md) for full details.
