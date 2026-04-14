@@ -3,7 +3,7 @@
   "version": "1.0.10",
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/ls1intum/prompt-lib.git"
+    "url": "git+https://github.com/prompt-edu/prompt-lib.git"
   },
   "main": "./dist/index.js",
   "module": "./dist/index.js",
