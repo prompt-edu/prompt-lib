@@ -1,34 +1,23 @@
-# prompt-lib
+# prompt-ui-components
 
-Shared UI components for the **AET Prompt** system, an educational platform for managing courses, assessments, and student participation.
+A shared UI component library for the **AET Prompt** system, built on [shadcn/ui](https://ui.shadcn.dev/).
 
-This repository contains one npm package:
+Components are designed for **Module Federation** singleton usage, which ensures:
+- A **consistent UI experience** across microfrontends
+- **Reduced bundle size** by avoiding duplicate component loading
+- **Unified UI state** such as shared toast handling across apps
 
-| Package | Description |
-|---|---|
-| [`@tumaet/prompt-ui-components`](./prompt-ui-components) | Reusable React UI components built on shadcn/ui |
-
-The shared state package now lives in its own repository:
-
-| Package | Repository |
-|---|---|
-| [`@tumaet/prompt-shared-state`](https://www.npmjs.com/package/@tumaet/prompt-shared-state) | [`prompt-shared-state`](https://github.com/prompt-edu/prompt-shared-state) |
-
-Both packages are designed for use in **Module Federation** microfrontend architectures, where they must be loaded as singletons to ensure consistent state and UI across independently deployed apps.
+For shared state primitives and shared TypeScript interfaces, use [`@tumaet/prompt-shared-state`](https://github.com/prompt-edu/prompt-shared-state).
 
 ---
 
-## Packages
+## Package
 
-### @tumaet/prompt-ui-components
-
-Provides:
+`@tumaet/prompt-ui-components` provides:
 - **36+ shadcn/ui base components** (buttons, dialogs, forms, tables, etc.)
 - **PromptTable** — advanced data table with sorting, filtering, pagination, row selection, and URL-synced state
 - **MinimalTiptapEditor** — rich text editor with toolbar, code highlighting, image support, and link management
 - **Custom components** — date pickers, multi-select, management page headers, score level selectors, and more
-
-See the [prompt-ui-components README](./prompt-ui-components/readme.md) for full documentation.
 
 ---
 
@@ -55,7 +44,6 @@ Run `corepack enable` to fix it.
 ### Building Locally
 
 ```bash
-cd prompt-ui-components
 yarn install
 yarn build
 ```
@@ -70,7 +58,7 @@ yarn lint
 ### Testing Before Release
 
 ```bash
-cd prompt-ui-components && yarn build
+yarn build
 ```
 
 ---
@@ -81,10 +69,9 @@ The package is published to npm when you create a GitHub release.
 
 ### 1. Update Package Version
 
-Ensure `prompt-ui-components/package.json` has the version number matching your intended release tag.
+Ensure `package.json` has the version number matching your intended release tag.
 
 ```bash
-cd prompt-ui-components
 yarn version patch   # 1.2.3 -> 1.2.4
 # or: yarn version minor  (1.2.3 -> 1.3.0)
 # or: yarn version major  (1.2.3 -> 2.0.0)
@@ -104,7 +91,7 @@ Or edit the `package.json` file manually.
 
 Once you publish the release, the GitHub Actions workflow:
 
-1. **Validates** that `prompt-ui-components/package.json` matches the release tag
+1. **Validates** that `package.json` matches the release tag
 2. **Builds** the package
 3. **Publishes** `@tumaet/prompt-ui-components` to npm
 

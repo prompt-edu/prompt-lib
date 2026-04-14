@@ -34,13 +34,13 @@ jobs:
           RELEASE_VERSION="${{ steps.extract_version.outputs.VERSION }}"
           
           # Check package version
-          PACKAGE_VERSION=$(node -p "require('./prompt-ui-components/package.json').version")
+          PACKAGE_VERSION=$(node -p "require('./package.json').version")
           if [ "$PACKAGE_VERSION" != "$RELEASE_VERSION" ]; then
             echo "❌ ERROR: Version mismatch in prompt-ui-components!"
             echo "   Release tag version: $RELEASE_VERSION"
             echo "   Package.json version: $PACKAGE_VERSION"
             echo ""
-            echo "Please update the version in prompt-ui-components/package.json to match the release tag."
+            echo "Please update the version in package.json to match the release tag."
             echo "Expected: \"version\": \"$RELEASE_VERSION\""
             exit 1
           fi
@@ -50,9 +50,6 @@ jobs:
   publish:
     needs: validate
     runs-on: ubuntu-latest
-    defaults:
-      run:
-        working-directory: prompt-ui-components
 
     steps:
       - name: Check out repository
