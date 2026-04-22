@@ -73,7 +73,7 @@
     "date-fns": "^4.1.0",
     "highlight.js": "^11.11.1",
     "lowlight": "^3.3.0",
-    "lucide-react": "^1.7.0",
+    "lucide-react": "^1.8.0",
     "postcss": "^8.5.10",
     "postcss-preset-env": "^11.2.1",
     "react": "^19.2.5",
