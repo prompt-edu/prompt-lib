@@ -26,7 +26,7 @@
     "build": "yarn build:esm && yarn build:copy-css",
     "lint": "eslint \"**/*.{js,jsx,ts,tsx}\""
   },
-  "packageManager": "yarn@4.13.0",
+  "packageManager": "yarn@4.14.1",
   "dependencies": {
     "@hookform/resolvers": "^5.2.2",
     "@radix-ui/react-accordion": "^1.2.12",
