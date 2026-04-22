@@ -24,7 +24,7 @@ export function TableFiltersMenu({ table, filters, trigger }: TableFiltersMenuPr
         )}
       </DropdownMenuTrigger>
 
-      <DropdownMenuContent className='w-64'>
+      <DropdownMenuContent className='w-64 max-h-[60vh] overflow-y-auto'>
         {filters.map((filter) => {
           const column = table.getColumn(filter.id)
           if (!column) return null
