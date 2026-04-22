@@ -2562,13 +2562,13 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@tumaet/prompt-shared-state@npm:^1.0.11":
-  version: 1.0.11
-  resolution: "@tumaet/prompt-shared-state@npm:1.0.11"
+"@tumaet/prompt-shared-state@npm:^1.0.13":
+  version: 1.0.13
+  resolution: "@tumaet/prompt-shared-state@npm:1.0.13"
   dependencies:
     typescript: "npm:^5.9.3"
     zustand: "npm:^5.0.12"
-  checksum: 10c0/b34cf6ce8d911aff1206ab0035fc2d311dbe28c7bef8a9648004b1ad0319793c7f8d51fe189b15e42ae95aa6680ff8d6acf5d3db49c649c9ad53536307558c04
+  checksum: 10c0/2eb8db64cc6a70e30fbbed611c12d0ced08eaf9bdbbc81ca87e3f806bfd18b6e5423df36e4e58771cc0f70b5cae1e409bcfa1c3073661a3769b5b7a27e6421f0
   languageName: node
   linkType: hard
 
@@ -2615,7 +2615,7 @@ __metadata:
     "@tiptap/pm": "npm:^2.27.2"
     "@tiptap/react": "npm:^2.27.2"
     "@tiptap/starter-kit": "npm:^2.27.2"
-    "@tumaet/prompt-shared-state": "npm:^1.0.11"
+    "@tumaet/prompt-shared-state": "npm:^1.0.13"
     "@types/react": "npm:^19.2.14"
     "@typescript-eslint/eslint-plugin": "npm:^8.57.1"
     "@typescript-eslint/parser": "npm:^8.57.1"
