@@ -2644,8 +2644,8 @@ __metadata:
   linkType: hard
 
 "@tumaet/prompt-shared-state@file:../prompt-shared-state::locator=%40tumaet%2Fprompt-ui-components%40workspace%3A.":
-  version: 1.1.0
-  resolution: "@tumaet/prompt-shared-state@file:../prompt-shared-state#../prompt-shared-state::hash=91f49a&locator=%40tumaet%2Fprompt-ui-components%40workspace%3A."
+  version: 1.1.1
+  resolution: "@tumaet/prompt-shared-state@file:../prompt-shared-state#../prompt-shared-state::hash=4edb68&locator=%40tumaet%2Fprompt-ui-components%40workspace%3A."
   dependencies:
     axios: "npm:^1.15.2"
     i18n-iso-countries: "npm:^7.14.0"
@@ -2656,7 +2656,7 @@ __metadata:
     "@tanstack/react-query": ^5.99.2
     react: ^19.2.5
     react-router-dom: ^7.14.1
-  checksum: 10c0/1c2f648fe1b05396f8edcb562fd943def2bda4017b75239d095bd5b3429c6f0208a456330071a11f886dfb99ef5225d721df62372e42f067e8dd1563e5c25b3c
+  checksum: 10c0/b605ea2874d0cabb529effe1b88509498ca4a005a0e53a1af4eeb2529689b4594c0ecce56f2f0c8cfa1cfeed66f03d7571c1321ce3fc46073338156b02ed1f39
   languageName: node
   linkType: hard
 
@@ -2744,7 +2744,7 @@ __metadata:
     typescript: "npm:^5.9.3"
   peerDependencies:
     "@tanstack/react-query": ^5.99.2
-    "@tumaet/prompt-shared-state": ^1.1.0
+    "@tumaet/prompt-shared-state": ^1.1.1
     react: ^19.2.5
     react-dom: ^19.2.5
     react-router-dom: ^7.14.1
