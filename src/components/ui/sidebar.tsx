@@ -168,10 +168,10 @@ const Sidebar = React.forwardRef<
     const { isMobile, state, openMobile, setOpenMobile } = useSidebar()
 
     if (collapsible === 'none') {
-      return (
+          return (
         <div
           className={cn(
-            'flex h-full w-[--sidebar-width] flex-col bg-sidebar text-sidebar-foreground',
+            'flex h-full w-(--sidebar-width) flex-col bg-sidebar text-sidebar-foreground',
             className,
           )}
           ref={ref}
@@ -185,13 +185,13 @@ const Sidebar = React.forwardRef<
     if (isMobile) {
       return (
         <Sheet open={openMobile} onOpenChange={setOpenMobile} {...props}>
-          <SheetContent
-            data-sidebar='sidebar'
-            data-mobile='true'
-            className='flex w-[--sidebar-width] bg-sidebar p-0 text-sidebar-foreground [&>button]:hidden'
-            style={
-              {
-                '--sidebar-width': SIDEBAR_WIDTH_MOBILE,
+        <SheetContent
+          data-sidebar='sidebar'
+          data-mobile='true'
+          className='flex w-(--sidebar-width) bg-sidebar p-0 text-sidebar-foreground [&>button]:hidden'
+          style={
+            {
+              '--sidebar-width': SIDEBAR_WIDTH_MOBILE,
                 '--sidebar-width-icon': SIDEBAR_WIDTH_ICON,
               } as React.CSSProperties
             }
@@ -215,24 +215,24 @@ const Sidebar = React.forwardRef<
         {/* This is what handles the sidebar gap on desktop */}
         <div
           className={cn(
-            'duration-200 relative h-svh w-[--sidebar-width] bg-transparent transition-[width] ease-linear',
+            'duration-200 relative h-svh w-(--sidebar-width) bg-transparent transition-[width] ease-linear',
             'group-data-[collapsible=offcanvas]:w-0',
             'group-data-[side=right]:rotate-180',
             variant === 'floating' || variant === 'inset'
               ? 'group-data-[collapsible=icon]:w-[calc(var(--sidebar-width-icon)_+_theme(spacing.4))]'
-              : 'group-data-[collapsible=icon]:w-[--sidebar-width-icon]',
+              : 'group-data-[collapsible=icon]:w-(--sidebar-width-icon)',
           )}
         />
         <div
           className={cn(
-            'duration-200 fixed inset-y-0 z-10 hidden h-svh w-[--sidebar-width] transition-[left,right,width] ease-linear md:flex',
+            'duration-200 fixed inset-y-0 z-10 hidden h-svh w-(--sidebar-width) transition-[left,right,width] ease-linear md:flex',
             side === 'left'
               ? 'left-0 group-data-[collapsible=offcanvas]:left-[calc(var(--sidebar-width)*-1)]'
               : 'right-0 group-data-[collapsible=offcanvas]:right-[calc(var(--sidebar-width)*-1)]',
             // Adjust the padding for floating and inset variants.
             variant === 'floating' || variant === 'inset'
               ? 'p-2 group-data-[collapsible=icon]:w-[calc(var(--sidebar-width-icon)_+_theme(spacing.4)_+2px)]'
-              : 'group-data-[collapsible=icon]:w-[--sidebar-width-icon] group-data-[side=left]:border-r group-data-[side=right]:border-l',
+              : 'group-data-[collapsible=icon]:w-(--sidebar-width-icon) group-data-[side=left]:border-r group-data-[side=right]:border-l',
             className,
           )}
           {...props}
@@ -645,7 +645,7 @@ const SidebarMenuSkeleton = React.forwardRef<
     >
       {showIcon && <Skeleton className='size-4 rounded-md' data-sidebar='menu-skeleton-icon' />}
       <Skeleton
-        className='h-4 flex-1 max-w-[--skeleton-width]'
+        className='h-4 flex-1 max-w-(--skeleton-width)'
         data-sidebar='menu-skeleton-text'
         style={
           {
