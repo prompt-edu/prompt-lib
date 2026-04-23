@@ -25,7 +25,7 @@ export const Selection = Extension.create({
               Decoration.inline(state.selection.from, state.selection.to, {
                 class: 'selection',
               }),
-            ])
+            ]) as any
           },
         },
       }),

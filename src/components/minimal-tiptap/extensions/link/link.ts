@@ -1,6 +1,5 @@
 import { mergeAttributes } from '@tiptap/react'
 import TiptapLink from '@tiptap/extension-link'
-import type { EditorView } from '@tiptap/pm/view'
 import { getMarkRange } from '@tiptap/react'
 import { Plugin, TextSelection } from '@tiptap/pm/state'
 
@@ -25,12 +24,25 @@ export const Link = TiptapLink.extend({
   },
 
   addOptions() {
+    const parentOptions = this.parent?.()
+
     return {
-      ...this.parent?.(),
+      ...parentOptions,
+      autolink: parentOptions?.autolink ?? true,
+      protocols: parentOptions?.protocols ?? [],
+      defaultProtocol: parentOptions?.defaultProtocol ?? 'http',
       openOnClick: false,
+      enableClickSelection: parentOptions?.enableClickSelection ?? false,
+      linkOnPaste: parentOptions?.linkOnPaste ?? true,
       HTMLAttributes: {
+        ...(parentOptions?.HTMLAttributes ?? {}),
         class: 'link',
       },
+      validate: parentOptions?.validate ?? (() => true),
+      isAllowedUri:
+        parentOptions?.isAllowedUri ??
+        ((url, ctx) => ctx.defaultValidate(url)),
+      shouldAutoLink: parentOptions?.shouldAutoLink ?? (() => true),
     }
   },
 
@@ -41,7 +53,7 @@ export const Link = TiptapLink.extend({
       ...(this.parent?.() || []),
       new Plugin({
         props: {
-          handleKeyDown: (_: EditorView, event: KeyboardEvent) => {
+          handleKeyDown: (_, event: KeyboardEvent) => {
             const { selection } = editor.state
 
             /*
