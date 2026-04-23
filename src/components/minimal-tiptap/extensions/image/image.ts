@@ -141,15 +141,21 @@ export const Image = TiptapImage.extend<CustomImageOptions>({
   atom: true,
 
   addOptions() {
+    const parentOptions = this.parent?.()
+
     return {
-      ...this.parent?.(),
+      ...parentOptions,
+      inline: parentOptions?.inline ?? false,
+      allowBase64: parentOptions?.allowBase64 ?? false,
+      HTMLAttributes: parentOptions?.HTMLAttributes ?? {},
+      resize: parentOptions?.resize ?? false,
       allowedMimeTypes: [],
       maxFileSize: 0,
       uploadFn: undefined,
       onToggle: undefined,
       downloadImage: undefined,
       copyImage: undefined,
-      copyLink: undefined
+      copyLink: undefined,
     }
   },
 

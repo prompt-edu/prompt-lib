@@ -41,17 +41,14 @@ export const ScoreLevelSelector = ({
         const isSelected = selectedScore === level
         const descriptionID = `score-level-${level}-description`
         const label = labelsByLevel?.[level] ?? config.title
-        const levelIndicators = showIndicators ? indicators?.[level] ?? [] : []
+        const levelIndicators = showIndicators ? (indicators?.[level] ?? []) : []
 
         return (
           <div
             key={level}
             className={cn(
               'relative',
-              hideUnselectedOnDesktop &&
-                selectedScore !== undefined &&
-                !isSelected &&
-                'lg:hidden',
+              hideUnselectedOnDesktop && selectedScore !== undefined && !isSelected && 'lg:hidden',
             )}
           >
             {levelIndicators.length > 0 && (
