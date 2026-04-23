@@ -1,6 +1,6 @@
 {
   "name": "@tumaet/prompt-ui-components",
-  "version": "1.0.11",
+  "version": "1.0.12",
   "repository": {
     "type": "git",
     "url": "git+https://github.com/prompt-edu/prompt-lib.git"
@@ -12,11 +12,13 @@
   "exports": {
     ".": "./dist/index.js",
     "./index.css": "./dist/index.css",
-    "./minimal-tiptap/index.css": "./dist/components/minimal-tiptap/styles/index.css"
+    "./minimal-tiptap/index.css": "./dist/components/minimal-tiptap/styles/index.css",
+    "./tailwind-config": "./tailwind-config.js"
   },
   "files": [
     "dist",
     "tailwind",
+    "tailwind-config.js",
     "src/index.css",
     "src/components/minimal-tiptap/styles/index.css"
   ],
@@ -66,12 +68,15 @@
     "@tiptap/pm": "^2.27.2",
     "@tiptap/react": "^2.27.2",
     "@tiptap/starter-kit": "^2.27.2",
-    "@tumaet/prompt-shared-state": "^1.0.13",
+    "@tumaet/prompt-shared-state": "1.1.0",
     "class-variance-authority": "^0.7.1",
     "clsx": "^2.1.1",
     "cmdk": "1.1.1",
     "date-fns": "^4.1.0",
+    "file-saver": "^2.0.5",
     "highlight.js": "^11.11.1",
+    "i18n-iso-countries": "^7.14.0",
+    "js-sha256": "^0.11.1",
     "lowlight": "^3.3.0",
     "lucide-react": "^1.8.0",
     "postcss": "^8.5.10",
@@ -90,13 +95,15 @@
   },
   "devDependencies": {
     "@eslint/compat": "^2.0.5",
+    "@types/file-saver": "^2.0.7",
     "@types/react": "^19.2.14",
     "@typescript-eslint/eslint-plugin": "^8.57.1",
     "@typescript-eslint/parser": "^8.57.1",
-    "eslint": "^10.2.1",
+    "eslint": "^9.39.2",
     "eslint-plugin-prettier": "^5.5.5",
     "eslint-plugin-react": "^7.37.5",
     "eslint-plugin-react-hooks": "^7.1.1",
+    "globals": "^16.5.0",
     "postcss-cli": "^11.0.1",
     "prettier": "^3.8.3"
   },
