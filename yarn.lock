@@ -2643,9 +2643,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@tumaet/prompt-shared-state@file:../prompt-shared-state::locator=%40tumaet%2Fprompt-ui-components%40workspace%3A.":
+"@tumaet/prompt-shared-state@npm:1.1.1":
   version: 1.1.1
-  resolution: "@tumaet/prompt-shared-state@file:../prompt-shared-state#../prompt-shared-state::hash=7f3c14&locator=%40tumaet%2Fprompt-ui-components%40workspace%3A."
+  resolution: "@tumaet/prompt-shared-state@npm:1.1.1"
   dependencies:
     axios: "npm:^1.15.2"
     i18n-iso-countries: "npm:^7.14.0"
@@ -2656,7 +2656,7 @@ __metadata:
     "@tanstack/react-query": ^5.99.2
     react: ^19.2.5
     react-router-dom: ^7.14.1
-  checksum: 10c0/a577d955f1687284dd609ba41685793b7688c1dd6e6dd2c08b5317195eeb0911a4bd2ea5706d901fcc2617317628a16281f696e7c1295f20919ad59a908a38a4
+  checksum: 10c0/147aa7deb44c9c7ef2175ebf93a7c256abae1c1a0b97c5323904f2aef5685e532e6d66f4390e77274f22bfa670f289508866923a7802b48c7fb8be920a9e5289
   languageName: node
   linkType: hard
 
@@ -2706,7 +2706,7 @@ __metadata:
     "@tiptap/pm": "npm:3.22.4"
     "@tiptap/react": "npm:3.22.4"
     "@tiptap/starter-kit": "npm:3.22.4"
-    "@tumaet/prompt-shared-state": "file:../prompt-shared-state"
+    "@tumaet/prompt-shared-state": "npm:1.1.1"
     "@types/file-saver": "npm:^2.0.7"
     "@types/react": "npm:^19.2.14"
     "@types/react-dom": "npm:^19.2.3"
