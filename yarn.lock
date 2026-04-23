@@ -2645,7 +2645,7 @@ __metadata:
 
 "@tumaet/prompt-shared-state@file:../prompt-shared-state::locator=%40tumaet%2Fprompt-ui-components%40workspace%3A.":
   version: 1.1.1
-  resolution: "@tumaet/prompt-shared-state@file:../prompt-shared-state#../prompt-shared-state::hash=4edb68&locator=%40tumaet%2Fprompt-ui-components%40workspace%3A."
+  resolution: "@tumaet/prompt-shared-state@file:../prompt-shared-state#../prompt-shared-state::hash=7f3c14&locator=%40tumaet%2Fprompt-ui-components%40workspace%3A."
   dependencies:
     axios: "npm:^1.15.2"
     i18n-iso-countries: "npm:^7.14.0"
@@ -2656,7 +2656,7 @@ __metadata:
     "@tanstack/react-query": ^5.99.2
     react: ^19.2.5
     react-router-dom: ^7.14.1
-  checksum: 10c0/b605ea2874d0cabb529effe1b88509498ca4a005a0e53a1af4eeb2529689b4594c0ecce56f2f0c8cfa1cfeed66f03d7571c1321ce3fc46073338156b02ed1f39
+  checksum: 10c0/a577d955f1687284dd609ba41685793b7688c1dd6e6dd2c08b5317195eeb0911a4bd2ea5706d901fcc2617317628a16281f696e7c1295f20919ad59a908a38a4
   languageName: node
   linkType: hard
 
