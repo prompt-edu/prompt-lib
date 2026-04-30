@@ -2736,7 +2736,7 @@ __metadata:
     react-dom: "npm:^19.2.5"
     react-hook-form: "npm:^7.73.1"
     react-medium-image-zoom: "npm:^5.4.3"
-    react-router-dom: "npm:^7.14.1"
+    react-router-dom: "npm:^7.14.2"
     recharts: "npm:^3.8.1"
     sonner: "npm:^2.0.7"
     tailwind-merge: "npm:^3.5.0"
@@ -2747,7 +2747,7 @@ __metadata:
     "@tumaet/prompt-shared-state": ^1.1.1
     react: ^19.2.5
     react-dom: ^19.2.5
-    react-router-dom: ^7.14.1
+    react-router-dom: ^7.14.2
   languageName: unknown
   linkType: soft
 
@@ -6561,7 +6561,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"react-router-dom@npm:^7.14.1":
+"react-router-dom@npm:^7.14.2":
   version: 7.14.2
   resolution: "react-router-dom@npm:7.14.2"
   dependencies:
