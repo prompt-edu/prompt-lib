@@ -80,7 +80,7 @@
     "js-sha256": "^0.11.1",
     "lowlight": "^3.3.0",
     "lucide-react": "^1.8.0",
-    "postcss": "^8.5.10",
+    "postcss": "^8.5.13",
     "postcss-preset-env": "^11.2.1",
     "react-day-picker": "8.10.1",
     "react-hook-form": "^7.73.1",
