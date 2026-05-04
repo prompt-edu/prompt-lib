@@ -82,7 +82,7 @@
     "lucide-react": "^1.8.0",
     "postcss": "^8.5.13",
     "postcss-preset-env": "^11.2.1",
-    "react-day-picker": "8.10.1",
+    "react-day-picker": "8.10.2",
     "react-hook-form": "^7.73.1",
     "react-medium-image-zoom": "^5.4.3",
     "recharts": "^3.8.1",
