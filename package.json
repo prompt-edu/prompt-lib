@@ -119,6 +119,6 @@
     "react-router-dom": "^7.14.2"
   },
   "resolutions": {
-    "tar": "^7.5.13"
+    "tar": "^7.5.15"
   }
 }
