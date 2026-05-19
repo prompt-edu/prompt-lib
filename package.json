@@ -94,8 +94,8 @@
   "peerDependencies": {
     "@tanstack/react-query": "^5.99.2",
     "@tumaet/prompt-shared-state": "^1.1.1",
-    "react": "^19.2.5",
-    "react-dom": "^19.2.5",
+    "react": "^19.2.6",
+    "react-dom": "^19.2.6",
     "react-router-dom": "^7.14.2"
   },
   "devDependencies": {
@@ -114,8 +114,8 @@
     "globals": "^16.5.0",
     "postcss-cli": "^11.0.1",
     "prettier": "^3.8.3",
-    "react": "^19.2.5",
-    "react-dom": "^19.2.5",
+    "react": "^19.2.6",
+    "react-dom": "^19.2.6",
     "react-router-dom": "^7.14.2"
   },
   "resolutions": {
