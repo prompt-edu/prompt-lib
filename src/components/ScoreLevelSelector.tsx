@@ -52,7 +52,7 @@ export const ScoreLevelSelector = ({
             )}
           >
             {levelIndicators.length > 0 && (
-              <div className='absolute -top-6 left-0 z-10 w-full'>
+              <div className='absolute -top-0.5 left-0 z-10 w-full'>
                 <div className='flex items-center justify-center gap-2 text-left'>
                   {levelIndicators.map((indicator, index) => (
                     <span key={`${level}-indicator-${index}`} className='flex items-center'>
