@@ -94,8 +94,8 @@
   "peerDependencies": {
     "@tanstack/react-query": "^5.99.2",
     "@tumaet/prompt-shared-state": "^1.1.1",
-    "react": "^19.2.6",
-    "react-dom": "^19.2.6",
+    "react": "^19.2.7",
+    "react-dom": "^19.2.7",
     "react-router-dom": "^7.14.2"
   },
   "devDependencies": {
@@ -103,7 +103,7 @@
     "@tanstack/react-query": "^5.99.2",
     "@tumaet/prompt-shared-state": "1.1.1",
     "@types/file-saver": "^2.0.7",
-    "@types/react": "^19.2.14",
+    "@types/react": "^19.2.17",
     "@types/react-dom": "^19.2.3",
     "@typescript-eslint/eslint-plugin": "^8.61.0",
     "@typescript-eslint/parser": "^8.61.0",
@@ -114,8 +114,8 @@
     "globals": "^16.5.0",
     "postcss-cli": "^11.0.1",
     "prettier": "^3.8.3",
-    "react": "^19.2.6",
-    "react-dom": "^19.2.6",
+    "react": "^19.2.7",
+    "react-dom": "^19.2.7",
     "react-router-dom": "^7.14.2"
   },
   "resolutions": {
