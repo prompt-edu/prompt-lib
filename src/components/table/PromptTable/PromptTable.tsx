@@ -35,7 +35,7 @@ export function PromptTable<T extends WithId>({
   onSortingChange,
   onSearchChange,
   onColumnFiltersChange,
-  pageSize: initialPageSize = 20,
+  pageSize: initialPageSize = 100,
 }: TableProps<T>): ReactElement {
   const [sorting, setSorting] = useState<SortingState>(initialState?.sorting ?? [])
   const [search, setSearch] = useState<string>(
