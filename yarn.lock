@@ -3003,7 +3003,7 @@ __metadata:
     react-day-picker: "npm:8.10.2"
     react-dom: "npm:^19.2.7"
     react-hook-form: "npm:^7.73.1"
-    react-medium-image-zoom: "npm:^5.4.7"
+    react-medium-image-zoom: "npm:^5.4.8"
     react-router-dom: "npm:^7.14.2"
     recharts: "npm:^3.8.1"
     sonner: "npm:^2.0.7"
@@ -6765,13 +6765,13 @@ __metadata:
   languageName: node
   linkType: hard
 
-"react-medium-image-zoom@npm:^5.4.7":
-  version: 5.4.7
-  resolution: "react-medium-image-zoom@npm:5.4.7"
+"react-medium-image-zoom@npm:^5.4.8":
+  version: 5.4.8
+  resolution: "react-medium-image-zoom@npm:5.4.8"
   peerDependencies:
     react: ^16.8.0 || ^17.0.0 || ^18.0.0 || ^19.0.0
     react-dom: ^16.8.0 || ^17.0.0 || ^18.0.0 || ^19.0.0
-  checksum: 10c0/916bbd2c555d0f6b444d3c8dacf3866ffeb365b304c5c72b60e18483fdefa4d1a70116969c222c111bd6adef37f096ff4cdf70796a12952d09352be61d95a323
+  checksum: 10c0/e721e90ff85f9236431eeb36e4f5ca1ab7c47b4e08bec5f799f299101eaa83a0c6c6d5cecd11bc3d899956dde49c5d8322d338d6ac0bbd3e9718180794a30415
   languageName: node
   linkType: hard
 
