@@ -22,8 +22,16 @@ export function TableInfoText<TData>({
 }: TableInfoTextProps<TData>): ReactElement {
   const { globalFilter, columnFilters } = table.getState()
   const selectedCount = table.getSelectedRowModel().rows.length
+  const filteredRows = table.getFilteredRowModel().rows
+  const canSelectAllFiltered = selectedCount > 0 && selectedCount < filteredRows.length
   const hideableColumns = table.getAllColumns().filter((col) => col.getCanHide())
   const visibleCount = hideableColumns.filter((col) => col.getIsVisible()).length
+
+  const selectAllFiltered = () => {
+    const next: Record<string, boolean> = {}
+    for (const row of filteredRows) next[row.id] = true
+    table.setRowSelection(next)
+  }
 
   const filterMetaById = Object.fromEntries(filters.map((f) => [f.id, f]))
 
@@ -76,7 +84,7 @@ export function TableInfoText<TData>({
         )}
       </div>
 
-      {/* Right: [X selected ·] X of Y rows · columns dropdown */}
+      {/* Right: [X selected ·] [Select all N ·] columns dropdown */}
       <div className='flex items-center gap-1.5 shrink-0'>
         {selectedCount > 0 && (
           <>
@@ -84,11 +92,18 @@ export function TableInfoText<TData>({
             <span>·</span>
           </>
         )}
-        <span>
-          {table.getFilteredRowModel().rows.length} of{' '}
-          {table.getPrePaginationRowModel().rows.length} rows
-        </span>
-        <span>·</span>
+        {canSelectAllFiltered && (
+          <>
+            <button
+              type='button'
+              onClick={selectAllFiltered}
+              className='font-medium text-blue-500 hover:text-blue-600 dark:text-blue-400 dark:hover:text-blue-300 transition-colors outline-none'
+            >
+              Select all {filteredRows.length}
+            </button>
+            <span>·</span>
+          </>
+        )}
         <DropdownMenu>
           <DropdownMenuTrigger className='flex items-center gap-1 hover:text-foreground transition-colors outline-none'>
             <Columns className='h-3.5 w-3.5' />
