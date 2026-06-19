@@ -84,7 +84,7 @@ export function TableInfoText<TData>({
         )}
       </div>
 
-      {/* Right: [X selected ·] [Select all N ·] columns dropdown */}
+      {/* Right: [X selected ·] [Select all N ·] [N rows ·] columns dropdown */}
       <div className='flex items-center gap-1.5 shrink-0'>
         {selectedCount > 0 && (
           <>
@@ -101,6 +101,14 @@ export function TableInfoText<TData>({
             >
               Select all {filteredRows.length}
             </button>
+            <span>·</span>
+          </>
+        )}
+        {selectedCount === 0 && (
+          <>
+            <span>
+              {filteredRows.length} row{filteredRows.length === 1 ? '' : 's'}
+            </span>
             <span>·</span>
           </>
         )}
