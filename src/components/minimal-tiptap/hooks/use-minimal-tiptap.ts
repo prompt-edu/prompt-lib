@@ -36,6 +36,7 @@ export interface UseMinimalTiptapEditorProps extends UseEditorOptions {
 
 const createExtensions = (placeholder: string) => [
   StarterKit.configure({
+    link: false,
     horizontalRule: false,
     codeBlock: false,
     paragraph: { HTMLAttributes: { class: 'text-node' } },
