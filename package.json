@@ -87,7 +87,7 @@
     "react-medium-image-zoom": "^5.4.8",
     "recharts": "^3.8.1",
     "sonner": "^2.0.7",
-    "tailwind-merge": "^3.5.0",
+    "tailwind-merge": "^3.6.0",
     "tsc-alias": "^1.8.17",
     "typescript": "^5.9.3"
   },
