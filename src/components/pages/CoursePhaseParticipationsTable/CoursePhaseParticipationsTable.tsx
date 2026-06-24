@@ -7,7 +7,7 @@ import {
 import { getParticipantColumns } from './table/participationColumns'
 import { getParticipantFilters } from './table/participationFilters'
 import { ExportDeps, getParticipantActions } from './table/participationActions'
-import { PromptTable, RowAction, TableFilter } from '@/components'
+import { PromptTableURL, RowAction, TableFilter } from '@/components'
 import { CoursePhaseParticipationWithStudent } from '@tumaet/prompt-shared-state'
 import { useParticipantBatchActions } from './utils/updateBatch'
 
@@ -47,7 +47,7 @@ export const CoursePhaseParticipationsTable = ({
   )
 
   return (
-    <PromptTable<ParticipantRow>
+    <PromptTableURL<ParticipantRow>
       data={data}
       columns={columns}
       filters={filters}
