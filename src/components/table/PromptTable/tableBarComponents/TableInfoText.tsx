@@ -86,12 +86,7 @@ export function TableInfoText<TData>({
 
       {/* Right: [X selected ·] [Select all N ·] [N rows ·] columns dropdown */}
       <div className='flex items-center gap-1.5 shrink-0'>
-        {selectedCount > 0 && (
-          <>
-            <span className='text-foreground'>{selectedCount} selected</span>
-            <span>·</span>
-          </>
-        )}
+        {selectedCount > 0 && <span>{selectedCount} selected ·</span>}
         {canSelectAllFiltered && (
           <>
             <button
