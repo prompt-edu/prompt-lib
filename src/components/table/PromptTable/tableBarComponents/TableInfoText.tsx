@@ -23,7 +23,9 @@ export function TableInfoText<TData>({
   const { globalFilter, columnFilters } = table.getState()
   const selectedCount = table.getSelectedRowModel().rows.length
   const filteredRows = table.getFilteredRowModel().rows
-  const canSelectAllFiltered = selectedCount > 0 && selectedCount < filteredRows.length
+  const filteredSelectedCount = table.getFilteredSelectedRowModel().rows.length
+  const canSelectAllFiltered =
+    filteredSelectedCount > 0 && filteredSelectedCount < filteredRows.length
   const hideableColumns = table.getAllColumns().filter((col) => col.getCanHide())
   const visibleCount = hideableColumns.filter((col) => col.getIsVisible()).length
 
@@ -99,7 +101,7 @@ export function TableInfoText<TData>({
             <span>·</span>
           </>
         )}
-        {selectedCount === 0 && (
+        {filteredSelectedCount === 0 && (
           <>
             <span>
               {filteredRows.length} row{filteredRows.length === 1 ? '' : 's'}
