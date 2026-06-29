@@ -7,9 +7,13 @@ export const checkboxColumn = <T extends { id: string }>(): ColumnDef<T> => ({
   header: ({ table }) => (
     <div className='flex items-center justify-center'>
       <Checkbox
-        checked={table.getIsAllRowsSelected()}
+        checked={table.getSelectedRowModel().rows.length > 0}
         onCheckedChange={(checked) => {
-          table.toggleAllRowsSelected(!!checked)
+          if (checked) {
+            table.toggleAllPageRowsSelected(true)
+          } else {
+            table.resetRowSelection()
+          }
         }}
         onClick={(e) => e.stopPropagation()}
       />
