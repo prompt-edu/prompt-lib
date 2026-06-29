@@ -3019,7 +3019,7 @@ __metadata:
     i18n-iso-countries: "npm:^7.14.0"
     js-sha256: "npm:^0.11.1"
     lowlight: "npm:^3.3.0"
-    lucide-react: "npm:^1.8.0"
+    lucide-react: "npm:^1.22.0"
     postcss: "npm:^8.5.15"
     postcss-cli: "npm:^11.0.1"
     postcss-preset-env: "npm:^11.3.1"
@@ -5627,12 +5627,12 @@ __metadata:
   languageName: node
   linkType: hard
 
-"lucide-react@npm:^1.8.0":
-  version: 1.8.0
-  resolution: "lucide-react@npm:1.8.0"
+"lucide-react@npm:^1.22.0":
+  version: 1.22.0
+  resolution: "lucide-react@npm:1.22.0"
   peerDependencies:
     react: ^16.5.1 || ^17.0.0 || ^18.0.0 || ^19.0.0
-  checksum: 10c0/f7398f89a0f5b2cbfd1b7a7f6b2f00b0abd05d4b21d948bbd281ab141c42cdff9f1d2aed4e32b78b4bbdfa78308b6577705698af8bf9945bad23ed7d56e255b4
+  checksum: 10c0/6d7066773c2d5f1a3e8f274d4544d2e6fb133f284c843ce89c041c7d2d6e265e5bed48c057724553405bdc4c943547642ceac25c2b807d5efbb1e75d0127de92
   languageName: node
   linkType: hard
 
