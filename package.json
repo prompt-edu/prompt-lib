@@ -1,6 +1,6 @@
 {
   "name": "@tumaet/prompt-ui-components",
-  "version": "1.1.3",
+  "version": "1.1.4",
   "repository": {
     "type": "git",
     "url": "git+https://github.com/prompt-edu/prompt-lib.git"
@@ -79,15 +79,15 @@
     "i18n-iso-countries": "^7.14.0",
     "js-sha256": "^0.11.1",
     "lowlight": "^3.3.0",
-    "lucide-react": "^1.8.0",
+    "lucide-react": "^1.22.0",
     "postcss": "^8.5.15",
     "postcss-preset-env": "^11.3.1",
     "react-day-picker": "8.10.2",
-    "react-hook-form": "^7.73.1",
+    "react-hook-form": "^7.80.0",
     "react-medium-image-zoom": "^5.4.8",
-    "recharts": "^3.8.1",
+    "recharts": "^3.9.0",
     "sonner": "^2.0.7",
-    "tailwind-merge": "^3.5.0",
+    "tailwind-merge": "^3.6.0",
     "tsc-alias": "^1.8.17",
     "typescript": "^5.9.3"
   },
