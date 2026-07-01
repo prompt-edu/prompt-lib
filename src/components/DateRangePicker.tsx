@@ -56,6 +56,7 @@ export const DatePickerWithRange: React.FC<DatePickerWithRangeProps> = ({
             selected={date}
             onSelect={setDate}
             numberOfMonths={numberOfMonths}
+            fixedWeeks
             locale={enGB}
           />
         </PopoverContent>
