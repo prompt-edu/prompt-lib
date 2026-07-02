@@ -42,6 +42,7 @@ export const DatePicker = ({ date, onSelect }: DatePickerProps): React.JSX.Eleme
           onSelect={handleSelect}
           defaultMonth={date}
           initialFocus
+          fixedWeeks
           locale={enGB} // changes week start to monday
         />
       </PopoverContent>
