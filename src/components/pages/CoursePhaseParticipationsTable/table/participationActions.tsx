@@ -9,6 +9,13 @@ export interface ExportDeps {
   studentReadableDataKeys?: string[]
 }
 
+const DEFAULT_EXPORT_FILENAME = 'participation-export'
+
+function resolveCsvFilename(filename?: string): string {
+  const trimmed = filename?.trim() || DEFAULT_EXPORT_FILENAME
+  return trimmed.toLowerCase().endsWith('.csv') ? trimmed : `${trimmed}.csv`
+}
+
 export function getParticipantActions(
   actions: {
     setPassed: (rows: ParticipantRow[]) => void
@@ -44,7 +51,17 @@ export function getParticipantActions(
     {
       label: 'Export CSV',
       icon: <Download className='h-4 w-4' />,
-      onAction: (rows) => {
+      confirm: {
+        title: 'Export CSV',
+        description: (c) => `Export ${c} participants as CSV.`,
+        confirmLabel: 'Export',
+        input: {
+          label: 'Filename',
+          placeholder: DEFAULT_EXPORT_FILENAME,
+          defaultValue: DEFAULT_EXPORT_FILENAME,
+        },
+      },
+      onAction: (rows, filename) => {
         const originalRows = rows.map((r) => ({
           coursePhaseID: r.coursePhaseID,
           courseParticipationID: r.courseParticipationID,
@@ -61,6 +78,7 @@ export function getParticipantActions(
           exportDeps.restrictedDataKeys ?? [],
           exportDeps.studentReadableDataKeys ?? [],
           extraColumns,
+          resolveCsvFilename(filename),
         )
       },
     },
