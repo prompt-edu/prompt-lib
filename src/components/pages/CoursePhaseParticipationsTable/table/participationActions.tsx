@@ -1,6 +1,6 @@
 import { ExtraParticipantColumn, ParticipantRow } from './participationRow'
 import { CheckCircle, Download, XCircle } from 'lucide-react'
-import { downloadParticipations } from '../utils/downloadParticipations'
+import { DEFAULT_EXPORT_FILENAME, downloadParticipations } from '../utils/downloadParticipations'
 import { RowAction } from '@/components'
 
 export interface ExportDeps {
@@ -9,11 +9,9 @@ export interface ExportDeps {
   studentReadableDataKeys?: string[]
 }
 
-const DEFAULT_EXPORT_FILENAME = 'participation-export'
-
 function resolveCsvFilename(filename?: string): string {
-  const trimmed = filename?.trim() || DEFAULT_EXPORT_FILENAME
-  return trimmed.toLowerCase().endsWith('.csv') ? trimmed : `${trimmed}.csv`
+  const sanitized = (filename ?? '').replace(/[\\/:*?"<>|]/g, '').trim() || DEFAULT_EXPORT_FILENAME
+  return sanitized.toLowerCase().endsWith('.csv') ? sanitized : `${sanitized}.csv`
 }
 
 export function getParticipantActions(
