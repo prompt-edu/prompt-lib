@@ -32,11 +32,11 @@ export function ActionsMenu<Type extends WithId>({
     onFinish?.()
   }
 
-  const executeAction = async (action: RowAction<Type>) => {
+  const executeAction = async (action: RowAction<Type>, inputValue?: string) => {
     const rowsToAffect = [...selectedRows]
     try {
       setIsExecuting(true)
-      await action.onAction(rowsToAffect)
+      await action.onAction(rowsToAffect, inputValue)
     } finally {
       setIsExecuting(false)
       closeMenu()
@@ -52,12 +52,12 @@ export function ActionsMenu<Type extends WithId>({
     await executeAction(action)
   }
 
-  const clickDialogConfirm = async () => {
+  const clickDialogConfirm = async (inputValue?: string) => {
     if (!openActionConfirmation) return
 
     const action = openActionConfirmation
     setOpenActionConfirmation(null)
-    await executeAction(action)
+    await executeAction(action, inputValue)
   }
 
   return (

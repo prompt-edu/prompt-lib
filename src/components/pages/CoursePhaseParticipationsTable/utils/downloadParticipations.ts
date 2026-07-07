@@ -2,13 +2,15 @@ import { CoursePhaseParticipationWithStudent } from '@tumaet/prompt-shared-state
 import { saveAs } from 'file-saver'
 import { ExtraParticipantColumn } from '../table/participationRow'
 
+export const DEFAULT_EXPORT_FILENAME = 'participation-export'
+
 export const downloadParticipations = (
   data: CoursePhaseParticipationWithStudent[],
   prevDataKeys: string[],
   restrictedDataKeys: string[],
   studentReadableDataKeys: string[],
   extraColumns: ExtraParticipantColumn<any>[] = [],
-  filename = 'participation-export.csv',
+  filename = `${DEFAULT_EXPORT_FILENAME}.csv`,
 ) => {
   if (!data || data.length === 0) {
     console.error('No data available to download.')

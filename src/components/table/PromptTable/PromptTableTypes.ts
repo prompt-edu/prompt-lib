@@ -27,12 +27,17 @@ export interface WithId {
 export interface RowAction<Type extends WithId> {
   label: string
   icon?: React.ReactNode
-  onAction: (rows: Type[]) => void | Promise<void>
+  onAction: (rows: Type[], inputValue?: string) => void | Promise<void>
   confirm?: {
     title?: string
     description: string | ((count: number) => string)
     confirmLabel?: string
     variant?: 'default' | 'destructive'
+    input?: {
+      label: string
+      placeholder?: string
+      defaultValue?: string
+    }
   }
   disabled?: (rows: Type[]) => boolean
   hide?: (rows: Type[]) => boolean
