@@ -83,7 +83,7 @@
     "postcss": "^8.5.16",
     "postcss-preset-env": "^11.3.2",
     "react-day-picker": "8.10.2",
-    "react-hook-form": "^7.80.0",
+    "react-hook-form": "^7.81.0",
     "react-medium-image-zoom": "^5.4.8",
     "recharts": "^3.9.2",
     "sonner": "^2.0.7",
