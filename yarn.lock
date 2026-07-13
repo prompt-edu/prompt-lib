@@ -858,6 +858,13 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@date-fns/tz@npm:^1.4.1":
+  version: 1.5.0
+  resolution: "@date-fns/tz@npm:1.5.0"
+  checksum: 10c0/4ef25eedd55924938fa81b23b949a3425201597e2007f5323db54d50fc19283eca5e2a7963c3d82c99b3adf273e9ea9bc7adfd1c9076e15badd99c593a984ffa
+  languageName: node
+  linkType: hard
+
 "@eslint-community/eslint-utils@npm:^4.8.0, @eslint-community/eslint-utils@npm:^4.9.1":
   version: 4.9.1
   resolution: "@eslint-community/eslint-utils@npm:4.9.1"
@@ -3047,7 +3054,7 @@ __metadata:
     postcss-preset-env: "npm:^11.3.2"
     prettier: "npm:^3.8.4"
     react: "npm:^19.2.7"
-    react-day-picker: "npm:8.10.2"
+    react-day-picker: "npm:10.0.1"
     react-dom: "npm:^19.2.7"
     react-hook-form: "npm:^7.80.0"
     react-medium-image-zoom: "npm:^5.4.8"
@@ -4078,7 +4085,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"date-fns@npm:^4.4.0":
+"date-fns@npm:^4.1.0, date-fns@npm:^4.4.0":
   version: 4.4.0
   resolution: "date-fns@npm:4.4.0"
   checksum: 10c0/988f0a13db183f5dfc85c36bbb6847a9c135a9225888bbea4005876ec15539a8613c21a07370a4e7ea543918d5a1cafb423c528b42cdbbde5fdfddb178126b21
@@ -6844,13 +6851,19 @@ __metadata:
   languageName: node
   linkType: hard
 
-"react-day-picker@npm:8.10.2":
-  version: 8.10.2
-  resolution: "react-day-picker@npm:8.10.2"
+"react-day-picker@npm:10.0.1":
+  version: 10.0.1
+  resolution: "react-day-picker@npm:10.0.1"
+  dependencies:
+    "@date-fns/tz": "npm:^1.4.1"
+    date-fns: "npm:^4.1.0"
   peerDependencies:
-    date-fns: ^2.28.0 || ^3.0.0
-    react: ^16.8.0 || ^17.0.0 || ^18.0.0 || ^19.0.0
-  checksum: 10c0/701fe6dc0cc2de1430ddbf976c3a9e1f00b8b9970f1d11364047238d34e5f60f8089f505c8d9ec77faeef861b06a3b7b8ed6cc5d11d454abe46fe6b3a46270eb
+    "@types/react": ">=16.8.0"
+    react: ">=16.8.0"
+  peerDependenciesMeta:
+    "@types/react":
+      optional: true
+  checksum: 10c0/2ca2690f5e8c22b0fd24079b68959110ec199ec7d5ac74f26cfe6dad3cadf7d781458a9a654673dd47009e4fbb8548711ec0ae048e41dd3cf1d4ede16dadad55
   languageName: node
   linkType: hard
 
