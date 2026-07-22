@@ -1,8 +1,9 @@
 /* eslint-disable @typescript-eslint/no-shadow */
-import * as React from 'react'
-import type { ShouldShowProps } from '../../types'
+
 import type { Editor } from '@tiptap/react'
 import { BubbleMenu } from '@tiptap/react/menus'
+import * as React from 'react'
+import type { ShouldShowProps } from '../../types'
 import { LinkEditBlock } from '../link/link-edit-block'
 import { LinkPopoverBlock } from '../link/link-popover-block'
 

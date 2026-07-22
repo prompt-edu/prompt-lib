@@ -1,6 +1,6 @@
-import { ColumnFiltersState, InitialTableState, SortingState } from '@tanstack/react-table'
+import type { ColumnFiltersState, InitialTableState, SortingState } from '@tanstack/react-table'
 import { useState } from 'react'
-import { TableFilter } from '../../PromptTable/PromptTableTypes'
+import type { TableFilter } from '../../PromptTable/PromptTableTypes'
 import { parseColumnFiltersFromUrl, parseSearchFromUrl, parseSortingFromUrl } from './urlParsing'
 
 export function useTableUrlState({

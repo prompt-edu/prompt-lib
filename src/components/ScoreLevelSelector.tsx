@@ -1,6 +1,6 @@
-import type { ReactNode } from 'react'
-import { LockIcon } from 'lucide-react'
 import { ScoreLevel } from '@tumaet/prompt-shared-state'
+import { LockIcon } from 'lucide-react'
+import type { ReactNode } from 'react'
 
 import { cn } from '@/lib/utils'
 

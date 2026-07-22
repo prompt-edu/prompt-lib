@@ -1,11 +1,11 @@
-import * as React from 'react'
+import type { FileResponse } from '@tumaet/prompt-shared-state'
+import { Download, File, Trash2 } from 'lucide-react'
+import type * as React from 'react'
 import { useState } from 'react'
-import { Download, Trash2, File } from 'lucide-react'
-import { FileResponse } from '@tumaet/prompt-shared-state'
 import { Button, Card, CardContent, DeleteConfirmation } from '@/components'
-import { cn } from '@/lib/utils'
 import { formatFileSize } from '@/lib/formatFileSize'
 import { openFileDownload } from '@/lib/openFileDownload'
+import { cn } from '@/lib/utils'
 
 export interface FileListProps {
   files: FileResponse[]

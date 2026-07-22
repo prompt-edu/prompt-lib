@@ -1,4 +1,4 @@
-import { ColumnFiltersState, SortingState } from '@tanstack/react-table'
+import type { ColumnFiltersState, SortingState } from '@tanstack/react-table'
 import { useEffect } from 'react'
 import { serializeColumnFiltersForUrl, serializeSortingForUrl } from './urlParsing'
 

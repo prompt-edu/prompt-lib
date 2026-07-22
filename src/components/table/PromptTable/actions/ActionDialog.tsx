@@ -1,3 +1,4 @@
+import { type ReactElement, useState } from 'react'
 import {
   Button,
   Dialog,
@@ -9,8 +10,7 @@ import {
   Input,
   Label,
 } from '@/components/ui'
-import { ReactElement, useState } from 'react'
-import { RowAction, WithId } from '../PromptTableTypes'
+import type { RowAction, WithId } from '../PromptTableTypes'
 
 interface ActionDialogProps<T extends WithId> {
   action: RowAction<T>

@@ -1,3 +1,5 @@
+import { AlertTriangle } from 'lucide-react'
+import type { ElementType } from 'react'
 import {
   Alert,
   AlertDescription,
@@ -7,8 +9,6 @@ import {
   CardHeader,
   CardTitle,
 } from '@/components'
-import { AlertTriangle } from 'lucide-react'
-import { ElementType } from 'react'
 
 export interface MissingSettingsItem {
   title: string

@@ -1,3 +1,5 @@
+import { ChevronRight } from 'lucide-react'
+import type { PropsWithChildren, ReactNode } from 'react'
 import {
   Card,
   CardDescription,
@@ -7,8 +9,6 @@ import {
   CollapsibleContent,
   CollapsibleTrigger,
 } from '@/components'
-import { PropsWithChildren, ReactNode } from 'react'
-import { ChevronRight } from 'lucide-react'
 
 interface SettingsCardProps extends PropsWithChildren {
   icon: ReactNode

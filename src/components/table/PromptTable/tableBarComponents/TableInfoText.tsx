@@ -1,15 +1,15 @@
-import { Table as ReactTable } from '@tanstack/react-table'
+import type { Table as ReactTable } from '@tanstack/react-table'
 import { Columns } from 'lucide-react'
-import { ReactElement } from 'react'
+import type { ReactElement } from 'react'
 import {
   DropdownMenu,
   DropdownMenuCheckboxItem,
   DropdownMenuContent,
   DropdownMenuTrigger,
 } from '@/components/ui'
-import { TableFilter } from '../PromptTableTypes'
 import { FilterBadge } from '../filters/FilterBadge'
 import { tableFilterTypeDisplayFunction } from '../filters/filterbadgeFns'
+import type { TableFilter } from '../PromptTableTypes'
 
 interface TableInfoTextProps<TData> {
   table: ReactTable<TData>

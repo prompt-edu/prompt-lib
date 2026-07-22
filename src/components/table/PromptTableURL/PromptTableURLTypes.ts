@@ -1,5 +1,4 @@
-import { TableProps } from '../PromptTable/PromptTableTypes'
-import { WithId } from '../PromptTable/PromptTableTypes'
+import type { TableProps, WithId } from '../PromptTable/PromptTableTypes'
 
 export interface UrlParamConfig {
   enabled?: boolean

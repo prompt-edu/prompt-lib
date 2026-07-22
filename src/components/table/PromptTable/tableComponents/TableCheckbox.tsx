@@ -12,7 +12,7 @@ export const TableCheckbox = ({ checked, onToggle, location }: TableCheckboxProp
       <Checkbox
         checked={checked}
         onCheckedChange={onToggle}
-        aria-label={location == 'row' ? 'Select row' : 'Select all'}
+        aria-label={location === 'row' ? 'Select row' : 'Select all'}
         onClick={(e) => e.stopPropagation()}
         onFocus={(e) => e.stopPropagation()}
       />

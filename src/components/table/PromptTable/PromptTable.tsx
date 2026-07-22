@@ -1,28 +1,27 @@
 import {
-  ColumnDef,
-  ColumnFiltersState,
+  type ColumnDef,
+  type ColumnFiltersState,
   getCoreRowModel,
   getFilteredRowModel,
   getPaginationRowModel,
   getSortedRowModel,
-  PaginationState,
-  SortingState,
+  type PaginationState,
+  type SortingState,
   useReactTable,
 } from '@tanstack/react-table'
-import { ReactElement, useState } from 'react'
+import { type ReactElement, useState } from 'react'
 import { Table } from '../../ui'
-import { checkboxColumn } from './columns/columnDefs/selectColumn'
 import { actionColumn } from './columns/columnDefs/actionColumn'
-import { TableSearch } from './tableBarComponents/TableSearch'
+import { checkboxColumn } from './columns/columnDefs/selectColumn'
+import { generateColumns } from './columns/generateColumns'
+import { addFiltersToColumns } from './filters/applyFiltersToColumns'
+import type { TableProps, WithId } from './PromptTableTypes'
 import { TableActionsButton } from './tableBarComponents/TableActionsButton'
 import { TableInfoText } from './tableBarComponents/TableInfoText'
 import { TablePagination } from './tableBarComponents/TablePagination'
+import { TableSearch } from './tableBarComponents/TableSearch'
 import { TableHeaders } from './tableComponents/TableHeaders'
 import { TableRows } from './tableComponents/TableRows'
-import { WithId } from './PromptTableTypes'
-import { generateColumns } from './columns/generateColumns'
-import { addFiltersToColumns } from './filters/applyFiltersToColumns'
-import { TableProps } from './PromptTableTypes'
 import { createChangeHandler } from './util/createChangeHandler'
 
 export function PromptTable<T extends WithId>({

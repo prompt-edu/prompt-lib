@@ -1,14 +1,14 @@
-import { ReactElement, useState } from 'react'
-import { RowAction, WithId } from '../PromptTableTypes'
+import { Loader2 } from 'lucide-react'
+import { type ReactElement, useState } from 'react'
 import {
   DropdownMenu,
   DropdownMenuContent,
   DropdownMenuLabel,
   DropdownMenuTrigger,
 } from '@/components/ui'
+import type { RowAction, WithId } from '../PromptTableTypes'
 import { ActionDialog } from './ActionDialog'
 import { DropdownMenuItemForRowAction } from './DropdownMenuItemForRowAction'
-import { Loader2 } from 'lucide-react'
 
 interface ActionsMenuProps<Type extends WithId> {
   selectedRows: Type[]

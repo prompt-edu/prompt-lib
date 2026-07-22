@@ -1,6 +1,6 @@
+import { AlertCircle, LogOut, RefreshCw } from 'lucide-react'
 import { Button } from '@/components/ui/button'
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card'
-import { AlertCircle, LogOut, RefreshCw } from 'lucide-react'
 
 interface ErrorPageProps {
   title?: string

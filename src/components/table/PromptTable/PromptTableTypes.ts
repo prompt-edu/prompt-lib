@@ -1,10 +1,10 @@
-import {
+import type {
   Column,
-  Table,
   ColumnDef,
   ColumnFiltersState,
   InitialTableState,
   SortingState,
+  Table,
 } from '@tanstack/react-table'
 
 export interface TableProps<T extends WithId> {

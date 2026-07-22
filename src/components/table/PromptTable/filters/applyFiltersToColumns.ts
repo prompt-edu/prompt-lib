@@ -1,5 +1,5 @@
-import { ColumnDef } from '@tanstack/react-table'
-import { TableFilter } from '../PromptTableTypes'
+import type { ColumnDef } from '@tanstack/react-table'
+import type { TableFilter } from '../PromptTableTypes'
 import { multiSelectFilter, numericRangeFilter } from './filterFns'
 
 function isAccessorKeyColumn<T>(

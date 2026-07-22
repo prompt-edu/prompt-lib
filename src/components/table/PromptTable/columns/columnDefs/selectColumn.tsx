@@ -1,5 +1,5 @@
+import type { ColumnDef } from '@tanstack/react-table'
 import { Checkbox } from '@/components/ui'
-import { ColumnDef } from '@tanstack/react-table'
 
 export const checkboxColumn = <T extends { id: string }>(): ColumnDef<T> => ({
   id: 'select',

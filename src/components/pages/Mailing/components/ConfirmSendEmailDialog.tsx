@@ -1,21 +1,24 @@
-import { Send, Loader2, AlertCircle, CheckCircle, X } from 'lucide-react'
 import { useMutation } from '@tanstack/react-query'
-import { useParams } from 'react-router-dom'
-import { useState, useEffect } from 'react'
-import { SendStatusMail, PassStatus } from '@tumaet/prompt-shared-state'
-import { sendStatusMail } from '@tumaet/prompt-shared-state'
-import { getCoursePhaseParticipationStatusCounts } from '@tumaet/prompt-shared-state'
 import {
+  getCoursePhaseParticipationStatusCounts,
+  PassStatus,
+  type SendStatusMail,
+  sendStatusMail,
+} from '@tumaet/prompt-shared-state'
+import { AlertCircle, CheckCircle, Loader2, Send, X } from 'lucide-react'
+import { useEffect, useState } from 'react'
+import { useParams } from 'react-router-dom'
+import {
+  Alert,
+  AlertDescription,
+  AlertTitle,
+  Button,
   Dialog,
   DialogContent,
   DialogDescription,
   DialogFooter,
   DialogHeader,
   DialogTitle,
-  Button,
-  Alert,
-  AlertDescription,
-  AlertTitle,
 } from '@/components'
 
 interface ConfirmSendEmailDialogProps {

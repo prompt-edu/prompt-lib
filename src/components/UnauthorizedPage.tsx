@@ -1,8 +1,8 @@
+import { AlertTriangle, ArrowLeft, LogOut } from 'lucide-react'
+import { useNavigate } from 'react-router-dom'
 import { Alert, AlertDescription, AlertTitle } from '@/components/ui/alert'
 import { Button } from '@/components/ui/button'
 import { Card, CardContent, CardFooter, CardHeader, CardTitle } from '@/components/ui/card'
-import { AlertTriangle, ArrowLeft, LogOut } from 'lucide-react'
-import { useNavigate } from 'react-router-dom'
 
 interface UnauthorizedPageProps {
   onLogout?: () => void

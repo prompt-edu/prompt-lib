@@ -1,6 +1,5 @@
-import { Table } from '@tanstack/react-table'
+import type { Table } from '@tanstack/react-table'
 import { Columns } from 'lucide-react'
-import { WithId } from '../PromptTableTypes'
 import {
   Button,
   DropdownMenu,
@@ -8,6 +7,7 @@ import {
   DropdownMenuContent,
   DropdownMenuTrigger,
 } from '@/components/ui'
+import type { WithId } from '../PromptTableTypes'
 
 interface TableColumnVisibilityButtonProps<Type> {
   table: Table<Type>

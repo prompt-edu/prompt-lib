@@ -1,22 +1,22 @@
-import { useEffect, useState } from 'react'
-import { useModifyCoursePhase } from '@tumaet/prompt-shared-state'
-import { Button, Tabs, TabsContent, TabsList, TabsTrigger } from '@/components'
-import { useToast } from '@/hooks'
 import {
-  CoursePhaseWithMetaData,
-  UpdateCoursePhase,
-  CoursePhaseMailingConfigData,
+  type CoursePhaseMailingConfigData,
+  type CoursePhaseWithMetaData,
+  type UpdateCoursePhase,
+  useGetMailingIsConfigured,
+  useModifyCoursePhase,
 } from '@tumaet/prompt-shared-state'
+import { MailWarningIcon } from 'lucide-react'
+import { useEffect, useState } from 'react'
+import { useParams } from 'react-router-dom'
+import { Button, Tabs, TabsContent, TabsList, TabsTrigger } from '@/components'
+import { MissingConfig, type MissingConfigItem } from '@/components/MissingConfig'
+import { useToast } from '@/hooks'
 import {
   AvailableMailPlaceholders,
   availablePlaceholders,
 } from './components/AvailableMailPlaceholders'
 import { EmailTemplateEditor } from './components/MailingEditor'
 import { SettingsCard } from './components/SettingsCard'
-import { useGetMailingIsConfigured } from '@tumaet/prompt-shared-state'
-import { MissingConfig, MissingConfigItem } from '@/components/MissingConfig'
-import { MailWarningIcon } from 'lucide-react'
-import { useParams } from 'react-router-dom'
 
 interface CoursePhaseMailingProps {
   coursePhase: CoursePhaseWithMetaData | undefined

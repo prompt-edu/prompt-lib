@@ -1,5 +1,5 @@
+import type { Column } from '@tanstack/react-table'
 import { DropdownMenuCheckboxItem, DropdownMenuLabel, DropdownMenuSeparator } from '@/components/ui'
-import { Column } from '@tanstack/react-table'
 
 interface SelectFilterSectionProps {
   label: string
