@@ -89,7 +89,7 @@
     "sonner": "^2.0.7",
     "tailwind-merge": "^3.6.0",
     "tsc-alias": "^1.8.17",
-    "typescript": "^5.9.3"
+    "typescript": "^7.0.2"
   },
   "peerDependencies": {
     "@tanstack/react-query": "^5.101.2",
