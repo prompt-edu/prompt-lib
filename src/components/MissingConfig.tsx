@@ -1,3 +1,6 @@
+import { AlertTriangle } from 'lucide-react'
+import type { ElementType } from 'react'
+import { useNavigate } from 'react-router-dom'
 import {
   Alert,
   AlertDescription,
@@ -8,9 +11,6 @@ import {
   CardHeader,
   CardTitle,
 } from '@/components'
-import { AlertTriangle } from 'lucide-react'
-import { ElementType } from 'react'
-import { useNavigate } from 'react-router-dom'
 
 export interface MissingConfigItem {
   title: string

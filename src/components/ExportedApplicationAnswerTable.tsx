@@ -1,7 +1,7 @@
-import { ExportedApplicationAnswer } from '@tumaet/prompt-shared-state'
+import type { ExportedApplicationAnswer } from '@tumaet/prompt-shared-state'
+import { AlignLeft, CheckSquare } from 'lucide-react'
 import { useMemo } from 'react'
 import { Badge, Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@/components'
-import { AlignLeft, CheckSquare } from 'lucide-react'
 
 interface ExportedApplicationAnswerTableProps {
   applicationAnswers: ExportedApplicationAnswer[]

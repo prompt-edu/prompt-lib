@@ -1,6 +1,6 @@
-import { CoursePhaseParticipationWithStudent } from '@tumaet/prompt-shared-state'
+import type { CoursePhaseParticipationWithStudent } from '@tumaet/prompt-shared-state'
 import { saveAs } from 'file-saver'
-import { ExtraParticipantColumn } from '../table/participationRow'
+import type { ExtraParticipantColumn } from '../table/participationRow'
 
 export const DEFAULT_EXPORT_FILENAME = 'participation-export'
 

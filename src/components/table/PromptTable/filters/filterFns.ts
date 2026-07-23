@@ -1,4 +1,4 @@
-import { FilterFn } from '@tanstack/react-table'
+import type { FilterFn } from '@tanstack/react-table'
 
 export const multiSelectFilter: FilterFn<any> = (row, columnId, filterValue: string[]) => {
   if (!Array.isArray(filterValue) || filterValue.length === 0) {

@@ -1,10 +1,9 @@
+import { type FileResponse, useFileUpload } from '@tumaet/prompt-shared-state'
+import { File, Loader2, Upload, X } from 'lucide-react'
 import * as React from 'react'
-import { Upload, X, File, Loader2 } from 'lucide-react'
-import { useFileUpload } from '@tumaet/prompt-shared-state'
-import { FileResponse } from '@tumaet/prompt-shared-state'
-import { Button, Progress, Card, CardContent } from '@/components'
-import { cn } from '@/lib/utils'
+import { Button, Card, CardContent, Progress } from '@/components'
 import { formatFileSize } from '@/lib/formatFileSize'
+import { cn } from '@/lib/utils'
 
 export interface FileUploadProps {
   coursePhaseId?: string

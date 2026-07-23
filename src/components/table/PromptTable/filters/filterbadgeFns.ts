@@ -1,4 +1,4 @@
-import { TableFilter } from '../PromptTableTypes'
+import type { TableFilter } from '../PromptTableTypes'
 
 interface minMaxFilterType {
   noScore: boolean

@@ -1,7 +1,7 @@
 /* eslint-disable react/prop-types */
+
+import { ClipboardCopyIcon, DownloadIcon, Ellipsis, Link2Icon, Scaling } from 'lucide-react'
 import * as React from 'react'
-import { Tooltip, TooltipContent, TooltipTrigger } from '@/components/ui/tooltip'
-import { cn } from '@/lib/utils'
 import { Button } from '@/components/ui/button'
 import {
   DropdownMenu,
@@ -9,7 +9,8 @@ import {
   DropdownMenuItem,
   DropdownMenuTrigger,
 } from '@/components/ui/dropdown-menu'
-import { ClipboardCopyIcon, Ellipsis, DownloadIcon, Link2Icon, Scaling } from 'lucide-react'
+import { Tooltip, TooltipContent, TooltipTrigger } from '@/components/ui/tooltip'
+import { cn } from '@/lib/utils'
 
 interface ImageActionsProps {
   shouldMerge?: boolean

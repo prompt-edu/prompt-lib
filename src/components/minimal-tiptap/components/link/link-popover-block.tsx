@@ -1,7 +1,7 @@
+import { CopyIcon, ExternalLinkIcon, Link2Off } from 'lucide-react'
 import * as React from 'react'
 import { Separator } from '@/components/ui/separator'
 import { ToolbarButton } from '../toolbar-button'
-import { CopyIcon, ExternalLinkIcon, Link2Off } from 'lucide-react'
 
 interface LinkPopoverBlockProps {
   url: string

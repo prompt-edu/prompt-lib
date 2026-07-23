@@ -1,7 +1,7 @@
-import { ExtraParticipantColumn, ParticipantRow } from './participationRow'
 import { CheckCircle, Download, XCircle } from 'lucide-react'
+import type { RowAction } from '@/components'
 import { DEFAULT_EXPORT_FILENAME, downloadParticipations } from '../utils/downloadParticipations'
-import { RowAction } from '@/components'
+import type { ExtraParticipantColumn, ParticipantRow } from './participationRow'
 
 export interface ExportDeps {
   prevDataKeys?: string[]

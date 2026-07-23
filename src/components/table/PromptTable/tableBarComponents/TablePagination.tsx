@@ -1,6 +1,6 @@
+import type { Table as ReactTable } from '@tanstack/react-table'
 import { ChevronLeft, ChevronRight, ChevronsLeft, ChevronsRight } from 'lucide-react'
-import { Table as ReactTable } from '@tanstack/react-table'
-import { ReactElement } from 'react'
+import type { ReactElement } from 'react'
 import {
   Button,
   Select,

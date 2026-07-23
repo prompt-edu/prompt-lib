@@ -1,5 +1,5 @@
-import { TableFilter } from '../PromptTableTypes'
-import { Table } from '@tanstack/react-table'
+import type { Table } from '@tanstack/react-table'
+import type { TableFilter } from '../PromptTableTypes'
 import { FilterBadge } from './FilterBadge'
 import { tableFilterTypeDisplayFunction } from './filterbadgeFns'
 

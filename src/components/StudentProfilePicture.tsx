@@ -1,4 +1,4 @@
-import { Avatar, AvatarImage, AvatarFallback } from '@/components'
+import { Avatar, AvatarFallback, AvatarImage } from '@/components'
 import { getGravatarUrl } from '@/lib/getGravatarUrl'
 
 type AvatarSize = 'lg' | 'md' | 'sm'

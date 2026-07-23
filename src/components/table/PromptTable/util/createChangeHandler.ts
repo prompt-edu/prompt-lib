@@ -1,4 +1,4 @@
-import { OnChangeFn } from '@tanstack/react-table'
+import type { OnChangeFn } from '@tanstack/react-table'
 
 export function createChangeHandler<T>(
   setState: React.Dispatch<React.SetStateAction<T>>,

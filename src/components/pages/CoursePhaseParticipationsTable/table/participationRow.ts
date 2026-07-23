@@ -1,6 +1,5 @@
-import { ColumnDef } from '@tanstack/react-table'
-import type { AccessorFn, SortingFn, FilterFn } from '@tanstack/react-table'
-import {
+import type { AccessorFn, ColumnDef, FilterFn, SortingFn } from '@tanstack/react-table'
+import type {
   CoursePhaseParticipationWithStudent,
   PassStatus,
   Student,

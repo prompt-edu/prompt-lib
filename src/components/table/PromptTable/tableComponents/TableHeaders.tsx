@@ -1,6 +1,6 @@
-import { flexRender, HeaderGroup, Table as ReactTable } from '@tanstack/react-table'
+import { flexRender, type HeaderGroup, type Table as ReactTable } from '@tanstack/react-table'
+import type { ReactElement } from 'react'
 import { TableHead, TableHeader, TableRow } from '../../../ui'
-import { ReactElement } from 'react'
 import { SortableHeader } from './SortableHeader'
 
 interface TableHeadersProps<TData> {

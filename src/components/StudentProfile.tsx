@@ -1,14 +1,14 @@
 import {
-  Student,
-  PassStatus,
   getGenderString,
   getStudyDegreeString,
+  type PassStatus,
+  type Student,
 } from '@tumaet/prompt-shared-state'
-import { Mail, Flag, Book, GraduationCap, Calendar, Hash, Users, KeyRound } from 'lucide-react'
+import { Book, Calendar, Flag, GraduationCap, Hash, KeyRound, Mail, Users } from 'lucide-react'
 import { Card, CardContent, CardHeader } from '@/components'
 import { getCountryName } from '@/lib/getCountries'
-import translations from '@/lib/translations.json'
 import { getStatusColor } from '@/lib/getStatusColor'
+import translations from '@/lib/translations.json'
 import { ProfilePicture } from './StudentProfilePicture'
 
 interface StudentProfileProps {

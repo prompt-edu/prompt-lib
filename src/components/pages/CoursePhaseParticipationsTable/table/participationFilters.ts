@@ -1,6 +1,6 @@
-import { getStatusBadge, getStatusString } from '@/lib/getStatusBadge'
 import { PassStatus } from '@tumaet/prompt-shared-state'
-import { TableFilter } from '@/components'
+import type { TableFilter } from '@/components'
+import { getStatusBadge, getStatusString } from '@/lib/getStatusBadge'
 
 export function getParticipantFilters(extraFilters: TableFilter[] = []): TableFilter[] {
   return [
@@ -12,7 +12,7 @@ export function getParticipantFilters(extraFilters: TableFilter[] = []): TableFi
       optionLabel: (v) => getStatusBadge(v as PassStatus),
       badge: {
         label: 'Status',
-        displayValue: function (filtervalue: unknown): string {
+        displayValue: (filtervalue: unknown): string => {
           const p = filtervalue as PassStatus
           return getStatusString(p)
         },

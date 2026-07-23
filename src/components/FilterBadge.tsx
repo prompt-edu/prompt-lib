@@ -1,5 +1,5 @@
-import { Badge } from '@/components'
 import { X } from 'lucide-react'
+import { Badge } from '@/components'
 
 interface FilterBadgeProps {
   label: string

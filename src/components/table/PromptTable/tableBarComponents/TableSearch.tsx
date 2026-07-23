@@ -1,9 +1,9 @@
-import { Input } from '@/components/ui'
+import type { Table as ReactTable } from '@tanstack/react-table'
 import { Filter, SearchIcon } from 'lucide-react'
-import { KeyboardEvent, ReactElement, useEffect, useRef, useState } from 'react'
-import { Table as ReactTable } from '@tanstack/react-table'
-import { TableFilter } from '../PromptTableTypes'
+import { type KeyboardEvent, type ReactElement, useEffect, useRef, useState } from 'react'
+import { Input } from '@/components/ui'
 import { TableFiltersMenu } from '../filters/TableFiltersMenu'
+import type { TableFilter } from '../PromptTableTypes'
 
 interface TableSearchProps {
   value: string

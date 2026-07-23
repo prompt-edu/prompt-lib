@@ -1,10 +1,10 @@
+import type { Column } from '@tanstack/react-table'
 import {
   DropdownMenuCheckboxItem,
   DropdownMenuLabel,
   DropdownMenuSeparator,
   Input,
 } from '@/components/ui'
-import { Column } from '@tanstack/react-table'
 
 interface NumericRangeFilterSectionProps {
   label: string

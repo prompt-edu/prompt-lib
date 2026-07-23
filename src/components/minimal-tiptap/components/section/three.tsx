@@ -1,14 +1,15 @@
 /* eslint-disable react/prop-types */
-import * as React from 'react'
+
 import type { Editor } from '@tiptap/react'
-import type { toggleVariants } from '@/components/ui/toggle'
 import type { VariantProps } from 'class-variance-authority'
-import { ChevronDown, CheckIcon } from 'lucide-react'
-import { ToolbarButton } from '../toolbar-button'
-import { Popover, PopoverTrigger, PopoverContent } from '@/components/ui/popover'
+import { CheckIcon, ChevronDown } from 'lucide-react'
+import * as React from 'react'
+import { Popover, PopoverContent, PopoverTrigger } from '@/components/ui/popover'
+import type { toggleVariants } from '@/components/ui/toggle'
 import { ToggleGroup, ToggleGroupItem } from '@/components/ui/toggle-group'
 import { Tooltip, TooltipContent, TooltipTrigger } from '@/components/ui/tooltip'
 import { useTheme } from '../../hooks/use-theme'
+import { ToolbarButton } from '../toolbar-button'
 
 interface ColorItem {
   cssVar: string

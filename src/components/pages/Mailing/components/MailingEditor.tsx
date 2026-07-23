@@ -1,13 +1,14 @@
-import React, { useState } from 'react'
+import type React from 'react'
+import { useState } from 'react'
 import {
-  Label,
-  TooltipProvider,
-  Input,
   Card,
   CardContent,
   CardHeader,
   CardTitle,
+  Input,
+  Label,
   MailingTiptapEditor,
+  TooltipProvider,
 } from '@/components'
 
 interface EmailTemplateEditorProps {

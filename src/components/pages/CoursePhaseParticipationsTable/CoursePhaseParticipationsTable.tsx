@@ -1,14 +1,14 @@
+import type { CoursePhaseParticipationWithStudent } from '@tumaet/prompt-shared-state'
 import { useMemo } from 'react'
-import {
-  buildParticipantRows,
-  ExtraParticipantColumn,
-  ParticipantRow,
-} from './table/participationRow'
+import { PromptTableURL, type RowAction, type TableFilter } from '@/components'
+import { type ExportDeps, getParticipantActions } from './table/participationActions'
 import { getParticipantColumns } from './table/participationColumns'
 import { getParticipantFilters } from './table/participationFilters'
-import { ExportDeps, getParticipantActions } from './table/participationActions'
-import { PromptTableURL, RowAction, TableFilter } from '@/components'
-import { CoursePhaseParticipationWithStudent } from '@tumaet/prompt-shared-state'
+import {
+  buildParticipantRows,
+  type ExtraParticipantColumn,
+  type ParticipantRow,
+} from './table/participationRow'
 import { useParticipantBatchActions } from './utils/updateBatch'
 
 interface CoursePhaseParticipationsTablePageProps {

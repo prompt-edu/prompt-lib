@@ -1,7 +1,7 @@
-import { ColumnDef } from '@tanstack/react-table'
-import { ExtraParticipantColumn, ParticipantRow } from './participationRow'
+import type { ColumnDef } from '@tanstack/react-table'
+import type { PassStatus } from '@tumaet/prompt-shared-state'
 import { getStatusBadge } from '@/lib/getStatusBadge'
-import { PassStatus } from '@tumaet/prompt-shared-state'
+import type { ExtraParticipantColumn, ParticipantRow } from './participationRow'
 
 export function getParticipantColumns(
   extraColumns: ExtraParticipantColumn<any>[],

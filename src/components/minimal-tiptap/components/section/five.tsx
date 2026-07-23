@@ -1,12 +1,12 @@
-import * as React from 'react'
 import type { Editor } from '@tiptap/react'
-import type { FormatAction } from '../../types'
-import type { toggleVariants } from '@/components/ui/toggle'
 import type { VariantProps } from 'class-variance-authority'
-import { ChevronDown, CodeIcon, SeparatorHorizontalIcon, PlusIcon, QuoteIcon } from 'lucide-react'
+import { ChevronDown, CodeIcon, PlusIcon, QuoteIcon, SeparatorHorizontalIcon } from 'lucide-react'
+import * as React from 'react'
+import type { toggleVariants } from '@/components/ui/toggle'
+import type { FormatAction } from '../../types'
+import { ImageEditDialog } from '../image/image-edit-dialog'
 import { LinkEditPopover } from '../link/link-edit-popover'
 import { ToolbarSection } from '../toolbar-section'
-import { ImageEditDialog } from '../image/image-edit-dialog'
 
 type InsertElementAction = 'codeBlock' | 'blockquote' | 'horizontalRule'
 interface InsertElement extends FormatAction {

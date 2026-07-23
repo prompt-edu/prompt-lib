@@ -1,5 +1,5 @@
-import { flexRender, Table as ReactTable } from '@tanstack/react-table'
-import { ReactElement } from 'react'
+import { flexRender, type Table as ReactTable } from '@tanstack/react-table'
+import type { ReactElement } from 'react'
 import { TableBody, TableCell, TableRow } from '../../../ui'
 
 interface TableRowsProps<TData> {

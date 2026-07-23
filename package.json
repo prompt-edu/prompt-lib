@@ -26,7 +26,12 @@
     "build:esm": "tsc --project tsconfig.json && tsc-alias",
     "build:copy-css": "cp src/index.css dist/index.css && mkdir -p dist/components/minimal-tiptap/styles && cp src/components/minimal-tiptap/styles/index.css dist/components/minimal-tiptap/styles/index.css",
     "build": "yarn build:esm && yarn build:copy-css",
-    "lint": "eslint \"**/*.{js,jsx,ts,tsx}\""
+    "lint": "biome lint",
+    "lint:fix": "biome lint --fix",
+    "format": "biome format",
+    "format:fix": "biome format --fix",
+    "check": "biome check",
+    "check:fix": "biome check --fix"
   },
   "packageManager": "yarn@4.14.1",
   "dependencies": {
@@ -99,21 +104,13 @@
     "react-router-dom": "^7.14.2"
   },
   "devDependencies": {
-    "@eslint/compat": "^2.1.0",
+    "@biomejs/biome": "2.5.2",
     "@tanstack/react-query": "^5.101.2",
     "@tumaet/prompt-shared-state": "1.1.1",
     "@types/file-saver": "^2.0.7",
     "@types/react": "^19.2.17",
     "@types/react-dom": "^19.2.3",
-    "@typescript-eslint/eslint-plugin": "^8.63.0",
-    "@typescript-eslint/parser": "^8.63.0",
-    "eslint": "^9.39.4",
-    "eslint-plugin-prettier": "^5.5.6",
-    "eslint-plugin-react": "^7.37.5",
-    "eslint-plugin-react-hooks": "^7.1.1",
-    "globals": "^17.7.0",
     "postcss-cli": "^11.0.1",
-    "prettier": "^3.8.4",
     "react": "^19.2.7",
     "react-dom": "^19.2.7",
     "react-router-dom": "^7.14.2"

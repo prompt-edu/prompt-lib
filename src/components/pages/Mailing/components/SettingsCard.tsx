@@ -1,7 +1,7 @@
+import type { CoursePhaseMailingConfigData } from '@tumaet/prompt-shared-state'
+import { Info } from 'lucide-react'
 import { Badge, Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components'
 import { ManualMailSending } from './ManualMailSending'
-import { CoursePhaseMailingConfigData } from '@tumaet/prompt-shared-state'
-import { Info } from 'lucide-react'
 
 interface SettingsCardProps {
   mailingMetaData: CoursePhaseMailingConfigData

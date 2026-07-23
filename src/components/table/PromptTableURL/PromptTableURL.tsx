@@ -1,9 +1,9 @@
-import { ReactElement } from 'react'
-import { WithId } from '../PromptTable/PromptTableTypes'
+import type { ReactElement } from 'react'
 import { PromptTable } from '../PromptTable/PromptTable'
-import { useTableUrlState } from './urlParsing/useTableUrlState'
+import type { WithId } from '../PromptTable/PromptTableTypes'
+import type { PromptTableURLProps } from './PromptTableURLTypes'
 import { useSyncTableStateToUrl } from './urlParsing/useSyncTableStateToUrl'
-import { PromptTableURLProps } from './PromptTableURLTypes'
+import { useTableUrlState } from './urlParsing/useTableUrlState'
 
 export function PromptTableURL<T extends WithId>({
   sortingQueryParam,

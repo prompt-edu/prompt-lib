@@ -1,6 +1,5 @@
-import { useUpdateCoursePhaseParticipationBatch } from '@tumaet/prompt-shared-state'
-import { PassStatus } from '@tumaet/prompt-shared-state'
-import { ParticipantRow } from '../table/participationRow'
+import { PassStatus, useUpdateCoursePhaseParticipationBatch } from '@tumaet/prompt-shared-state'
+import type { ParticipantRow } from '../table/participationRow'
 
 export function useParticipantBatchActions(phaseId: string) {
   const { mutate: updateBatch } = useUpdateCoursePhaseParticipationBatch()

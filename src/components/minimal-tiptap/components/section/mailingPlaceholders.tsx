@@ -1,11 +1,10 @@
-import * as React from 'react'
 import type { Editor } from '@tiptap/react'
-import type { FormatAction } from '../../types'
-import type { toggleVariants } from '@/components/ui/toggle'
 import type { VariantProps } from 'class-variance-authority'
-import { ListIcon } from 'lucide-react'
+import { ListIcon, MailSearch } from 'lucide-react'
+import * as React from 'react'
+import type { toggleVariants } from '@/components/ui/toggle'
+import type { FormatAction } from '../../types'
 import { ToolbarSection } from '../toolbar-section'
-import { MailSearch } from 'lucide-react'
 
 const formatActions = (placeholders: string[]): FormatAction[] => {
   return placeholders.map((placeholder) => ({
