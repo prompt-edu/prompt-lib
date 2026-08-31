@@ -11,6 +11,18 @@ import {
 } from './table/participationRow'
 import { useParticipantBatchActions } from './utils/updateBatch'
 
+// Every student attribute is available as a column, but only the ones lecturers need at a
+// glance start visible; the rest are opt-in via the column dropdown and always exported.
+const DEFAULT_HIDDEN_COLUMNS = {
+  matriculationNumber: false,
+  universityLogin: false,
+  gender: false,
+  nationality: false,
+  studyDegree: false,
+  studyProgram: false,
+  currentSemester: false,
+}
+
 interface CoursePhaseParticipationsTablePageProps {
   phaseId: string
   participants: CoursePhaseParticipationWithStudent[]
@@ -53,7 +65,7 @@ export const CoursePhaseParticipationsTable = ({
       filters={filters}
       actions={actions}
       onRowClick={(row) => onClickRowAction?.(row)}
-      initialState={{ columnVisibility: { matriculationNumber: false, universityLogin: false } }}
+      initialState={{ columnVisibility: DEFAULT_HIDDEN_COLUMNS }}
     />
   )
 }

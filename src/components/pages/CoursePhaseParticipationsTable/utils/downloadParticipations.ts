@@ -26,6 +26,10 @@ export const downloadParticipations = (
     hasUniversityAccount: 'Has University Account',
     courseParticipationID: 'Course Participation ID',
     gender: 'Gender',
+    nationality: 'Nationality',
+    studyDegree: 'Study Degree',
+    studyProgram: 'Study Program',
+    currentSemester: 'Current Semester',
     passStatus: 'Pass Status',
   }
 
@@ -38,6 +42,10 @@ export const downloadParticipations = (
     'hasUniversityAccount',
     'courseParticipationID',
     'gender',
+    'nationality',
+    'studyDegree',
+    'studyProgram',
+    'currentSemester',
     'passStatus',
     ...prevDataKeys,
     ...restrictedDataKeys,

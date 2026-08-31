@@ -1,5 +1,6 @@
-import type { PassStatus } from '@tumaet/prompt-shared-state'
+import { getGenderString, getStudyDegreeString, type PassStatus } from '@tumaet/prompt-shared-state'
 import type { PromptTableColumnDef } from '@/components/table/PromptTable/tableFeatures'
+import { getCountryName } from '@/lib/getCountries'
 import { getStatusBadge } from '@/lib/getStatusBadge'
 import type { ExtraParticipantColumn, ParticipantRow } from './participationRow'
 
@@ -16,12 +17,42 @@ export function getParticipantColumns(
       header: 'Last name',
     },
     {
+      accessorKey: 'email',
+      header: 'Email',
+    },
+    {
       accessorKey: 'matriculationNumber',
       header: 'Matriculation #',
     },
     {
       accessorKey: 'universityLogin',
       header: 'Login',
+    },
+    {
+      // The accessors below resolve the stored codes to the labels the table shows, so
+      // sorting and search operate on the same text the lecturer sees.
+      id: 'gender',
+      header: 'Gender',
+      accessorFn: (row) => (row.gender ? getGenderString(row.gender) : ''),
+    },
+    {
+      id: 'nationality',
+      header: 'Nationality',
+      accessorFn: (row) =>
+        row.nationality ? (getCountryName(row.nationality) ?? row.nationality) : '',
+    },
+    {
+      id: 'studyDegree',
+      header: 'Study Degree',
+      accessorFn: (row) => (row.studyDegree ? getStudyDegreeString(row.studyDegree) : ''),
+    },
+    {
+      accessorKey: 'studyProgram',
+      header: 'Study Program',
+    },
+    {
+      accessorKey: 'currentSemester',
+      header: 'Semester',
     },
     {
       accessorKey: 'passStatus',
