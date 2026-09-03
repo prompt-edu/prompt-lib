@@ -12,6 +12,12 @@ export function SortableHeader<TData extends RowData>({
   column,
   title,
 }: SortableHeaderProps<TData>) {
+  // Sorting can be turned off per column or table-wide (a server-driven table sorts elsewhere),
+  // and a header that cannot sort must not offer the control.
+  if (!column.getCanSort()) {
+    return <span>{title}</span>
+  }
+
   return (
     <Button
       variant='ghost'

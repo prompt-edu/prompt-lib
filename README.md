@@ -21,6 +21,38 @@ For shared state primitives and shared TypeScript interfaces, use [`@tumaet/prom
 
 ---
 
+## Server-paged tables
+
+`PromptTable` and `PromptTableURL` own a search box, sortable column headers and a pagination bar,
+and all three act on the rows currently in `data`. That is right for a table holding the whole data
+set and wrong for one fed a single server page: the search would narrow the page instead of the
+data set, and the headers would reorder it.
+
+A consumer that drives those concerns itself hands them over with `serverDriven`:
+
+```tsx
+// The consumer searches, sorts and pages on the server and passes one page at a time.
+<PromptTable data={page.entries} columns={columns} serverDriven />
+
+// Or per concern - here the table still owns the search box and the column headers.
+<PromptTable data={page.entries} columns={columns} serverDriven={{ pagination: true }} />
+```
+
+| Flag         | What the table stops doing                                               |
+| ------------ | ------------------------------------------------------------------------ |
+| `search`     | drops the built-in search box; the global filter no longer narrows `data` |
+| `sorting`    | renders plain column headers; `data` is no longer reordered              |
+| `pagination` | drops the pagination bar; every row in `data` renders as one page        |
+
+`serverDriven: true` is shorthand for all three. Column `filters` stay client-side either way; when
+the search box is gone the filter menu moves out of it and gets its own button.
+
+The prop only stops the table from doing the work - fetching the matching page stays with the
+consumer. `onSortingChange`, `onSearchChange` and `onColumnFiltersChange` report the state the table
+still owns and are safe to hang a request on: they fire once the table has committed the new value.
+
+---
+
 ## Prerequisites
 
 This project uses **Yarn 4** as specified in the `packageManager` field of each `package.json`. To work with this repository, enable Corepack, which will automatically use the correct Yarn version.

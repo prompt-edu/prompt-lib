@@ -16,7 +16,24 @@ export interface TableProps<T extends WithId> {
   onSortingChange?: (sorting: SortingState) => void
   onSearchChange?: (search: string) => void
   onColumnFiltersChange?: (columnFilters: ColumnFiltersState) => void
+  /** Rows per client-side page. Ignored when pagination is server-driven. */
   pageSize?: number
+  /**
+   * Concerns the consumer handles server-side. `true` is shorthand for all of them; by default
+   * the table owns every one of them. Pass this when `data` is a single server page, so the
+   * table stops applying its own version of a concern to that page and drops the control that
+   * would read as if it applied to the whole data set.
+   */
+  serverDriven?: boolean | ServerDrivenFeatures
+}
+
+export interface ServerDrivenFeatures {
+  /** Drops the built-in search box and stops the global filter from narrowing `data`. */
+  search?: boolean
+  /** Renders plain column headers and stops the table from reordering `data`. */
+  sorting?: boolean
+  /** Drops the pagination bar and renders every row in `data` as one page. */
+  pagination?: boolean
 }
 
 export interface WithId {
