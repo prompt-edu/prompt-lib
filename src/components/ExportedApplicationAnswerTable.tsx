@@ -1,6 +1,6 @@
 import { AlignLeft, CheckSquare } from 'lucide-react'
-import { useMemo } from 'react'
-import { Badge, Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@/components'
+import { type ReactNode, useMemo } from 'react'
+import { Badge, Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from '@/components'
 
 // The provided-output DTO transfers `order_num` and sends multi-select answers as arrays,
 // neither of which the declared `ExportedApplicationAnswer` describes.
@@ -31,6 +31,22 @@ const compareByOrder = (
   return left < right ? -1 : 1
 }
 
+const AnswerBlock = ({ isEmpty, children }: { isEmpty: boolean; children: ReactNode }) => {
+  if (isEmpty) {
+    return (
+      <div className='rounded-md border border-dashed border-border px-3 py-2.5 text-sm italic text-muted-foreground'>
+        Not answered
+      </div>
+    )
+  }
+
+  return (
+    <div className='rounded-md border-l-2 border-primary/40 bg-muted/50 px-3 py-2.5 text-sm'>
+      {children}
+    </div>
+  )
+}
+
 export const ExportedApplicationAnswerTable = ({
   applicationAnswers,
 }: ExportedApplicationAnswerTableProps) => {
@@ -39,51 +55,63 @@ export const ExportedApplicationAnswerTable = ({
     [applicationAnswers],
   )
 
-  return (
-    <div className='overflow-x-auto'>
-      <Table>
-        <TableHeader>
-          <TableRow>
-            <TableHead className='w-1/12'>Type</TableHead>
-            <TableHead className='w-1/5'>Key</TableHead>
-            <TableHead>Answer</TableHead>
-          </TableRow>
-        </TableHeader>
-        <TableBody>
-          {orderedAnswers.map((answer, index) => {
-            return (
-              <TableRow key={answer.key} className={index % 2 === 0 ? 'bg-muted/50' : ''}>
-                <TableCell>
-                  {answer.type === 'multiselect' ? (
-                    <CheckSquare className='h-4 w-4 text-muted-foreground' />
-                  ) : (
-                    <AlignLeft className='h-4 w-4 text-muted-foreground' />
-                  )}
-                </TableCell>
+  if (orderedAnswers.length === 0) {
+    return null
+  }
 
-                <TableCell className='font-medium'>
-                  <div className='flex items-center space-x-2'>
-                    <span>{answer.key}</span>
-                  </div>
-                </TableCell>
-                <TableCell>
-                  {Array.isArray(answer.answer) ? (
-                    <div>
-                      {answer.answer.map((item, idx) => (
-                        <Badge key={idx} className='mr-1'>
-                          {item}
+  return (
+    <TooltipProvider>
+      {/* biome-ignore lint/a11y/noRedundantRoles: Safari drops list semantics from a list-style-none list */}
+      <ol role='list' className='m-0 list-none divide-y divide-border p-0'>
+        {orderedAnswers.map((answer, index) => {
+          const isMultiSelect = answer.type === 'multiselect'
+          const Icon = isMultiSelect ? CheckSquare : AlignLeft
+          const label = isMultiSelect ? 'Multi-select' : 'Text'
+          const questionName = answer.key.trim() || `Question ${index + 1}`
+
+          return (
+            // biome-ignore lint/suspicious/noArrayIndexKey: the DTO carries no question id, access keys may repeat, and the list is static and presentational
+            <li key={index} className='flex gap-3 py-5 first:pt-0 last:pb-0'>
+              <div className='flex h-6 w-6 shrink-0 items-center justify-center rounded-md bg-muted text-xs font-medium text-muted-foreground'>
+                {index + 1}
+              </div>
+
+              <div className='min-w-0 flex-1 space-y-2.5'>
+                <div className='flex items-center gap-2'>
+                  <Tooltip>
+                    <TooltipTrigger
+                      type='button'
+                      aria-label={`${label} question`}
+                      className='inline-flex shrink-0 items-center border-0 bg-transparent p-0 text-muted-foreground'
+                    >
+                      <Icon className='h-4 w-4' aria-hidden='true' />
+                    </TooltipTrigger>
+                    <TooltipContent>{label}</TooltipContent>
+                  </Tooltip>
+                  <span className='min-w-0 break-words font-semibold'>{questionName}</span>
+                </div>
+
+                {Array.isArray(answer.answer) ? (
+                  <AnswerBlock isEmpty={answer.answer.length === 0}>
+                    <div className='flex flex-wrap gap-1.5'>
+                      {answer.answer.map((option, optionIndex) => (
+                        // biome-ignore lint/suspicious/noArrayIndexKey: multi-select values are not guaranteed unique and the list is static
+                        <Badge key={optionIndex} className='max-w-full break-words'>
+                          {option}
                         </Badge>
                       ))}
                     </div>
-                  ) : (
+                  </AnswerBlock>
+                ) : (
+                  <AnswerBlock isEmpty={!answer.answer.trim()}>
                     <p className='whitespace-pre-wrap break-words'>{answer.answer}</p>
-                  )}
-                </TableCell>
-              </TableRow>
-            )
-          })}
-        </TableBody>
-      </Table>
-    </div>
+                  </AnswerBlock>
+                )}
+              </div>
+            </li>
+          )
+        })}
+      </ol>
+    </TooltipProvider>
   )
 }
