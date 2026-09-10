@@ -1,19 +1,43 @@
-import type { ExportedApplicationAnswer } from '@tumaet/prompt-shared-state'
 import { AlignLeft, CheckSquare } from 'lucide-react'
 import { useMemo } from 'react'
 import { Badge, Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@/components'
 
+// The provided-output DTO transfers `order_num` and sends multi-select answers as arrays,
+// neither of which the declared `ExportedApplicationAnswer` describes.
+interface RuntimeExportedApplicationAnswer {
+  key: string
+  answer: string | string[]
+  type: 'text' | 'multiselect'
+  orderNum?: number
+  order_num?: number
+}
+
 interface ExportedApplicationAnswerTableProps {
-  applicationAnswers: ExportedApplicationAnswer[]
+  applicationAnswers: RuntimeExportedApplicationAnswer[]
+}
+
+const resolveOrder = (answer: RuntimeExportedApplicationAnswer) => {
+  const order = answer.order_num ?? answer.orderNum
+  return typeof order === 'number' && Number.isFinite(order) ? order : Number.POSITIVE_INFINITY
+}
+
+const compareByOrder = (
+  a: RuntimeExportedApplicationAnswer,
+  b: RuntimeExportedApplicationAnswer,
+) => {
+  const left = resolveOrder(a)
+  const right = resolveOrder(b)
+  if (left === right) return 0
+  return left < right ? -1 : 1
 }
 
 export const ExportedApplicationAnswerTable = ({
   applicationAnswers,
 }: ExportedApplicationAnswerTableProps) => {
-  const orderedAnswers = useMemo(() => {
-    if (!applicationAnswers) return []
-    return applicationAnswers?.sort((a, b) => a.orderNum - b.orderNum)
-  }, [applicationAnswers])
+  const orderedAnswers = useMemo(
+    () => [...(applicationAnswers ?? [])].sort(compareByOrder),
+    [applicationAnswers],
+  )
 
   return (
     <div className='overflow-x-auto'>
