@@ -1,8 +1,10 @@
 import type { AccessorFn, FilterFn, SortFn } from '@tanstack/react-table'
 import type {
   CoursePhaseParticipationWithStudent,
+  Gender,
   PassStatus,
   Student,
+  StudyDegree,
 } from '@tumaet/prompt-shared-state'
 import type {
   PromptTableColumnDef,
@@ -27,6 +29,11 @@ export interface ParticipantRow {
   email?: string
   matriculationNumber?: string
   universityLogin?: string
+  gender?: Gender
+  nationality?: string
+  studyDegree?: StudyDegree
+  studyProgram?: string
+  currentSemester?: number
 
   [key: string]: unknown
 }
@@ -82,6 +89,11 @@ export function buildParticipantRows(
       email: p.student.email,
       matriculationNumber: p.student.matriculationNumber,
       universityLogin: p.student.universityLogin,
+      gender: p.student.gender,
+      nationality: p.student.nationality,
+      studyDegree: p.student.studyDegree,
+      studyProgram: p.student.studyProgram,
+      currentSemester: p.student.currentSemester,
 
       ...extraValues,
     }

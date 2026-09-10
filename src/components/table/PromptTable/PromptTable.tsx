@@ -14,6 +14,7 @@ import { addFiltersToColumns } from './filters/applyFiltersToColumns'
 import { TableFiltersMenu } from './filters/TableFiltersMenu'
 import type { TableProps, WithId } from './PromptTableTypes'
 import { TableActionsButton } from './tableBarComponents/TableActionsButton'
+import { TableColumnVisibilityButton } from './tableBarComponents/TableColumnVisibilityButton'
 import { TableInfoText } from './tableBarComponents/TableInfoText'
 import { TablePagination } from './tableBarComponents/TablePagination'
 import { TableSearch } from './tableBarComponents/TableSearch'
@@ -30,6 +31,7 @@ export function PromptTable<T extends WithId>({
   filters,
   onRowClick,
   initialState,
+  enableColumnVisibilityToggle = false,
   onSortingChange,
   onSearchChange,
   onColumnFiltersChange,
@@ -94,7 +96,8 @@ export function PromptTable<T extends WithId>({
   const hasFilters = !!filters?.length
   // The search box hosts the filter menu, so a server-driven search has to show it on its own.
   const standaloneFilters = server.search && filters && filters.length > 0 ? filters : undefined
-  const showTableBar = !server.search || !!standaloneFilters || !!actions
+  const showTableBarActions = enableColumnVisibilityToggle || !!actions
+  const showTableBar = !server.search || !!standaloneFilters || showTableBarActions
 
   return (
     <div className='flex flex-col gap-3 w-full'>
@@ -104,9 +107,10 @@ export function PromptTable<T extends WithId>({
             <TableSearch value={search} onChange={setSearch} table={table} filters={filters} />
           )}
           {standaloneFilters && <TableFiltersMenu table={table} filters={standaloneFilters} />}
-          {actions && (
-            <div className='ml-auto'>
-              <TableActionsButton table={table} actions={actions} />
+          {showTableBarActions && (
+            <div className='flex items-center gap-2 ml-auto'>
+              {enableColumnVisibilityToggle && <TableColumnVisibilityButton table={table} />}
+              {actions && <TableActionsButton table={table} actions={actions} />}
             </div>
           )}
         </div>

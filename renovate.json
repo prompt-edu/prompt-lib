@@ -16,6 +16,11 @@
       "description": "No minimum age for security updates",
       "matchCategories": ["security"],
       "minimumReleaseAge": "0 days"
+    },
+    {
+      "description": "No minimum age for the packages we maintain ourselves",
+      "matchPackageNames": ["@tumaet/prompt-shared-state"],
+      "minimumReleaseAge": "0 days"
     }
   ]
 }

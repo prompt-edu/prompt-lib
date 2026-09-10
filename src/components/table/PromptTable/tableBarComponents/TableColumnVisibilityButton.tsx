@@ -30,6 +30,8 @@ export function TableColumnVisibilityButton<Type extends WithId & RowData>({
         {columns
           .filter((column) => column.getCanHide())
           .map((column) => {
+            const header = column.columnDef.header
+            const label = typeof header === 'string' && header ? header : column.id
             return (
               <DropdownMenuCheckboxItem
                 key={column.id}
@@ -40,7 +42,7 @@ export function TableColumnVisibilityButton<Type extends WithId & RowData>({
                   column.toggleVisibility(!column.getIsVisible())
                 }}
               >
-                {column.id.replace(/_/g, ' ')}
+                {label}
               </DropdownMenuCheckboxItem>
             )
           })}

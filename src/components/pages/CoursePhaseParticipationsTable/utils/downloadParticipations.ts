@@ -1,8 +1,22 @@
-import type { CoursePhaseParticipationWithStudent } from '@tumaet/prompt-shared-state'
+import {
+  type CoursePhaseParticipationWithStudent,
+  type Gender,
+  getGenderString,
+  getStudyDegreeString,
+  type StudyDegree,
+} from '@tumaet/prompt-shared-state'
 import { saveAs } from 'file-saver'
+import { getCountryName } from '@/lib/getCountries'
 import type { ExtraParticipantColumn } from '../table/participationRow'
 
 export const DEFAULT_EXPORT_FILENAME = 'participation-export'
+
+// Keeps the export in sync with the labels the table shows instead of writing the stored codes.
+const headerValueDisplayMap: Record<string, (value: unknown) => string> = {
+  gender: (value) => getGenderString(value as Gender),
+  nationality: (value) => getCountryName(value as string) ?? String(value),
+  studyDegree: (value) => getStudyDegreeString(value as StudyDegree),
+}
 
 export const downloadParticipations = (
   data: CoursePhaseParticipationWithStudent[],
@@ -26,6 +40,10 @@ export const downloadParticipations = (
     hasUniversityAccount: 'Has University Account',
     courseParticipationID: 'Course Participation ID',
     gender: 'Gender',
+    nationality: 'Nationality',
+    studyDegree: 'Study Degree',
+    studyProgram: 'Study Program',
+    currentSemester: 'Current Semester',
     passStatus: 'Pass Status',
   }
 
@@ -38,6 +56,10 @@ export const downloadParticipations = (
     'hasUniversityAccount',
     'courseParticipationID',
     'gender',
+    'nationality',
+    'studyDegree',
+    'studyProgram',
+    'currentSemester',
     'passStatus',
     ...prevDataKeys,
     ...restrictedDataKeys,
@@ -45,7 +67,7 @@ export const downloadParticipations = (
   ]
 
   const extraHeaders = extraColumns.map((col) => col.header)
-  const csvHeaders = [...baseHeaders, ...extraHeaders]
+  const csvHeaders = [...new Set([...baseHeaders, ...extraHeaders])]
 
   const csvRows = data.map((row) => {
     const student = (row.student || {}) as unknown as Record<string, unknown>
@@ -53,7 +75,9 @@ export const downloadParticipations = (
     return csvHeaders
       .map((header) => {
         if (header in student) {
-          return JSON.stringify(student[header] ?? '')
+          const value = student[header]
+          const toDisplayValue = headerValueDisplayMap[header]
+          return JSON.stringify(value && toDisplayValue ? toDisplayValue(value) : (value ?? ''))
         } else if (header === 'passStatus') {
           return JSON.stringify(row.passStatus ?? '')
         } else if (prevDataKeys.includes(header)) {

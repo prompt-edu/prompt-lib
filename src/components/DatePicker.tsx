@@ -40,7 +40,7 @@ export const DatePicker = ({ date, onSelect }: DatePickerProps): React.JSX.Eleme
           selected={date}
           onSelect={handleSelect}
           defaultMonth={date}
-          initialFocus
+          autoFocus
           fixedWeeks
           locale={enGB} // changes week start to monday
         />

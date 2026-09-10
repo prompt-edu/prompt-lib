@@ -49,7 +49,7 @@ export const DatePickerWithRange: React.FC<DatePickerWithRangeProps> = ({
         </PopoverTrigger>
         <PopoverContent className='w-auto p-0' align='start'>
           <Calendar
-            initialFocus
+            autoFocus
             mode='range'
             defaultMonth={date?.from}
             selected={date}

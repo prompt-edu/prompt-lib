@@ -13,6 +13,7 @@ export interface TableProps<T extends WithId> {
   filters?: TableFilter<T>[]
   onRowClick?: (rowData: T) => void
   initialState?: PromptTableInitialState
+  enableColumnVisibilityToggle?: boolean
   onSortingChange?: (sorting: SortingState) => void
   onSearchChange?: (search: string) => void
   onColumnFiltersChange?: (columnFilters: ColumnFiltersState) => void
