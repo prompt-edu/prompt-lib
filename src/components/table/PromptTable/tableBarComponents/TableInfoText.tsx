@@ -15,11 +15,14 @@ import type { PromptTableInstance } from '../tableFeatures'
 interface TableInfoTextProps<TData extends RowData> {
   table: PromptTableInstance<TData>
   filters?: TableFilter<TData>[]
+  /** Set to false when the table owns no filtering, so it never claims "No filters selected". */
+  showFilterTags?: boolean
 }
 
 export function TableInfoText<TData extends RowData>({
   table,
   filters = [],
+  showFilterTags = true,
 }: TableInfoTextProps<TData>): ReactElement {
   const { globalFilter, columnFilters } = table.state
   const selectedCount = table.getSelectedRowModel().rows.length
@@ -46,45 +49,46 @@ export function TableInfoText<TData extends RowData>({
     <div className='flex items-center justify-between gap-2 text-sm text-muted-foreground min-h-[26px]'>
       {/* Left: active filter/search tags, or placeholder */}
       <div className='flex flex-wrap items-center gap-2'>
-        {hasActiveTags ? (
-          <>
-            {typeof globalFilter === 'string' && globalFilter.length > 0 && (
-              <FilterBadge
-                label={`Search: "${globalFilter}"`}
-                onRemove={() => table.setGlobalFilter('')}
-              />
-            )}
-
-            {columnFilters.flatMap((filter) => {
-              const meta = filterMetaById[filter.id]
-              const column = table.getColumn(filter.id)
-              if (!meta || !column) return []
-              const value = filter.value
-              if (value == null) return []
-
-              const render = (badgeValue: unknown, key: string, onRemove: () => void) => (
+        {showFilterTags &&
+          (hasActiveTags ? (
+            <>
+              {typeof globalFilter === 'string' && globalFilter.length > 0 && (
                 <FilterBadge
-                  key={key}
-                  label={`${meta.badge ? meta.badge.label : meta.label}: ${tableFilterTypeDisplayFunction(meta)(badgeValue)}`}
-                  onRemove={onRemove}
+                  label={`Search: "${globalFilter}"`}
+                  onRemove={() => table.setGlobalFilter('')}
                 />
-              )
+              )}
 
-              if (Array.isArray(value)) {
-                return value.map((v) =>
-                  render(v, `${filter.id}-${String(v)}`, () => {
-                    const next = value.filter((x) => x !== v)
-                    column.setFilterValue(next.length ? next : undefined)
-                  }),
+              {columnFilters.flatMap((filter) => {
+                const meta = filterMetaById[filter.id]
+                const column = table.getColumn(filter.id)
+                if (!meta || !column) return []
+                const value = filter.value
+                if (value == null) return []
+
+                const render = (badgeValue: unknown, key: string, onRemove: () => void) => (
+                  <FilterBadge
+                    key={key}
+                    label={`${meta.badge ? meta.badge.label : meta.label}: ${tableFilterTypeDisplayFunction(meta)(badgeValue)}`}
+                    onRemove={onRemove}
+                  />
                 )
-              }
 
-              return [render(value, filter.id, () => column.setFilterValue(undefined))]
-            })}
-          </>
-        ) : (
-          <span>No filters selected</span>
-        )}
+                if (Array.isArray(value)) {
+                  return value.map((v) =>
+                    render(v, `${filter.id}-${String(v)}`, () => {
+                      const next = value.filter((x) => x !== v)
+                      column.setFilterValue(next.length ? next : undefined)
+                    }),
+                  )
+                }
+
+                return [render(value, filter.id, () => column.setFilterValue(undefined))]
+              })}
+            </>
+          ) : (
+            <span>No filters selected</span>
+          ))}
       </div>
 
       {/* Right: [X selected ·] [Select all N ·] [N rows ·] columns dropdown */}
