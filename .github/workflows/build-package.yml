@@ -1,14 +1,20 @@
-name: Build Package
+name: Quality Package
 
 on:
   pull_request:
     branches: [main]
+  push:
+    branches: [main]
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
 
 permissions:
   contents: read
 
 jobs:
-  build:
+  quality-package:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout repository
@@ -24,6 +30,9 @@ jobs:
 
       - name: Install dependencies
         run: yarn install --frozen-lockfile
+
+      - name: Lint package
+        run: yarn biome check
 
       - name: Build package
         run: yarn build
