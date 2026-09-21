@@ -84,7 +84,7 @@
     "i18n-iso-countries": "^7.14.0",
     "js-sha256": "^1.0.0",
     "lowlight": "^3.3.0",
-    "lucide-react": "^1.45.0",
+    "lucide-react": "^1.46.0",
     "postcss": "^8.5.28",
     "postcss-preset-env": "^11.5.3",
     "react-day-picker": "10.0.1",

@@ -2830,7 +2830,7 @@ __metadata:
     i18n-iso-countries: "npm:^7.14.0"
     js-sha256: "npm:^1.0.0"
     lowlight: "npm:^3.3.0"
-    lucide-react: "npm:^1.45.0"
+    lucide-react: "npm:^1.46.0"
     postcss: "npm:^8.5.28"
     postcss-cli: "npm:^12.0.0"
     postcss-preset-env: "npm:^11.5.3"
@@ -4228,7 +4228,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"lucide-react@npm:^1.45.0":
+"lucide-react@npm:^1.46.0":
   version: 1.47.0
   resolution: "lucide-react@npm:1.47.0"
   peerDependencies:
