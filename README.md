@@ -53,6 +53,26 @@ still owns and are safe to hang a request on: they fire once the table has commi
 
 ---
 
+## Date pickers
+
+`DatePicker` and `DatePickerWithRange` are typable text fields with a calendar button. Dates are
+shown as `dd.MM.yyyy`; typing also accepts `d.M.yyyy`, `dd/MM/yyyy` and ISO `yyyy-MM-dd`. Typed
+text commits on Enter or blur, shows as invalid while it is not a real day, and reverts to the last
+valid date when left that way. Clearing a field selects no date.
+
+```tsx
+<DatePicker id='releaseDate' date={date} onSelect={setDate} />
+
+// Adds an HH:mm field. A new date keeps the selected time; a first date gets defaultTime.
+<DatePicker date={deadline} onSelect={setDeadline} withTime defaultTime='23:59' />
+
+// Separate start and end fields. A typed end before the start swaps them, a typed start after the
+// end clears the end, and an end without a start is only selected once a start is typed.
+<DatePickerWithRange date={range} setDate={setRange} />
+```
+
+---
+
 ## Prerequisites
 
 This project uses **Yarn 4** as specified in the `packageManager` field of each `package.json`. To work with this repository, enable Corepack, which will automatically use the correct Yarn version.
@@ -86,6 +106,15 @@ yarn build
 # From within the package directory
 yarn lint
 ```
+
+### Unit Tests
+
+```bash
+yarn test
+```
+
+Vitest runs the colocated `src/**/*.test.ts` files in a node environment; they are left out of the
+build.
 
 ### Testing Before Release
 

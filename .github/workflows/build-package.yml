@@ -34,5 +34,8 @@ jobs:
       - name: Lint package
         run: yarn biome check
 
+      - name: Test package
+        run: yarn test
+
       - name: Build package
         run: yarn build
