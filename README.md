@@ -66,7 +66,8 @@ valid date when left that way. Clearing a field selects no date.
 // Adds an HH:mm field. A new date keeps the selected time; a first date gets defaultTime.
 <DatePicker date={deadline} onSelect={setDeadline} withTime defaultTime='23:59' />
 
-// Separate start and end fields; a typed end before the start swaps them.
+// Separate start and end fields. A typed end before the start swaps them, a typed start after the
+// end clears the end, and an end without a start is only selected once a start is typed.
 <DatePickerWithRange date={range} setDate={setRange} />
 ```
 

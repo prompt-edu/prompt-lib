@@ -1,12 +1,11 @@
-import { isAfter } from 'date-fns'
 import { enGB } from 'date-fns/locale'
 import { CalendarIcon } from 'lucide-react'
-import type * as React from 'react'
+import * as React from 'react'
 import type { DateRange } from 'react-day-picker'
 import { Button } from '@/components/ui/button'
 import { Calendar } from '@/components/ui/calendar'
 import { Popover, PopoverContent, PopoverTrigger } from '@/components/ui/popover'
-import { DATE_INPUT_PLACEHOLDER } from '@/lib/dateInput'
+import { DATE_INPUT_PLACEHOLDER, resolveTypedRange } from '@/lib/dateInput'
 import { cn } from '@/lib/utils'
 import { useDateInputDraft } from './useDateInputDraft'
 
@@ -26,19 +25,26 @@ export const DatePickerWithRange: React.FC<DatePickerWithRangeProps> = ({
   numberOfMonths = 1,
   ...props
 }) => {
-  // A typed end before the start swaps them, so the range stays ordered without dropping input.
-  const commitRange = (from: Date | undefined, to: Date | undefined) => {
-    if (!from && !to) {
-      setDate(undefined)
-    } else if (from && to && isAfter(from, to)) {
-      setDate({ from: to, to: from })
-    } else {
-      setDate({ from, to })
-    }
+  // An end typed without a start, shown in the end field but not selected until a start is typed.
+  const [pendingEnd, setPendingEnd] = React.useState<Date | undefined>(undefined)
+  // A start selected from outside, e.g. by the parent, replaces a pending end.
+  if (date?.from && pendingEnd) setPendingEnd(undefined)
+
+  const end = date?.from ? date.to : pendingEnd
+
+  const commitRange = (typed: 'from' | 'to', from: Date | undefined, to: Date | undefined) => {
+    const resolved = resolveTypedRange(typed, from, to)
+    setPendingEnd(resolved.pendingEnd)
+    setDate(resolved.range)
   }
 
-  const fromField = useDateInputDraft(date?.from, (from) => commitRange(from, date?.to))
-  const toField = useDateInputDraft(date?.to, (to) => commitRange(date?.from, to))
+  const handleCalendarSelect = (range: DateRange | undefined) => {
+    setPendingEnd(undefined)
+    setDate(range)
+  }
+
+  const fromField = useDateInputDraft(date?.from, (from) => commitRange('from', from, end))
+  const toField = useDateInputDraft(end, (to) => commitRange('to', date?.from, to))
 
   return (
     <div className={cn('grid gap-2', className)} {...props}>
@@ -74,7 +80,7 @@ export const DatePickerWithRange: React.FC<DatePickerWithRangeProps> = ({
               mode='range'
               defaultMonth={date?.from}
               selected={date}
-              onSelect={setDate}
+              onSelect={handleCalendarSelect}
               numberOfMonths={numberOfMonths}
               fixedWeeks
               locale={enGB}

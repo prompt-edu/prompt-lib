@@ -1,4 +1,5 @@
-import { format } from 'date-fns'
+import { format, isAfter } from 'date-fns'
+import type { DateRange } from 'react-day-picker'
 
 // Shared by the date pickers' text fields. Not exported from the package: the pickers own the format.
 
@@ -61,4 +62,25 @@ export const applyTime = (date: Date, time: string): Date | undefined => {
   const result = new Date(date)
   result.setHours(parsed.hours, parsed.minutes, 0, 0)
   return result
+}
+
+/**
+ * Resolves a range after its start or end field was typed. Like the calendar, it never selects an
+ * end without a start: that end comes back as pendingEnd, for the end field to keep showing until a
+ * start is typed. A start typed after the end clears the end, as it starts a new range; an end
+ * typed before the start swaps the two, so the typed dates stay a range.
+ */
+export const resolveTypedRange = (
+  typed: 'from' | 'to',
+  from: Date | undefined,
+  to: Date | undefined,
+): { range: DateRange | undefined; pendingEnd: Date | undefined } => {
+  if (!from) return { range: undefined, pendingEnd: to }
+  if (to && isAfter(from, to)) {
+    return {
+      range: typed === 'from' ? { from, to: undefined } : { from: to, to: from },
+      pendingEnd: undefined,
+    }
+  }
+  return { range: { from, to }, pendingEnd: undefined }
 }
