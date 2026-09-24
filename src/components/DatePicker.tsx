@@ -1,4 +1,3 @@
-import { isSameDay } from 'date-fns'
 import { enGB } from 'date-fns/locale'
 import { CalendarIcon } from 'lucide-react'
 import * as React from 'react'
@@ -6,15 +5,9 @@ import { Button } from '@/components/ui/button'
 import { Calendar } from '@/components/ui/calendar'
 import { Input } from '@/components/ui/input'
 import { Popover, PopoverContent, PopoverTrigger } from '@/components/ui/popover'
-import {
-  applyTime,
-  DATE_INPUT_PLACEHOLDER,
-  formatDateInput,
-  formatTimeInput,
-  parseDateInput,
-  parseTimeInput,
-} from '@/lib/dateInput'
+import { applyTime, DATE_INPUT_PLACEHOLDER, formatTimeInput, parseTimeInput } from '@/lib/dateInput'
 import { cn } from '@/lib/utils'
+import { useDateInputDraft } from './useDateInputDraft'
 
 interface DatePickerProps {
   date: Date | undefined
@@ -39,43 +32,21 @@ export const DatePicker = ({
   placeholder = DATE_INPUT_PLACEHOLDER,
 }: DatePickerProps): React.JSX.Element => {
   const [open, setOpen] = React.useState(false)
-  // The typed text while the field is being edited; null shows the committed date.
-  const [draft, setDraft] = React.useState<string | null>(null)
   // The time typed before any date is selected, applied once one is.
   const [pendingTime, setPendingTime] = React.useState(defaultTime)
   // The time field's value while it is incomplete, which the native input reports as ''.
   const [timeDraft, setTimeDraft] = React.useState<string | null>(null)
 
-  const isInvalid = draft !== null && draft.trim() !== '' && !parseDateInput(draft)
   const time = date ? formatTimeInput(date) : pendingTime
 
   const withSelectedTime = (day: Date) => (withTime ? (applyTime(day, time) ?? day) : day)
 
-  const commitDraft = () => {
-    if (draft === null) return
-    setDraft(null)
-    if (draft.trim() === '') {
-      if (date) onSelect(undefined)
-      return
-    }
-    // Unparseable text is dropped, which reverts the field to the committed date.
-    const parsed = parseDateInput(draft)
-    if (parsed && !(date && isSameDay(parsed, date))) onSelect(withSelectedTime(parsed))
-  }
-
-  const handleKeyDown = (event: React.KeyboardEvent<HTMLInputElement>) => {
-    if (draft === null) return
-    if (event.key === 'Enter') {
-      // Commit instead of submitting the surrounding form with the stale value.
-      event.preventDefault()
-      commitDraft()
-    } else if (event.key === 'Escape') {
-      setDraft(null)
-    }
-  }
+  const dateField = useDateInputDraft(date, (newDate) =>
+    onSelect(newDate && withSelectedTime(newDate)),
+  )
 
   const handleSelect = (newDate: Date | undefined) => {
-    setDraft(null)
+    dateField.reset()
     onSelect(newDate && withSelectedTime(newDate))
     setOpen(false)
   }
@@ -95,12 +66,8 @@ export const DatePicker = ({
       <div className='relative min-w-0 flex-1'>
         <Input
           id={id}
-          value={draft ?? formatDateInput(date)}
           placeholder={placeholder}
-          aria-invalid={isInvalid}
-          onChange={(event) => setDraft(event.target.value)}
-          onBlur={commitDraft}
-          onKeyDown={handleKeyDown}
+          {...dateField.inputProps}
           className='pr-10 aria-[invalid=true]:border-destructive aria-[invalid=true]:focus-visible:ring-destructive'
         />
         <Popover open={open} onOpenChange={setOpen}>
