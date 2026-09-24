@@ -14,10 +14,22 @@ interface DatePickerProps {
   onSelect: (date: Date | undefined) => void
   /** Adds an HH:mm time field next to the date; without it selected dates are at local midnight. */
   withTime?: boolean
-  /** The HH:mm time a date gets when there is no selected date to take the time from. */
+  /**
+   * The HH:mm time a date gets when there is no selected date to take the time from. A time typed
+   * before any date is selected takes precedence.
+   */
   defaultTime?: string
   /** Set on the date text field, so a `<Label htmlFor>` can point at it. */
   id?: string
+  /**
+   * The date text field's accessible name. Defaults to 'Date' without an `id`; with one, the
+   * field is expected to be named by its `<Label htmlFor>`.
+   */
+  'aria-label'?: string
+  /**
+   * Merged onto the wrapper's classes with `cn`, so a width class (e.g. `w-full`) replaces the
+   * default `w-[280px]`; without one the default width stays.
+   */
   className?: string
   placeholder?: string
 }
@@ -28,16 +40,17 @@ export const DatePicker = ({
   withTime = false,
   defaultTime = '00:00',
   id,
+  'aria-label': ariaLabel = id ? undefined : 'Date',
   className,
   placeholder = DATE_INPUT_PLACEHOLDER,
 }: DatePickerProps): React.JSX.Element => {
   const [open, setOpen] = React.useState(false)
-  // The time typed before any date is selected, applied once one is.
-  const [pendingTime, setPendingTime] = React.useState(defaultTime)
+  // The time typed before any date is selected, applied once one is. Until then defaultTime applies.
+  const [pendingTime, setPendingTime] = React.useState<string | null>(null)
   // The time field's value while it is incomplete, which the native input reports as ''.
   const [timeDraft, setTimeDraft] = React.useState<string | null>(null)
 
-  const time = date ? formatTimeInput(date) : pendingTime
+  const time = date ? formatTimeInput(date) : (pendingTime ?? defaultTime)
 
   const withSelectedTime = (day: Date) => (withTime ? (applyTime(day, time) ?? day) : day)
 
@@ -66,6 +79,7 @@ export const DatePicker = ({
       <div className='relative min-w-0 flex-1'>
         <Input
           id={id}
+          aria-label={ariaLabel}
           placeholder={placeholder}
           {...dateField.inputProps}
           className='pr-10 aria-[invalid=true]:border-destructive aria-[invalid=true]:focus-visible:ring-destructive'
