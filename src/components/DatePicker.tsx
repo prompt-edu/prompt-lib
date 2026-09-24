@@ -6,12 +6,23 @@ import { Button } from '@/components/ui/button'
 import { Calendar } from '@/components/ui/calendar'
 import { Input } from '@/components/ui/input'
 import { Popover, PopoverContent, PopoverTrigger } from '@/components/ui/popover'
-import { DATE_INPUT_PLACEHOLDER, formatDateInput, parseDateInput } from '@/lib/dateInput'
+import {
+  applyTime,
+  DATE_INPUT_PLACEHOLDER,
+  formatDateInput,
+  formatTimeInput,
+  parseDateInput,
+  parseTimeInput,
+} from '@/lib/dateInput'
 import { cn } from '@/lib/utils'
 
 interface DatePickerProps {
   date: Date | undefined
   onSelect: (date: Date | undefined) => void
+  /** Adds an HH:mm time field next to the date; without it selected dates are at local midnight. */
+  withTime?: boolean
+  /** The HH:mm time a date gets when there is no selected date to take the time from. */
+  defaultTime?: string
   /** Set on the date text field, so a `<Label htmlFor>` can point at it. */
   id?: string
   className?: string
@@ -21,6 +32,8 @@ interface DatePickerProps {
 export const DatePicker = ({
   date,
   onSelect,
+  withTime = false,
+  defaultTime = '00:00',
   id,
   className,
   placeholder = DATE_INPUT_PLACEHOLDER,
@@ -28,8 +41,15 @@ export const DatePicker = ({
   const [open, setOpen] = React.useState(false)
   // The typed text while the field is being edited; null shows the committed date.
   const [draft, setDraft] = React.useState<string | null>(null)
+  // The time typed before any date is selected, applied once one is.
+  const [pendingTime, setPendingTime] = React.useState(defaultTime)
+  // The time field's value while it is incomplete, which the native input reports as ''.
+  const [timeDraft, setTimeDraft] = React.useState<string | null>(null)
 
   const isInvalid = draft !== null && draft.trim() !== '' && !parseDateInput(draft)
+  const time = date ? formatTimeInput(date) : pendingTime
+
+  const withSelectedTime = (day: Date) => (withTime ? (applyTime(day, time) ?? day) : day)
 
   const commitDraft = () => {
     if (draft === null) return
@@ -40,7 +60,7 @@ export const DatePicker = ({
     }
     // Unparseable text is dropped, which reverts the field to the committed date.
     const parsed = parseDateInput(draft)
-    if (parsed && !(date && isSameDay(parsed, date))) onSelect(parsed)
+    if (parsed && !(date && isSameDay(parsed, date))) onSelect(withSelectedTime(parsed))
   }
 
   const handleKeyDown = (event: React.KeyboardEvent<HTMLInputElement>) => {
@@ -56,8 +76,18 @@ export const DatePicker = ({
 
   const handleSelect = (newDate: Date | undefined) => {
     setDraft(null)
-    onSelect(newDate)
+    onSelect(newDate && withSelectedTime(newDate))
     setOpen(false)
+  }
+
+  const handleTimeChange = (value: string) => {
+    setTimeDraft(value)
+    if (!parseTimeInput(value)) return
+    if (date) {
+      onSelect(applyTime(date, value))
+    } else {
+      setPendingTime(value)
+    }
   }
 
   return (
@@ -98,6 +128,17 @@ export const DatePicker = ({
           </PopoverContent>
         </Popover>
       </div>
+      {withTime && (
+        <Input
+          id={id && `${id}-time`}
+          type='time'
+          aria-label='Time'
+          value={timeDraft ?? time}
+          onChange={(event) => handleTimeChange(event.target.value)}
+          onBlur={() => setTimeDraft(null)}
+          className='w-28 shrink-0'
+        />
+      )}
     </div>
   )
 }

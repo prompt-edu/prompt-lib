@@ -43,15 +43,22 @@ export const parseDateInput = (text: string): Date | undefined => {
   return date
 }
 
-/** Returns a copy of date set to an HH:mm time, or undefined when the time is not valid. */
-export const applyTime = (date: Date, time: string): Date | undefined => {
+/** Parses an HH:mm time, or returns undefined when it is not a valid time of day. */
+export const parseTimeInput = (time: string): { hours: number; minutes: number } | undefined => {
   const match = TIME.exec(time.trim())
   if (!match) return undefined
   const hours = Number(match[1])
   const minutes = Number(match[2])
   if (hours > 23 || minutes > 59) return undefined
+  return { hours, minutes }
+}
+
+/** Returns a copy of date set to an HH:mm time, or undefined when the time is not valid. */
+export const applyTime = (date: Date, time: string): Date | undefined => {
+  const parsed = parseTimeInput(time)
+  if (!parsed) return undefined
 
   const result = new Date(date)
-  result.setHours(hours, minutes, 0, 0)
+  result.setHours(parsed.hours, parsed.minutes, 0, 0)
   return result
 }

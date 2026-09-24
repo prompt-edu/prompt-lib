@@ -1,5 +1,11 @@
 import { describe, expect, it } from 'vitest'
-import { applyTime, formatDateInput, formatTimeInput, parseDateInput } from './dateInput'
+import {
+  applyTime,
+  formatDateInput,
+  formatTimeInput,
+  parseDateInput,
+  parseTimeInput,
+} from './dateInput'
 
 const day = (year: number, month: number, date: number) => new Date(year, month - 1, date)
 
@@ -50,6 +56,20 @@ describe('formatDateInput', () => {
   })
 })
 
+describe('parseTimeInput', () => {
+  it.each([
+    ['00:00', { hours: 0, minutes: 0 }],
+    ['9:05', { hours: 9, minutes: 5 }],
+    ['23:59', { hours: 23, minutes: 59 }],
+  ])('parses %j', (time, expected) => {
+    expect(parseTimeInput(time)).toEqual(expected)
+  })
+
+  it.each(['', '24:00', '12:60', '12', '12:5', 'noon'])('rejects %j', (time) => {
+    expect(parseTimeInput(time)).toBeUndefined()
+  })
+})
+
 describe('applyTime', () => {
   it('sets hours and minutes and clears seconds', () => {
     const date = new Date(2026, 8, 24, 8, 15, 42, 500)
@@ -62,8 +82,8 @@ describe('applyTime', () => {
     expect(date).toEqual(day(2026, 9, 24))
   })
 
-  it.each(['', '24:00', '12:60', '12', '12:5', 'noon'])('rejects %j', (time) => {
-    expect(applyTime(day(2026, 9, 24), time)).toBeUndefined()
+  it('rejects an invalid time', () => {
+    expect(applyTime(day(2026, 9, 24), '24:00')).toBeUndefined()
   })
 })
 
