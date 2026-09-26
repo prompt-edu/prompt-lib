@@ -10,7 +10,7 @@ const sizeStyles: Record<AvatarSize, string> = {
   sm: 'h-6 w-6 text-[0.7em]',
 }
 
-interface ProfilePictureProps {
+export interface ProfilePictureProps {
   firstName: string
   lastName: string
   /** Shows this URL instead of looking the picture up, e.g. for an upload preview. */
@@ -44,7 +44,8 @@ export function ProfilePicture(props: ProfilePictureProps) {
   // Long lists render many avatars; only those near the viewport look up and load their picture
   const [avatarRef, isInView] = useIsInView<HTMLSpanElement>()
   const lookedUpUrl = useProfilePictureUrl(src || !isInView ? undefined : toRef(props))
-  const url = src ?? lookedUpUrl
+  // An empty src counts as absent, so a looked-up picture is not hidden behind it
+  const url = src || lookedUpUrl
   const initials = (firstName?.charAt(0) || 'N') + (lastName?.charAt(0) || 'A')
 
   return (

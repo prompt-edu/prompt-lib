@@ -88,16 +88,39 @@ describe('createProfilePictureBatcher', () => {
     expect(requests.map((request) => request.studentIds.length)).toEqual([MAX_LOOKUP_IDS, 1])
   })
 
-  it('resolves to null when the lookup fails', async () => {
+  it('rejects every caller when the lookup fails, rather than reporting no picture', async () => {
     const scheduler = manualSchedule()
     const batcher = createProfilePictureBatcher(async () => {
       throw new Error('endpoint not available')
     }, scheduler.schedule)
 
-    const result = batcher.load('user', 'u1')
+    const results = [batcher.load('user', 'u1'), batcher.load('user', 'u1')]
     scheduler.run()
 
-    expect(await result).toBeNull()
+    for (const result of results) {
+      await expect(result).rejects.toThrow('endpoint not available')
+    }
+  })
+
+  it('still resolves the chunks whose lookup succeeds', async () => {
+    const scheduler = manualSchedule()
+    let calls = 0
+    const batcher = createProfilePictureBatcher(async () => {
+      calls += 1
+      if (calls === 1) throw new Error('first chunk failed')
+      return emptyResponse()
+    }, scheduler.schedule)
+
+    const results = Promise.allSettled(
+      Array.from({ length: MAX_LOOKUP_IDS + 1 }, (_, index) =>
+        batcher.load('student', `s${index}`),
+      ),
+    )
+    scheduler.run()
+    const settled = await results
+
+    expect(settled.slice(0, MAX_LOOKUP_IDS).every((r) => r.status === 'rejected')).toBe(true)
+    expect(settled[MAX_LOOKUP_IDS]).toEqual({ status: 'fulfilled', value: null })
   })
 
   it('starts a new batch after a flush', async () => {

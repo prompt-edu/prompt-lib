@@ -21,10 +21,15 @@ export type ProfilePictureLookup = (
 /** Matches the server's limit for a single lookup request. */
 export const MAX_LOOKUP_IDS = 1000
 
+interface Waiter {
+  resolve: (url: string | null) => void
+  reject: (error: unknown) => void
+}
+
 interface PendingRequest {
   kind: ProfilePictureIdKind
   id: string
-  resolvers: ((url: string | null) => void)[]
+  waiters: Waiter[]
 }
 
 const requestFields: Record<ProfilePictureIdKind, keyof ProfilePictureLookupRequest> = {
@@ -53,8 +58,8 @@ const toRequest = (pending: PendingRequest[]): ProfilePictureLookupRequest => {
 
 /**
  * Collects every picture requested in the same tick into one lookup, so a table with hundreds of
- * avatars costs one request instead of hundreds. Resolves to null for ids without a picture and
- * when the lookup fails, so a missing picture always falls back to initials.
+ * avatars costs one request instead of hundreds. Resolves to null for ids without a picture.
+ * A failed lookup rejects instead, so callers can retry it rather than cache "no picture".
  */
 export const createProfilePictureBatcher = (
   lookup: ProfilePictureLookup,
@@ -68,15 +73,20 @@ export const createProfilePictureBatcher = (
 
     for (let start = 0; start < batch.length; start += MAX_LOOKUP_IDS) {
       const chunk = batch.slice(start, start + MAX_LOOKUP_IDS)
-      let response: ProfilePictureLookupResponse | null = null
+      let response: ProfilePictureLookupResponse
       try {
         response = await lookup(toRequest(chunk))
-      } catch {
-        response = null
+      } catch (error) {
+        for (const { waiters } of chunk) {
+          for (const { reject } of waiters) {
+            reject(error)
+          }
+        }
+        continue
       }
-      for (const { kind, id, resolvers } of chunk) {
-        const url = response?.[responseFields[kind]]?.[id] ?? null
-        for (const resolve of resolvers) {
+      for (const { kind, id, waiters } of chunk) {
+        const url = response[responseFields[kind]]?.[id] ?? null
+        for (const { resolve } of waiters) {
           resolve(url)
         }
       }
@@ -85,7 +95,7 @@ export const createProfilePictureBatcher = (
 
   return {
     load: (kind: ProfilePictureIdKind, id: string): Promise<string | null> =>
-      new Promise((resolve) => {
+      new Promise((resolve, reject) => {
         if (pending.size === 0) {
           schedule(() => {
             void flush()
@@ -94,9 +104,9 @@ export const createProfilePictureBatcher = (
         const key = `${kind}:${id}`
         const existing = pending.get(key)
         if (existing) {
-          existing.resolvers.push(resolve)
+          existing.waiters.push({ resolve, reject })
         } else {
-          pending.set(key, { kind, id, resolvers: [resolve] })
+          pending.set(key, { kind, id, waiters: [{ resolve, reject }] })
         }
       }),
   }

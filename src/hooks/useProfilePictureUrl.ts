@@ -40,7 +40,9 @@ export const useProfilePictureUrl = (ref?: ProfilePictureRef): string | null => 
     enabled: Boolean(ref?.id),
     staleTime: URL_CACHE_MS,
     gcTime: URL_CACHE_MS,
-    retry: false,
+    // A failed lookup is retried once and not cached, so an outage does not hide pictures for
+    // the whole cache time; meanwhile the avatar shows initials
+    retry: 1,
   })
   return data ?? null
 }
