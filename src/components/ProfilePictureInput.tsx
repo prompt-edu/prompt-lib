@@ -14,7 +14,10 @@ export interface ProfilePictureInputProps {
   notice?: ReactNode
   /** A validation message from the surrounding form, e.g. when a required picture is missing. */
   error?: string
-  /** Shows the section without letting anyone change a picture, e.g. in a lecturer preview. */
+  /**
+   * Shows the section as a preview, e.g. for a lecturer: nothing can be changed, and the viewer's
+   * own picture is not shown, since it would appear as if it were the applicant's.
+   */
   readOnly?: boolean
 }
 
@@ -77,7 +80,13 @@ export function ProfilePictureInput({
         </Alert>
       )}
 
-      {!readOnly && <ProfilePictureDialog open={isDialogOpen} onOpenChange={setIsDialogOpen} />}
+      {!readOnly && (
+        <ProfilePictureDialog
+          open={isDialogOpen}
+          onOpenChange={setIsDialogOpen}
+          required={required}
+        />
+      )}
     </div>
   )
 }
