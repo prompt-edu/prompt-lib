@@ -42,9 +42,11 @@ export function ProfilePictureUploadPrompt({
   const { user } = useAuthStore()
   const { data: ownPicture, isPending, isError } = useOwnProfilePicture()
   const [isDialogOpen, setIsDialogOpen] = useState(false)
-  const [isDismissedLocally, setIsDismissedLocally] = useState(() =>
-    dismissKey ? isProfilePicturePromptDismissed(dismissKey) : false,
-  )
+  // Tracked per key, so a prompt that is reused under another key does not keep the old state
+  const [dismissedKeys, setDismissedKeys] = useState<ReadonlySet<string | undefined>>(new Set())
+  const isDismissedLocally =
+    dismissedKeys.has(dismissKey) ||
+    (dismissKey ? isProfilePicturePromptDismissed(dismissKey) : false)
 
   const isOptional = requirement === 'optional'
   const dismissed = isOptional && (isDismissed ?? isDismissedLocally)
@@ -55,7 +57,7 @@ export function ProfilePictureUploadPrompt({
       return
     }
     if (dismissKey) dismissProfilePicturePrompt(dismissKey)
-    setIsDismissedLocally(true)
+    setDismissedKeys((keys) => new Set(keys).add(dismissKey))
   }
 
   // Nothing to ask for, or nothing known yet: an unknown state must not flash the prompt
