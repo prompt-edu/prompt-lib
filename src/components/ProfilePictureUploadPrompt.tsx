@@ -94,7 +94,11 @@ export function ProfilePictureUploadPrompt({
           </Button>
         </div>
       </CardContent>
-      <ProfilePictureDialog open={isDialogOpen} onOpenChange={setIsDialogOpen} />
+      <ProfilePictureDialog
+        open={isDialogOpen}
+        onOpenChange={setIsDialogOpen}
+        required={!isOptional}
+      />
     </Card>
   )
 }
