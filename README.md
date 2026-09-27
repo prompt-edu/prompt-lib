@@ -73,6 +73,48 @@ valid date when left that way. Clearing a field selects no date.
 
 ---
 
+## Participant navigation
+
+`ParticipantNavigation` puts previous / next buttons on a participant's detail page, at the left
+and right edge, with the current position (`3 / 12`) between them. The buttons carry the
+neighbors' names from `md` up and truncate long ones; below that they show only the chevron.
+
+```tsx
+// `participants` is already in the order to step through, e.g. the sorted or filtered list the
+// detail page was opened from. The page decides the URL.
+<ParticipantNavigation
+  participants={orderedParticipations}
+  currentId={participation.courseParticipationID}
+  onNavigate={(p) => navigate(`../${p.courseParticipationID}`, { relative: 'path' })}
+  colorByStatus
+/>
+```
+
+| Prop            | Default | Effect                                                              |
+| --------------- | ------- | ------------------------------------------------------------------- |
+| `colorByStatus` | `false` | tints each button with the pass status of the participant it leads to |
+| `wrapAround`    | `false` | continues from the last participant to the first and vice versa     |
+
+Without `wrapAround` the previous button is disabled on the first participant and the next button
+on the last, so reaching the end of the list is visible.
+
+When the detail page is opened from a `PromptTable`, the order comes from the table: `onRowClick`
+receives every row as the table shows it (searched, filtered and sorted, across all pages) as its
+second argument.
+
+```tsx
+<PromptTable
+  data={rows}
+  columns={columns}
+  onRowClick={(row, orderedRows) =>
+    navigate(`${row.id}`, { state: { order: orderedRows.map((r) => r.id) } })
+  }
+/>
+``` The underlying `getNavigationNeighbors`
+is exported for pages that need the neighbors without the buttons.
+
+---
+
 ## Prerequisites
 
 This project uses **Yarn 4** as specified in the `packageManager` field of each `package.json`. To work with this repository, enable Corepack, which will automatically use the correct Yarn version.
