@@ -1,3 +1,4 @@
+import type { ReactNode } from 'react'
 import {
   Card,
   CardContent,
@@ -15,9 +16,11 @@ export type ProfilePictureRequirement = 'off' | 'optional' | 'required'
 export interface ProfilePictureRequirementSettingProps {
   value: ProfilePictureRequirement
   onChange: (value: ProfilePictureRequirement) => void
-  /** Leaves out "required", e.g. where a picture must never be mandatory, like the application. */
+  /** Leaves out "required", e.g. for phases where a picture must never be mandatory. */
   allowRequired?: boolean
   disabled?: boolean
+  /** Phase-specific settings shown below the choice in the same card, e.g. a save button. */
+  children?: ReactNode
 }
 
 const OPTIONS: { value: ProfilePictureRequirement; label: string; description: string }[] = [
@@ -47,6 +50,7 @@ export function ProfilePictureRequirementSetting({
   onChange,
   allowRequired = true,
   disabled = false,
+  children,
 }: ProfilePictureRequirementSettingProps) {
   const options = allowRequired ? OPTIONS : OPTIONS.filter((option) => option.value !== 'required')
 
@@ -82,6 +86,7 @@ export function ProfilePictureRequirementSetting({
             </div>
           ))}
         </RadioGroup>
+        {children && <div className='mt-6 space-y-6'>{children}</div>}
       </CardContent>
     </Card>
   )
