@@ -14,6 +14,8 @@ import { ProfilePicture } from './StudentProfilePicture'
 export interface ProfilePictureUploadPromptProps {
   /** The phase's setting from `ProfilePictureRequirementSetting`; `off` renders nothing. */
   requirement: ProfilePictureRequirement
+  /** Explains why the phase asks for a picture; replaces the default explanation. */
+  explanation?: string
   /**
    * Remembers in this browser that an optional prompt was dismissed, e.g. the course phase id.
    * Without it, a dismissal lasts until the page is left.
@@ -31,6 +33,7 @@ export interface ProfilePictureUploadPromptProps {
  */
 export function ProfilePictureUploadPrompt({
   requirement,
+  explanation,
   dismissKey,
   isDismissed,
   onDismiss,
@@ -71,9 +74,10 @@ export function ProfilePictureUploadPrompt({
         <div className='flex-1'>
           <p className='font-medium'>Add a profile picture</p>
           <p className='text-sm text-muted-foreground'>
-            {isOptional
-              ? 'It helps your team and tutors recognize you. You can skip this.'
-              : 'This course phase asks every student for a profile picture.'}
+            {explanation?.trim() ||
+              (isOptional
+                ? 'It helps your team and tutors recognize you. You can skip this.'
+                : 'This course phase asks every student for a profile picture.')}
           </p>
         </div>
         <div className='flex gap-2'>
