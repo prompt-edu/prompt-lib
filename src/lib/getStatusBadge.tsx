@@ -13,16 +13,3 @@ export function getStatusBadge(status: PassStatus) {
       return <Badge className='bg-gray-500 hover:bg-gray-500'>Unknown</Badge>
   }
 }
-
-export function getStatusString(status: PassStatus): string {
-  switch (status) {
-    case 'passed':
-      return 'Passed'
-    case 'failed':
-      return 'Failed'
-    case 'not_assessed':
-      return 'Not Assessed'
-    default:
-      return 'Unknown'
-  }
-}
