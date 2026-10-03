@@ -1,5 +1,4 @@
 import { getGenderString, getStudyDegreeString, type PassStatus } from '@tumaet/prompt-shared-state'
-import { createElement } from 'react'
 import { ProfilePicture } from '@/components/StudentProfilePicture'
 import type { PromptTableColumnDef } from '@/components/table/PromptTable/tableFeatures'
 import { getCountryName } from '@/lib/getCountries'
@@ -12,15 +11,16 @@ export function getParticipantColumns(
   return [
     {
       id: 'profilePicture',
-      header: '',
+      header: 'Picture',
       enableSorting: false,
-      cell: ({ row }) =>
-        createElement(ProfilePicture, {
-          courseParticipationId: row.original.courseParticipationID,
-          firstName: row.original.firstName,
-          lastName: row.original.lastName,
-          size: 'sm',
-        }),
+      cell: ({ row }) => (
+        <ProfilePicture
+          courseParticipationId={row.original.courseParticipationID}
+          firstName={row.original.firstName}
+          lastName={row.original.lastName}
+          size='sm'
+        />
+      ),
     },
     {
       accessorKey: 'firstName',
