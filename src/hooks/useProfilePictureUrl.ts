@@ -1,4 +1,4 @@
-import { useQuery } from '@tanstack/react-query'
+import { skipToken, useQuery } from '@tanstack/react-query'
 import { axiosInstance } from '@tumaet/prompt-shared-state'
 import {
   createProfilePictureBatcher,
@@ -36,8 +36,7 @@ export const profilePictureQueryKeys = {
 export const useProfilePictureUrl = (ref?: ProfilePictureRef): string | null => {
   const { data } = useQuery({
     queryKey: ref ? profilePictureQueryKeys.of(ref) : profilePictureQueryKeys.all,
-    queryFn: () => (ref ? batcher.load(ref.kind, ref.id) : Promise.resolve(null)),
-    enabled: Boolean(ref?.id),
+    queryFn: ref ? () => batcher.load(ref.kind, ref.id) : skipToken,
     staleTime: URL_CACHE_MS,
     gcTime: URL_CACHE_MS,
     // A failed lookup is retried once and not cached, so an outage does not hide pictures for

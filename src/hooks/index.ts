@@ -1,6 +1,5 @@
 export * from './use-mobile'
 export * from './use-toast'
 export * from './useCustomElementWidth'
-export * from './useIsInView'
-export * from './useProfilePictureUrl'
+export { profilePictureQueryKeys } from './useProfilePictureUrl'
 export * from './useScreenSize'
