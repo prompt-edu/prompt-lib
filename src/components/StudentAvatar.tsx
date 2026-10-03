@@ -3,10 +3,13 @@ import { Link } from 'react-router-dom'
 import { ProfilePicture } from './StudentProfilePicture'
 
 interface MinimalStudent {
+  /** The student id; used for the picture and the link to the student page. */
   id?: string
+  /** Looks the picture up by course participation when the student id is not known. */
+  courseParticipationId?: string
   firstName: string
   lastName: string
-  email: string
+  email?: string
 }
 
 interface StudentAvatarProps {
@@ -17,7 +20,8 @@ export const StudentAvatar = ({ student }: StudentAvatarProps) => {
   const avatar = (
     <>
       <ProfilePicture
-        email={student.email}
+        studentId={student.id}
+        courseParticipationId={student.courseParticipationId}
         firstName={student.firstName}
         lastName={student.lastName}
         size='sm'
@@ -56,7 +60,14 @@ export const RenderStudents = ({
       ) : (
         <ul className='flex flex-wrap gap-x-2'>
           {students.map((student) => (
-            <li key={student.id ?? student.email}>
+            <li
+              key={
+                student.id ??
+                student.courseParticipationId ??
+                student.email ??
+                `${student.firstName} ${student.lastName}`
+              }
+            >
               <StudentAvatar student={student} />
             </li>
           ))}

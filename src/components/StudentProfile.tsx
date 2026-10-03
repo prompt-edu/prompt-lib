@@ -23,7 +23,7 @@ export const StudentProfile = ({ student, status }: StudentProfileProps) => {
       <div className={`h-16 ${status ? getStatusColor(status) : 'bg-gray-100 dark:bg-muted'}`} />
       <div className='mb-4'>
         <ProfilePicture
-          email={student.email}
+          studentId={student.id}
           firstName={student.firstName}
           lastName={student.lastName}
           size='lg'

@@ -1,8 +1,6 @@
-import { sha256 } from 'js-sha256'
-
-export const getGravatarUrl = (email: string, size?: number) => {
-  const requestedSize = size ?? 200
-  const hash = sha256(email.trim().toLowerCase())
-
-  return `https://www.gravatar.com/avatar/${hash}?d=identicon&d=404&size=${requestedSize}`
-}
+/**
+ * @deprecated PROMPT no longer sends anyone's email hash to Gravatar. This returns an empty URL,
+ * which makes an Avatar fall back to its initials, so existing callers keep compiling and working.
+ * Show PROMPT profile pictures with the ProfilePicture component instead.
+ */
+export const getGravatarUrl = (_email: string, _size?: number): string => ''

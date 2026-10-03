@@ -2971,7 +2971,6 @@ __metadata:
     file-saver: "npm:^2.0.5"
     highlight.js: "npm:^11.12.0"
     i18n-iso-countries: "npm:^7.14.0"
-    js-sha256: "npm:^1.0.0"
     lowlight: "npm:^3.3.0"
     lucide-react: "npm:^1.47.0"
     postcss: "npm:^8.5.28"
