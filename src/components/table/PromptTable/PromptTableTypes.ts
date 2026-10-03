@@ -11,7 +11,11 @@ export interface TableProps<T extends WithId> {
   actions?: RowAction<T>[]
   columns?: PromptTableColumnDef<T, any>[]
   filters?: TableFilter<T>[]
-  onRowClick?: (rowData: T) => void
+  /**
+   * `orderedRows` holds every row as the table currently shows it: searched, filtered and sorted,
+   * across all pages. Lets a detail page step through the rows in the order the user saw.
+   */
+  onRowClick?: (rowData: T, orderedRows: T[]) => void
   initialState?: PromptTableInitialState
   enableColumnVisibilityToggle?: boolean
   onSortingChange?: (sorting: SortingState) => void

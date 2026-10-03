@@ -5,7 +5,7 @@ import type { PromptTableInstance } from '../tableFeatures'
 
 interface TableRowsProps<TData extends RowData> {
   table: PromptTableInstance<TData>
-  onRowClick?: (rowData: TData) => void
+  onRowClick?: (rowData: TData, orderedRows: TData[]) => void
 }
 
 export function TableRows<TData extends RowData>({
@@ -34,7 +34,10 @@ export function TableRows<TData extends RowData>({
           data-state={row.getIsSelected() ? 'selected' : undefined}
           onClick={() => {
             if (onRowClick) {
-              onRowClick(row.original)
+              onRowClick(
+                row.original,
+                table.getPrePaginatedRowModel().rows.map((r) => r.original),
+              )
             }
           }}
           className='cursor-pointer'
