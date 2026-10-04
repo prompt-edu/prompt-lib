@@ -93,10 +93,9 @@ neighbors' names from `md` up and truncate long ones; below that they show only 
 | Prop            | Default | Effect                                                              |
 | --------------- | ------- | ------------------------------------------------------------------- |
 | `colorByStatus` | `false` | tints each button with the pass status of the participant it leads to |
-| `wrapAround`    | `false` | continues from the last participant to the first and vice versa     |
 
-Without `wrapAround` the previous button is disabled on the first participant and the next button
-on the last, so reaching the end of the list is visible.
+The previous button is disabled on the first participant and the next button on the last, so
+reaching the end of the list is visible.
 
 When the detail page is opened from a `PromptTable`, the order comes from the table: `onRowClick`
 receives every row as the table shows it (searched, filtered and sorted, across all pages) as its
@@ -110,8 +109,7 @@ second argument.
     navigate(`${row.id}`, { state: { order: orderedRows.map((r) => r.id) } })
   }
 />
-``` The underlying `getNavigationNeighbors`
-is exported for pages that need the neighbors without the buttons.
+```
 
 ---
 

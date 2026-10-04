@@ -1,7 +1,6 @@
 export * from './formatFileSize'
 export * from './getCountries'
 export * from './getGravatarUrl'
-export * from './getNavigationNeighbors'
 export * from './getStatusBadge'
 export * from './getStatusColor'
 export * from './getStudentName'

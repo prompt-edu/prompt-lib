@@ -1,45 +1,28 @@
-export interface NavigationNeighbors {
-  previousId?: string
-  nextId?: string
-  /** 1-based position of `currentId` in `order`. */
+export interface NavigationNeighbors<T> {
+  previous?: T
+  next?: T
+  /** 1-based position of the current participant in `participants`. */
   position?: number
 }
 
-export interface NavigationNeighborsOptions {
-  /** Continue from the last entry to the first and vice versa. Defaults to `false`. */
-  wrapAround?: boolean
-}
-
 /**
- * Resolves the ids before and after `currentId` in `order`. Without `wrapAround` the first entry
- * has no previous and the last no next id. Returns nothing when the id is not part of the order.
+ * Resolves the participants before and after `currentId`. The first participant has no previous
+ * and the last no next one. Returns nothing when the id is not part of `participants`.
  */
-export const getNavigationNeighbors = (
-  order: string[],
+export const getNavigationNeighbors = <T extends { courseParticipationID: string }>(
+  participants: T[],
   currentId: string | undefined,
-  { wrapAround = false }: NavigationNeighborsOptions = {},
-): NavigationNeighbors => {
-  const currentIndex = currentId ? order.indexOf(currentId) : -1
+): NavigationNeighbors<T> => {
+  const currentIndex = currentId
+    ? participants.findIndex((p) => p.courseParticipationID === currentId)
+    : -1
   if (currentIndex === -1) {
     return {}
   }
 
-  const position = currentIndex + 1
-  if (order.length === 1) {
-    return { position }
-  }
-
-  if (wrapAround) {
-    return {
-      previousId: order[(currentIndex - 1 + order.length) % order.length],
-      nextId: order[(currentIndex + 1) % order.length],
-      position,
-    }
-  }
-
   return {
-    previousId: order[currentIndex - 1],
-    nextId: order[currentIndex + 1],
-    position,
+    previous: participants[currentIndex - 1],
+    next: participants[currentIndex + 1],
+    position: currentIndex + 1,
   }
 }

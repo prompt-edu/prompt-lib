@@ -1,6 +1,5 @@
 import { PassStatus } from '@tumaet/prompt-shared-state'
 import { ChevronLeft, ChevronRight } from 'lucide-react'
-import { useMemo } from 'react'
 import { Button } from '@/components/ui/button'
 import { getNavigationNeighbors } from '@/lib/getNavigationNeighbors'
 import { getStudentName } from '@/lib/getStudentName'
@@ -19,8 +18,6 @@ interface ParticipantNavigationProps<T extends NavigableParticipant> {
   onNavigate: (participant: T) => void
   /** Tints each button with the pass status of the participant it leads to. */
   colorByStatus?: boolean
-  /** Continue from the last participant to the first and vice versa. */
-  wrapAround?: boolean
   className?: string
 }
 
@@ -42,18 +39,9 @@ export const ParticipantNavigation = <T extends NavigableParticipant>({
   currentId,
   onNavigate,
   colorByStatus = false,
-  wrapAround = false,
   className,
 }: ParticipantNavigationProps<T>) => {
-  const participantById = useMemo(
-    () => new Map(participants.map((p) => [p.courseParticipationID, p])),
-    [participants],
-  )
-  const { previousId, nextId, position } = getNavigationNeighbors(
-    participants.map((p) => p.courseParticipationID),
-    currentId,
-    { wrapAround },
-  )
+  const { previous, next, position } = getNavigationNeighbors(participants, currentId)
 
   if (position === undefined || participants.length <= 1) {
     return null
@@ -79,7 +67,7 @@ export const ParticipantNavigation = <T extends NavigableParticipant>({
             statusButtonClassNames[participant.passStatus],
         )}
       >
-        <Icon className='h-4 w-4 shrink-0' />
+        <Icon />
         <span className='hidden min-w-0 truncate md:inline'>{name ?? label}</span>
       </Button>
     )
@@ -90,11 +78,11 @@ export const ParticipantNavigation = <T extends NavigableParticipant>({
       aria-label='Participant navigation'
       className={cn('grid grid-cols-[1fr_auto_1fr] items-center gap-2', className)}
     >
-      {renderButton('previous', previousId ? participantById.get(previousId) : undefined)}
+      {renderButton('previous', previous)}
       <span className='text-sm tabular-nums text-muted-foreground'>
         {position} / {participants.length}
       </span>
-      {renderButton('next', nextId ? participantById.get(nextId) : undefined)}
+      {renderButton('next', next)}
     </nav>
   )
 }
