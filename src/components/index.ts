@@ -1,6 +1,7 @@
 export * from './DatePicker'
 export * from './DateRangePicker'
 export * from './DeleteConfirmationDialog'
+export * from './DemographicDistributionCard'
 export { default as DynamicIcon } from './DynamicIcon'
 export * from './dialog'
 export * from './ErrorPage'
