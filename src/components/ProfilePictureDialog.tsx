@@ -23,12 +23,18 @@ import { ProfilePicture } from './StudentProfilePicture'
 export interface ProfilePictureDialogProps {
   open: boolean
   onOpenChange: (open: boolean) => void
+  /** Leaves out that a picture is optional, e.g. when a phase requires one. */
+  required?: boolean
 }
 
 const MIN_ZOOM = 1
 const MAX_ZOOM = 3
 
-export const ProfilePictureDialog = ({ open, onOpenChange }: ProfilePictureDialogProps) => {
+export const ProfilePictureDialog = ({
+  open,
+  onOpenChange,
+  required = false,
+}: ProfilePictureDialogProps) => {
   const { user } = useAuthStore()
   const { data: ownPicture } = useOwnProfilePicture()
   const uploadPicture = useUploadProfilePicture()
@@ -112,7 +118,7 @@ export const ProfilePictureDialog = ({ open, onOpenChange }: ProfilePictureDialo
           <DialogTitle>Profile picture</DialogTitle>
           <DialogDescription>
             Your picture is shown to everyone logged in to PROMPT, for example in participant lists
-            and team overviews. Adding one is optional.
+            and team overviews.{!required && ' Adding one is optional.'}
           </DialogDescription>
         </DialogHeader>
 
