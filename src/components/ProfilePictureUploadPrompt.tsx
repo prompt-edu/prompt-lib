@@ -21,8 +21,9 @@ export interface ProfilePictureUploadPromptProps {
    * Without it, a dismissal lasts until the page is left.
    */
   dismissKey?: string
-  /** Controls the dismissal instead of the browser storage, e.g. to keep it on the server. */
+  /** Hides an optional prompt, e.g. after a dismissal the phase keeps on its server. */
   isDismissed?: boolean
+  /** Called on "Not now" instead of writing the dismissal to the browser storage. */
   onDismiss?: () => void
   className?: string
 }
@@ -49,14 +50,11 @@ export function ProfilePictureUploadPrompt({
     (dismissKey ? isProfilePicturePromptDismissed(dismissKey) : false)
 
   const isOptional = requirement === 'optional'
-  const dismissed = isOptional && (isDismissed ?? isDismissedLocally)
+  const dismissed = isOptional && (isDismissed || isDismissedLocally)
 
   const dismiss = () => {
-    if (onDismiss) {
-      onDismiss()
-      return
-    }
-    if (dismissKey) dismissProfilePicturePrompt(dismissKey)
+    if (onDismiss) onDismiss()
+    else if (dismissKey) dismissProfilePicturePrompt(dismissKey)
     setDismissedKeys((keys) => new Set(keys).add(dismissKey))
   }
 
