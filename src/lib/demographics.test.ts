@@ -2,6 +2,7 @@ import { Gender, PassStatus, type Student, StudyDegree } from '@tumaet/prompt-sh
 import { describe, expect, it } from 'vitest'
 import {
   type DemographicGroup,
+  formatDemographicShare,
   getDemographicChartData,
   groupByGender,
   groupByNationality,
@@ -63,21 +64,27 @@ describe('groupByGender', () => {
 })
 
 describe('groupByStudyProgram', () => {
-  it('folds free-text programs into Other and missing ones into Unknown', () => {
+  const studyPrograms = [
+    { name: 'Computer Science', shortName: 'CS' },
+    { name: 'Robotics', shortName: null },
+    { name: 'Physics' },
+  ]
+
+  it('groups by the given programs, folds the rest into Other and missing ones into Unknown', () => {
     const items = [
       participation({ studyProgram: 'Computer Science' }),
       participation({ studyProgram: ' Computer Science ' }),
       participation({ studyProgram: 'Physics' }),
+      participation({ studyProgram: 'Information Systems' }),
       participation({ studyProgram: 'Other' }),
       participation({ studyProgram: '' }),
       participation(),
     ]
 
-    expect(summary(groupByStudyProgram(items, byStudent))).toEqual([
+    expect(summary(groupByStudyProgram(items, byStudent, studyPrograms))).toEqual([
       ['CS', 'Computer Science', 2],
-      ['IS', 'Information Systems', 0],
-      ['GE', 'Games Engineering', 0],
-      ['M&T', 'Management and Technology', 0],
+      ['Robotics', 'Robotics', 0],
+      ['Physics', 'Physics', 1],
       ['Other', 'Other', 2],
       ['Unknown', 'Unknown', 2],
     ])
@@ -218,6 +225,14 @@ describe('getDemographicChartData', () => {
 
     expect(segments.map((s) => s.key)).toEqual(['students'])
     expect(rows.map((row) => row.students)).toEqual([3, 1, 0])
+  })
+
+  it('formats a non-empty share under one percent as <1%', () => {
+    const row = (total: number, share: number) => ({ shortLabel: 'A', label: 'A', total, share })
+
+    expect(formatDemographicShare(row(1, 0))).toBe('<1%')
+    expect(formatDemographicShare(row(0, 0))).toBe('0%')
+    expect(formatDemographicShare(row(3, 75))).toBe('75%')
   })
 
   it('returns zero shares when there are no items', () => {

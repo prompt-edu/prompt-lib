@@ -8,7 +8,6 @@ import {
 } from '@tumaet/prompt-shared-state'
 import { getCountryName } from './getCountries'
 import { getStatusString } from './getStatusString'
-import translations from './translations.json'
 
 export interface DemographicGroup<T> {
   shortLabel: string
@@ -39,12 +38,14 @@ export type DemographicChartRow = {
 
 type StudentAccessor<T> = (item: T) => Student
 
+export interface DemographicStudyProgram {
+  name: string
+  shortName?: string | null
+}
+
 const UNKNOWN = 'Unknown'
 const OTHER = 'Other'
 const MAX_SEMESTER = 12
-
-const { studyPrograms, studyProgramShortNames } = translations.university
-const shortProgramNames: Record<string, string> = studyProgramShortNames
 
 const group = <T>(shortLabel: string, label: string, items: T[]): DemographicGroup<T> => ({
   shortLabel,
@@ -77,18 +78,20 @@ export function groupByGender<T>(
 export function groupByStudyProgram<T>(
   items: T[],
   getStudent: StudentAccessor<T>,
+  studyPrograms: DemographicStudyProgram[],
 ): DemographicGroup<T>[] {
   const programOf = (item: T) => getStudent(item).studyProgram?.trim()
-  const listed = studyPrograms.map((program) =>
+  const names = new Set(studyPrograms.map(({ name }) => name))
+  const listed = studyPrograms.map(({ name, shortName }) =>
     group(
-      shortProgramNames[program] ?? program,
-      program,
-      items.filter((item) => programOf(item) === program),
+      shortName ?? name,
+      name,
+      items.filter((item) => programOf(item) === name),
     ),
   )
   const other = items.filter((item) => {
     const program = programOf(item)
-    return !!program && !studyPrograms.includes(program)
+    return !!program && !names.has(program)
   })
   const unknown = items.filter((item) => !programOf(item))
   return [...listed, group(OTHER, OTHER, other), ...groupIfAny(UNKNOWN, unknown)]
@@ -198,6 +201,9 @@ const getSegments = (
   }
   return [{ key: 'students', label: 'Students', color: 'hsl(var(--primary))', matches: () => true }]
 }
+
+export const formatDemographicShare = ({ total, share }: DemographicChartRow) =>
+  total > 0 && share < 1 ? '<1%' : `${share}%`
 
 export function getDemographicChartData(
   groups: DemographicGroup<StatisticsParticipation>[],

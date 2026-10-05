@@ -17,6 +17,7 @@ import {
   type DemographicChartRow,
   type DemographicGroup,
   type DemographicStack,
+  formatDemographicShare,
   getDemographicChartData,
   type StatisticsParticipation,
 } from '@/lib/demographics'
@@ -68,7 +69,7 @@ export const DemographicDistributionCard = ({
                 <ChartTooltipContent
                   labelFormatter={(_, payload) => {
                     const row: DemographicChartRow | undefined = payload[0]?.payload
-                    return row && `${row.label}: ${row.total} (${row.share}%)`
+                    return row && `${row.label}: ${row.total} (${formatDemographicShare(row)})`
                   }}
                 />
               }
