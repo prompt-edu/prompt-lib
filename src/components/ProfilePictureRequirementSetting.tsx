@@ -15,8 +15,6 @@ export type ProfilePictureRequirement = 'off' | 'optional' | 'required'
 export interface ProfilePictureRequirementSettingProps {
   value: ProfilePictureRequirement
   onChange: (value: ProfilePictureRequirement) => void
-  /** Leaves out "required", e.g. where a picture must never be mandatory, like the application. */
-  allowRequired?: boolean
   disabled?: boolean
 }
 
@@ -45,11 +43,8 @@ const OPTIONS: { value: ProfilePictureRequirement; label: string; description: s
 export function ProfilePictureRequirementSetting({
   value,
   onChange,
-  allowRequired = true,
   disabled = false,
 }: ProfilePictureRequirementSettingProps) {
-  const options = allowRequired ? OPTIONS : OPTIONS.filter((option) => option.value !== 'required')
-
   return (
     <Card>
       <CardHeader>
@@ -65,7 +60,7 @@ export function ProfilePictureRequirementSetting({
           disabled={disabled}
           className='gap-3'
         >
-          {options.map((option) => (
+          {OPTIONS.map((option) => (
             <div key={option.value} className='flex items-start gap-3'>
               <RadioGroupItem
                 value={option.value}
