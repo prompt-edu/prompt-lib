@@ -1,6 +1,7 @@
 import { PassStatus } from '@tumaet/prompt-shared-state'
 import type { TableFilter } from '@/components'
-import { getStatusBadge, getStatusString } from '@/lib/getStatusBadge'
+import { getStatusBadge } from '@/lib/getStatusBadge'
+import { getStatusString } from '@/lib/getStatusString'
 import type { ParticipantRow } from './participationRow'
 
 export function getParticipantFilters(

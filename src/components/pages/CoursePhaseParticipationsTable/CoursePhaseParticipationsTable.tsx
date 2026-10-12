@@ -30,7 +30,7 @@ interface CoursePhaseParticipationsTablePageProps {
   extraFilters?: TableFilter<ParticipantRow>[]
   extraActions?: RowAction<ParticipantRow>[]
   exportDeps?: ExportDeps
-  onClickRowAction?: (row: ParticipantRow) => void
+  onClickRowAction?: (row: ParticipantRow, orderedRows: ParticipantRow[]) => void
 }
 
 export const CoursePhaseParticipationsTable = ({
@@ -64,7 +64,7 @@ export const CoursePhaseParticipationsTable = ({
       columns={columns}
       filters={filters}
       actions={actions}
-      onRowClick={(row) => onClickRowAction?.(row)}
+      onRowClick={onClickRowAction}
       initialState={{ columnVisibility: DEFAULT_HIDDEN_COLUMNS }}
       enableColumnVisibilityToggle
     />

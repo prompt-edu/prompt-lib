@@ -1,4 +1,4 @@
-import { useQuery } from '@tanstack/react-query'
+import { skipToken, useQuery } from '@tanstack/react-query'
 import { profilePictureApi } from '@/lib/profilePictureApi'
 import { createProfilePictureBatcher, type ProfilePictureIdKind } from '@/lib/profilePictureBatcher'
 
@@ -27,8 +27,7 @@ export const profilePictureQueryKeys = {
 export const useProfilePictureUrl = (ref?: ProfilePictureRef): string | null => {
   const { data } = useQuery({
     queryKey: ref ? profilePictureQueryKeys.of(ref) : profilePictureQueryKeys.all,
-    queryFn: () => (ref ? batcher.load(ref.kind, ref.id) : Promise.resolve(null)),
-    enabled: Boolean(ref?.id),
+    queryFn: ref ? () => batcher.load(ref.kind, ref.id) : skipToken,
     staleTime: PROFILE_PICTURE_URL_CACHE_MS,
     gcTime: PROFILE_PICTURE_URL_CACHE_MS,
     // A failed lookup is retried once and not cached, so an outage does not hide pictures for
