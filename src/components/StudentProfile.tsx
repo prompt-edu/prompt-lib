@@ -14,9 +14,11 @@ import { ProfilePicture } from './StudentProfilePicture'
 interface StudentProfileProps {
   student: Student
   status?: PassStatus
+  /** Hides the profile picture behind a neutral marker; the text explains why. */
+  pictureHiddenReason?: string
 }
 
-export const StudentProfile = ({ student, status }: StudentProfileProps) => {
+export const StudentProfile = ({ student, status, pictureHiddenReason }: StudentProfileProps) => {
   return (
     <Card className='relative overflow-hidden'>
       {/* Status indicator */}
@@ -26,6 +28,7 @@ export const StudentProfile = ({ student, status }: StudentProfileProps) => {
           studentId={student.id}
           firstName={student.firstName}
           lastName={student.lastName}
+          hiddenReason={pictureHiddenReason}
           size='lg'
           className='absolute border-4 border-background rounded-full transform left-3 -translate-y-1/2'
         />
