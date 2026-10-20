@@ -1,7 +1,7 @@
 import { useAuthStore } from '@tumaet/prompt-shared-state'
-import { ImageUp } from 'lucide-react'
+import { ImageUp, UserRound } from 'lucide-react'
 import { type ReactNode, useState } from 'react'
-import { Alert, AlertDescription, Button, CardTitle } from '@/components'
+import { Alert, AlertDescription, Avatar, AvatarFallback, Button, CardTitle } from '@/components'
 import { useOwnProfilePicture } from '@/hooks/useOwnProfilePicture'
 import { ProfilePictureDialog } from './ProfilePictureDialog'
 import { ProfilePicture } from './StudentProfilePicture'
@@ -15,10 +15,11 @@ export interface ProfilePictureInputProps {
   /** A validation message from the surrounding form, e.g. when a required picture is missing. */
   error?: string
   /**
-   * Shows the section as a preview, e.g. for a lecturer: nothing can be changed, and the viewer's
-   * own picture is not shown, since it would appear as if it were the applicant's.
+   * Shows the section as someone else would see it, e.g. a lecturer previewing the form: nothing
+   * can be changed, and a neutral placeholder replaces the viewer's own picture and initials, since
+   * they would appear as if they were the applicant's.
    */
-  readOnly?: boolean
+  preview?: boolean
 }
 
 /**
@@ -30,12 +31,12 @@ export function ProfilePictureInput({
   explanation,
   notice,
   error,
-  readOnly = false,
+  preview = false,
 }: ProfilePictureInputProps) {
   const { user } = useAuthStore()
-  const { data: ownPicture } = useOwnProfilePicture()
+  const { data: ownPicture } = useOwnProfilePicture(!preview)
   const [isDialogOpen, setIsDialogOpen] = useState(false)
-  const picture = readOnly ? null : ownPicture
+  const picture = preview ? null : ownPicture
 
   return (
     <div className='space-y-4'>
@@ -50,18 +51,26 @@ export function ProfilePictureInput({
       </div>
 
       <div className='flex items-center gap-4'>
-        <ProfilePicture
-          src={picture?.url}
-          firstName={user?.firstName ?? ''}
-          lastName={user?.lastName ?? ''}
-          size='lg'
-        />
+        {preview ? (
+          <Avatar className='h-24 w-24'>
+            <AvatarFallback className='w-full h-full flex items-center justify-center text-muted-foreground'>
+              <UserRound className='h-1/2 w-1/2' aria-hidden />
+            </AvatarFallback>
+          </Avatar>
+        ) : (
+          <ProfilePicture
+            src={picture?.url}
+            firstName={user?.firstName ?? ''}
+            lastName={user?.lastName ?? ''}
+            size='lg'
+          />
+        )}
         <div className='space-y-2'>
           <Button
             type='button'
             variant='outline'
             onClick={() => setIsDialogOpen(true)}
-            disabled={readOnly}
+            disabled={preview}
           >
             <ImageUp className='h-4 w-4' />
             {picture ? 'Change picture' : 'Add picture'}
@@ -80,7 +89,7 @@ export function ProfilePictureInput({
         </Alert>
       )}
 
-      {!readOnly && (
+      {!preview && (
         <ProfilePictureDialog
           open={isDialogOpen}
           onOpenChange={setIsDialogOpen}
