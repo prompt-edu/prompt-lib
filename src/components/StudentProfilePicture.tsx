@@ -1,3 +1,4 @@
+import { EyeOff } from 'lucide-react'
 import { Avatar, AvatarFallback, AvatarImage } from '@/components'
 import { useIsInView } from '@/hooks/useIsInView'
 import { type ProfilePictureRef, useProfilePictureUrl } from '@/hooks/useProfilePictureUrl'
@@ -20,6 +21,11 @@ export interface ProfilePictureProps {
   courseParticipationId?: string
   /** @deprecated Gravatar is no longer used. Pass userId, studentId or courseParticipationId. */
   email?: string
+  /**
+   * Shows a neutral "hidden" avatar instead of the picture and never looks it up, e.g. while a
+   * phase hides applicants' pictures. The text explains why and is shown on hover.
+   */
+  hiddenReason?: string
   size?: AvatarSize
   className?: string
 }
@@ -40,13 +46,32 @@ const toRef = ({
  * have: pictures are looked up by user, student, or course participation id.
  */
 export function ProfilePicture(props: ProfilePictureProps) {
-  const { firstName, lastName, src, size = 'md', className = '' } = props
+  const { firstName, lastName, src, hiddenReason, size = 'md', className = '' } = props
   // Long lists render many avatars; only those near the viewport look up and load their picture
   const [avatarRef, isInView] = useIsInView<HTMLSpanElement>()
-  const lookedUpUrl = useProfilePictureUrl(src || !isInView ? undefined : toRef(props))
+  const lookedUpUrl = useProfilePictureUrl(
+    src || hiddenReason || !isInView ? undefined : toRef(props),
+  )
   // An empty src counts as absent, so a looked-up picture is not hidden behind it
   const url = src || lookedUpUrl
   const initials = (firstName?.charAt(0) || 'N') + (lastName?.charAt(0) || 'A')
+
+  // Every hidden person looks the same, so the marker does not reveal who has a picture
+  if (hiddenReason) {
+    return (
+      <Avatar
+        ref={avatarRef}
+        className={`${sizeStyles[size]} ${className}`}
+        title={hiddenReason}
+        aria-label={hiddenReason}
+        role='img'
+      >
+        <AvatarFallback className='w-full h-full flex items-center justify-center text-muted-foreground'>
+          <EyeOff className='h-1/2 w-1/2' aria-hidden />
+        </AvatarFallback>
+      </Avatar>
+    )
+  }
 
   return (
     <Avatar ref={avatarRef} className={`${sizeStyles[size]} ${className}`}>

@@ -1,3 +1,4 @@
+import type { ReactNode } from 'react'
 import {
   Card,
   CardContent,
@@ -16,6 +17,8 @@ export interface ProfilePictureRequirementSettingProps {
   value: ProfilePictureRequirement
   onChange: (value: ProfilePictureRequirement) => void
   disabled?: boolean
+  /** Phase-specific settings shown below the choice in the same card, e.g. a save button. */
+  children?: ReactNode
 }
 
 const OPTIONS: { value: ProfilePictureRequirement; label: string; description: string }[] = [
@@ -44,6 +47,7 @@ export function ProfilePictureRequirementSetting({
   value,
   onChange,
   disabled = false,
+  children,
 }: ProfilePictureRequirementSettingProps) {
   return (
     <Card>
@@ -77,6 +81,7 @@ export function ProfilePictureRequirementSetting({
             </div>
           ))}
         </RadioGroup>
+        {children && <div className='mt-6 space-y-6'>{children}</div>}
       </CardContent>
     </Card>
   )

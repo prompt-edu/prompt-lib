@@ -4,10 +4,11 @@ import { PROFILE_PICTURE_URL_CACHE_MS, profilePictureQueryKeys } from '@/hooks/u
 import { profilePictureApi } from '@/lib/profilePictureApi'
 
 /** The logged-in user's own picture, or null if they have none. */
-export const useOwnProfilePicture = () =>
+export const useOwnProfilePicture = (enabled = true) =>
   useQuery({
     queryKey: profilePictureQueryKeys.own,
     queryFn: profilePictureApi.own,
+    enabled,
     staleTime: PROFILE_PICTURE_URL_CACHE_MS,
   })
 
