@@ -37,12 +37,12 @@ const OPTIONS: { value: ProfilePictureRequirement; label: string; description: s
   {
     value: 'optional',
     label: 'Optional',
-    description: 'Students are asked for a picture but can dismiss the request.',
+    description: 'Students are asked to upload a picture but can dismiss the request.',
   },
   {
     value: 'required',
     label: 'Required',
-    description: 'Students are asked for a picture and cannot dismiss the request.',
+    description: 'Students are asked to upload a picture and cannot dismiss the request.',
   },
 ]
 
