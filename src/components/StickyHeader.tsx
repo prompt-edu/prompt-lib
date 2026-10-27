@@ -2,8 +2,8 @@ import { type ReactNode, useEffect, useRef, useState } from 'react'
 import { flushSync } from 'react-dom'
 import { cn } from '@/lib/utils'
 
-// The global management header (`h-14`) stays at the top; the bar docks beneath it.
-const HEADER_OFFSET_PX = 56
+// The bar docks beneath the global management header, which an announcement banner can push down.
+const MANAGEMENT_HEADER_ID = 'management-header'
 const UNDOCK_HYSTERESIS_PX = 8
 
 interface StickyHeaderProps {
@@ -45,9 +45,11 @@ export const StickyHeader = ({
 
     const update = () => {
       const { top, left, width } = placeholder.getBoundingClientRect()
+      const headerBottom =
+        document.getElementById(MANAGEMENT_HEADER_ID)?.getBoundingClientRect().bottom ?? 0
       const shouldDock = dockedRef.current
-        ? top <= HEADER_OFFSET_PX + UNDOCK_HYSTERESIS_PX
-        : top <= HEADER_OFFSET_PX
+        ? top <= headerBottom + UNDOCK_HYSTERESIS_PX
+        : top <= headerBottom
 
       if (dockedRef.current !== shouldDock) {
         dockedRef.current = shouldDock
@@ -59,7 +61,7 @@ export const StickyHeader = ({
       if (shouldDock) {
         placeholder.style.height = `${undockedHeightRef.current}px`
         bar.style.position = 'fixed'
-        bar.style.top = `${HEADER_OFFSET_PX}px`
+        bar.style.top = `${headerBottom}px`
         bar.style.left = `${left}px`
         bar.style.width = `${width}px`
       } else {
@@ -84,12 +86,18 @@ export const StickyHeader = ({
     const resizeObserver = new ResizeObserver(scheduleUpdate)
     resizeObserver.observe(bar)
     resizeObserver.observe(placeholder)
+    const bannerHeightObserver = new MutationObserver(scheduleUpdate)
+    bannerHeightObserver.observe(document.documentElement, {
+      attributes: true,
+      attributeFilter: ['style'],
+    })
     undockedHeightRef.current = bar.offsetHeight
     scheduleUpdate()
     window.addEventListener('scroll', scheduleUpdate, true)
     window.addEventListener('resize', scheduleUpdate)
     return () => {
       resizeObserver.disconnect()
+      bannerHeightObserver.disconnect()
       if (frame !== undefined) cancelAnimationFrame(frame)
       window.removeEventListener('scroll', scheduleUpdate, true)
       window.removeEventListener('resize', scheduleUpdate)
