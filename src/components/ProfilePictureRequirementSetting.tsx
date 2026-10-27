@@ -26,7 +26,7 @@ export interface ProfilePictureRequirementSettingProps {
 }
 
 const DEFAULT_DESCRIPTION =
-  'Ask students to upload a profile picture, so they can be recognized in teams and reviews.'
+  'Ask students for a profile picture, so the course team can recognize them.'
 
 const OPTIONS: { value: ProfilePictureRequirement; label: string; description: string }[] = [
   {
@@ -37,12 +37,12 @@ const OPTIONS: { value: ProfilePictureRequirement; label: string; description: s
   {
     value: 'optional',
     label: 'Optional',
-    description: 'Students without a picture see a request they can dismiss.',
+    description: 'Students are asked for a picture but can dismiss the request.',
   },
   {
     value: 'required',
     label: 'Required',
-    description: 'Students without a picture see a request that stays until they add one.',
+    description: 'Students are asked for a picture and cannot dismiss the request.',
   },
 ]
 
