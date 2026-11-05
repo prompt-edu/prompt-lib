@@ -17,25 +17,32 @@ export interface ProfilePictureRequirementSettingProps {
   value: ProfilePictureRequirement
   onChange: (value: ProfilePictureRequirement) => void
   disabled?: boolean
+  /** Replaces the default introduction, e.g. to address applicants instead of students. */
+  description?: ReactNode
+  /** Replaces the default description of single options, keyed by the option. */
+  optionDescriptions?: Partial<Record<ProfilePictureRequirement, string>>
   /** Phase-specific settings shown below the choice in the same card, e.g. a save button. */
   children?: ReactNode
 }
+
+const DEFAULT_DESCRIPTION =
+  'Ask students for a profile picture, so the course team can recognize them.'
 
 const OPTIONS: { value: ProfilePictureRequirement; label: string; description: string }[] = [
   {
     value: 'off',
     label: 'Off',
-    description: 'Students are not asked for a profile picture in this phase.',
+    description: 'Students are not asked for a picture.',
   },
   {
     value: 'optional',
     label: 'Optional',
-    description: 'Students without a picture are asked to add one and can dismiss the request.',
+    description: 'Students are asked to upload a picture but can dismiss the request.',
   },
   {
     value: 'required',
     label: 'Required',
-    description: 'Students without a picture are asked to add one until they do.',
+    description: 'Students are asked to upload a picture and cannot dismiss the request.',
   },
 ]
 
@@ -47,15 +54,15 @@ export function ProfilePictureRequirementSetting({
   value,
   onChange,
   disabled = false,
+  description = DEFAULT_DESCRIPTION,
+  optionDescriptions,
   children,
 }: ProfilePictureRequirementSettingProps) {
   return (
     <Card>
       <CardHeader>
         <CardTitle className='text-lg'>Profile picture</CardTitle>
-        <CardDescription>
-          Ask students to upload a profile picture, so they can be recognized in teams and reviews.
-        </CardDescription>
+        <CardDescription>{description}</CardDescription>
       </CardHeader>
       <CardContent>
         <RadioGroup
@@ -76,7 +83,9 @@ export function ProfilePictureRequirementSetting({
                 className='flex flex-col items-start gap-1 font-normal'
               >
                 <span className='font-medium'>{option.label}</span>
-                <span className='text-sm text-muted-foreground'>{option.description}</span>
+                <span className='text-sm text-muted-foreground'>
+                  {optionDescriptions?.[option.value] ?? option.description}
+                </span>
               </Label>
             </div>
           ))}
