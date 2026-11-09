@@ -26,13 +26,11 @@ interface ParticipantNavigationProps<T extends NavigableParticipant> {
   children?: ReactNode
 }
 
+// Only the text and border carry the status; hovering looks like any other outline button.
 const statusButtonClassNames: Record<PassStatus, string> = {
-  [PassStatus.PASSED]:
-    'border-green-600 text-green-700 hover:bg-green-50 dark:border-green-500 dark:text-green-400 dark:hover:bg-green-950',
-  [PassStatus.FAILED]:
-    'border-red-600 text-red-700 hover:bg-red-50 dark:border-red-500 dark:text-red-400 dark:hover:bg-red-950',
-  [PassStatus.NOT_ASSESSED]:
-    'border-gray-500 text-gray-700 hover:bg-gray-50 dark:border-gray-400 dark:text-gray-300 dark:hover:bg-gray-900',
+  [PassStatus.PASSED]: 'border-green-600 text-green-700 dark:border-green-500 dark:text-green-400',
+  [PassStatus.FAILED]: 'border-red-600 text-red-700 dark:border-red-500 dark:text-red-400',
+  [PassStatus.NOT_ASSESSED]: 'border-gray-500 text-gray-700 dark:border-gray-400 dark:text-gray-300',
 }
 
 /**
