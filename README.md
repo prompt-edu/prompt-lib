@@ -94,7 +94,7 @@ the chevron.
 | Prop            | Default | Effect                                                              |
 | --------------- | ------- | ------------------------------------------------------------------- |
 | `colorByStatus` | `false` | tints each button with the pass status of the participant it leads to |
-| `floating`      | `false` | gives the buttons and the middle their own background and shadow; the middle is only as wide as its content |
+| `compact`       | `false` | puts chevron-only buttons into one centered pill around the middle, e.g. for a docked header |
 | `children`      | —       | content between the buttons, before the position, e.g. the current participant's name |
 
 The previous button is disabled on the first participant and the next button on the last, so
@@ -114,8 +114,9 @@ the optional `expandedContent` collapses once it docks. The page layout never de
 state, so docking does not shift the content below.
 
 The docked bar has a background and a shadow of its own. With `floating` it has neither, so its
-content floats over the page; pair it with `ParticipantNavigation`'s `floating` to dock previous,
-the current participant and next as three separate pieces.
+content floats over the page. Paired with `ParticipantNavigation`'s `compact`, the full navigation
+with the neighbors' names stays at the top of the page, where there is room, and docks as one small
+pill: previous, the current participant and next.
 
 ```tsx
 <StickyHeader floating expandedContent={<ParticipantProfile participant={participant} />}>
@@ -124,7 +125,7 @@ the current participant and next as three separate pieces.
       participants={orderedParticipations}
       currentId={participant.courseParticipationID}
       onNavigate={navigateToParticipation}
-      floating={docked}
+      compact={docked}
     >
       {docked && <span className='truncate font-semibold'>{participantName}</span>}
     </ParticipantNavigation>

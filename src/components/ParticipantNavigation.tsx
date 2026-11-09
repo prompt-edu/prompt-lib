@@ -19,7 +19,11 @@ interface ParticipantNavigationProps<T extends NavigableParticipant> {
   onNavigate: (participant: T) => void
   /** Tints each button with the pass status of the participant it leads to. */
   colorByStatus?: boolean
-  floating?: boolean
+  /**
+   * Icon-only buttons inside one centered pill around `children` and the position, e.g. for a
+   * docked header. The full variant spreads the buttons to the edges with the neighbors' names.
+   */
+  compact?: boolean
   className?: string
   children?: ReactNode
 }
@@ -35,14 +39,15 @@ const statusButtonClassNames: Record<PassStatus, string> = {
 
 /**
  * Previous / next buttons for stepping through participants from their detail page, with the
- * current position centered between them. Names show from `md` up and truncate so long names fit.
+ * current position centered between them. The buttons show the neighbors' names where their side
+ * has room and truncate long ones; `compact` reduces them to chevrons inside one pill.
  */
 export const ParticipantNavigation = <T extends NavigableParticipant>({
   participants,
   currentId,
   onNavigate,
   colorByStatus = false,
-  floating = false,
+  compact = false,
   className,
   children,
 }: ParticipantNavigationProps<T>) => {
@@ -59,6 +64,36 @@ export const ParticipantNavigation = <T extends NavigableParticipant>({
     const name = participant ? getStudentName(participant.student) : undefined
     const label = direction === 'previous' ? 'Previous' : 'Next'
     const Icon = direction === 'previous' ? ChevronLeft : ChevronRight
+    const statusClassName =
+      colorByStatus && participant?.passStatus
+        ? statusButtonClassNames[participant.passStatus]
+        : undefined
+
+    const button = (
+      <Button
+        variant={compact ? 'ghost' : 'outline'}
+        size={compact ? 'icon' : 'default'}
+        disabled={!participant}
+        onClick={() => participant && onNavigate(participant)}
+        title={name}
+        aria-label={name ? `${label} participant: ${name}` : `${label} participant`}
+        className={cn(
+          compact
+            ? 'h-8 w-8 shrink-0 rounded-full'
+            : ['min-w-0 max-w-full', direction === 'next' && 'flex-row-reverse'],
+          statusClassName,
+        )}
+      >
+        <Icon />
+        {!compact && (
+          <span className='hidden min-w-0 truncate @[8rem]:inline'>{name ?? label}</span>
+        )}
+      </Button>
+    )
+
+    if (compact) {
+      return button
+    }
 
     return (
       <div
@@ -67,31 +102,36 @@ export const ParticipantNavigation = <T extends NavigableParticipant>({
           direction === 'previous' ? 'justify-start' : 'justify-end',
         )}
       >
-        <div
-          className={cn(
-            'flex min-w-0 max-w-full rounded-md',
-            floating && 'bg-background shadow-sm',
-          )}
-        >
-          <Button
-            variant='outline'
-            disabled={!participant}
-            onClick={() => participant && onNavigate(participant)}
-            title={name}
-            aria-label={name ? `${label} participant: ${name}` : `${label} participant`}
-            className={cn(
-              'min-w-0 max-w-full',
-              direction === 'next' && 'flex-row-reverse',
-              colorByStatus &&
-                participant?.passStatus &&
-                statusButtonClassNames[participant.passStatus],
-            )}
-          >
-            <Icon />
-            <span className='hidden min-w-0 truncate @[8rem]:inline'>{name ?? label}</span>
-          </Button>
-        </div>
+        {button}
       </div>
+    )
+  }
+
+  const middle = (
+    <>
+      {children && (
+        <div className='flex min-w-0 items-center gap-2 overflow-hidden'>{children}</div>
+      )}
+      {canNavigate && (
+        <span className='shrink-0 text-sm tabular-nums text-muted-foreground'>
+          {position} / {participants.length}
+        </span>
+      )}
+    </>
+  )
+
+  if (compact) {
+    return (
+      <Container
+        aria-label={canNavigate ? 'Participant navigation' : undefined}
+        className={cn('flex justify-center', className)}
+      >
+        <div className='flex h-10 min-w-0 max-w-full items-center gap-1 rounded-full border border-input bg-background px-1 shadow-sm'>
+          {canNavigate && renderButton('previous', previous)}
+          <div className='flex min-w-0 items-center gap-2 px-2'>{middle}</div>
+          {canNavigate && renderButton('next', next)}
+        </div>
+      </Container>
     )
   }
 
@@ -102,21 +142,7 @@ export const ParticipantNavigation = <T extends NavigableParticipant>({
     >
       <div className='grid grid-cols-[minmax(3rem,1fr)_minmax(0,auto)_minmax(3rem,1fr)] items-center gap-2 @[40rem]:grid-cols-[minmax(3rem,1fr)_fit-content(60%)_minmax(3rem,1fr)]'>
         {canNavigate && renderButton('previous', previous)}
-        <div
-          className={cn(
-            'col-start-2 flex min-w-0 items-center justify-center gap-2',
-            floating && 'h-10 rounded-md border border-input bg-background px-4 shadow-sm',
-          )}
-        >
-          {children && (
-            <div className='flex min-w-0 items-center gap-2 overflow-hidden'>{children}</div>
-          )}
-          {canNavigate && (
-            <span className='shrink-0 text-sm tabular-nums text-muted-foreground'>
-              {position} / {participants.length}
-            </span>
-          )}
-        </div>
+        <div className='col-start-2 flex min-w-0 items-center justify-center gap-2'>{middle}</div>
         {canNavigate && renderButton('next', next)}
       </div>
     </Container>
