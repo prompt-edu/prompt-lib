@@ -93,8 +93,8 @@ neighbors' names from `md` up and truncate long ones; below that they show only 
 | Prop            | Default | Effect                                                              |
 | --------------- | ------- | ------------------------------------------------------------------- |
 | `colorByStatus` | `false` | tints each button with the pass status of the participant it leads to |
-| `compact`       | `false` | puts chevron-only buttons into one centered box around `children`, without the position |
-| `children`      | —       | content of the compact box, e.g. the current participant's name |
+| `compact`       | `false` | puts chevron-only buttons into one centered box around the current participant's picture and name, without the position |
+| `children`      | —       | shown after the name in the compact box from `sm` up, e.g. the participant's badges |
 
 The previous button is disabled on the first participant and the next button on the last, so
 reaching the end of the list is visible.
@@ -116,7 +116,7 @@ compact `ParticipantNavigation`, whose box opts back in with `pointer-events-aut
       onNavigate={navigateToParticipation}
       compact={docked}
     >
-      <span className='truncate font-semibold'>{participantName}</span>
+      <ParticipantBadges participant={participant} />
     </ParticipantNavigation>
   )}
 </StickyHeader>

@@ -1,6 +1,7 @@
 import { PassStatus } from '@tumaet/prompt-shared-state'
 import { ChevronLeft, ChevronRight } from 'lucide-react'
 import type { ReactNode } from 'react'
+import { ProfilePicture } from '@/components/StudentProfilePicture'
 import { Button } from '@/components/ui/button'
 import { getNavigationNeighbors } from '@/lib/getNavigationNeighbors'
 import { getStudentName } from '@/lib/getStudentName'
@@ -19,10 +20,13 @@ interface ParticipantNavigationProps<T extends NavigableParticipant> {
   onNavigate: (participant: T) => void
   /** Tints each button with the pass status of the participant it leads to. */
   colorByStatus?: boolean
-  /** Chevron-only buttons in one box around `children`, without the position, e.g. for a docked header. */
+  /**
+   * Chevron-only buttons in one box around the current participant's picture and name, without
+   * the position, e.g. for a docked header.
+   */
   compact?: boolean
   className?: string
-  /** Shown between the buttons of the compact box, e.g. the current participant's name. */
+  /** Shown after the name in the compact box from `sm` up, e.g. the participant's badges. */
   children?: ReactNode
 }
 
@@ -30,7 +34,8 @@ interface ParticipantNavigationProps<T extends NavigableParticipant> {
 const statusButtonClassNames: Record<PassStatus, string> = {
   [PassStatus.PASSED]: 'border-green-600 text-green-700 dark:border-green-500 dark:text-green-400',
   [PassStatus.FAILED]: 'border-red-600 text-red-700 dark:border-red-500 dark:text-red-400',
-  [PassStatus.NOT_ASSESSED]: 'border-gray-500 text-gray-700 dark:border-gray-400 dark:text-gray-300',
+  [PassStatus.NOT_ASSESSED]:
+    'border-gray-500 text-gray-700 dark:border-gray-400 dark:text-gray-300',
 }
 
 /**
@@ -48,9 +53,10 @@ export const ParticipantNavigation = <T extends NavigableParticipant>({
 }: ParticipantNavigationProps<T>) => {
   const { previous, next, position } = getNavigationNeighbors(participants, currentId)
   const canNavigate = position !== undefined && participants.length > 1
+  const current = position !== undefined ? participants[position - 1] : undefined
 
-  // The compact box still shows its children, so a docked header keeps the participant's name.
-  if (!canNavigate && !(compact && children)) {
+  // The compact box still shows the participant, so a docked header keeps the name.
+  if (!canNavigate && !(compact && current)) {
     return null
   }
 
@@ -111,7 +117,21 @@ export const ParticipantNavigation = <T extends NavigableParticipant>({
     >
       <div className='pointer-events-auto flex h-10 min-w-0 max-w-full items-center gap-1 rounded-md border border-input bg-background px-1 shadow-sm'>
         {canNavigate && renderButton('previous', previous)}
-        <div className='flex min-w-0 items-center gap-2 overflow-hidden px-2'>{children}</div>
+        <div className='flex min-w-0 items-center gap-2 overflow-hidden px-2'>
+          {current && (
+            <>
+              <ProfilePicture
+                courseParticipationId={current.courseParticipationID}
+                firstName={current.student.firstName ?? ''}
+                lastName={current.student.lastName ?? ''}
+                size='sm'
+                className='shrink-0'
+              />
+              <span className='truncate font-semibold'>{getStudentName(current.student)}</span>
+            </>
+          )}
+          {children && <div className='hidden shrink-0 items-center gap-1 sm:flex'>{children}</div>}
+        </div>
         {canNavigate && renderButton('next', next)}
       </div>
     </Container>
