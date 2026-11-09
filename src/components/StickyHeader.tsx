@@ -10,7 +10,6 @@ interface StickyHeaderProps {
   children: (docked: boolean) => ReactNode
   expandedContent?: ReactNode
   floating?: boolean
-  className?: string
 }
 
 /**
@@ -27,7 +26,6 @@ export const StickyHeader = ({
   children,
   expandedContent,
   floating = false,
-  className,
 }: StickyHeaderProps) => {
   const placeholderRef = useRef<HTMLDivElement>(null)
   const barRef = useRef<HTMLDivElement>(null)
@@ -114,7 +112,6 @@ export const StickyHeader = ({
         className={cn(
           'z-20 transition-colors duration-300 print:static! print:w-auto!',
           docked && !floating && 'rounded-md bg-background shadow-sm',
-          className,
         )}
       >
         {children(docked)}

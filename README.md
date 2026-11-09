@@ -77,8 +77,7 @@ valid date when left that way. Clearing a field selects no date.
 
 `ParticipantNavigation` puts previous / next buttons on a participant's detail page, at the left
 and right edge, with the current position (`3 / 12`) between them. The buttons carry the
-neighbors' names and truncate long ones; when a side has less than `8rem`, its button shows only
-the chevron.
+neighbors' names from `md` up and truncate long ones; below that they show only the chevron.
 
 ```tsx
 // `participants` is already in the order to step through, e.g. the sorted or filtered list the
@@ -94,29 +93,19 @@ the chevron.
 | Prop            | Default | Effect                                                              |
 | --------------- | ------- | ------------------------------------------------------------------- |
 | `colorByStatus` | `false` | tints each button with the pass status of the participant it leads to |
-| `compact`       | `false` | puts chevron-only buttons into one centered pill around the middle, e.g. for a docked header |
-| `children`      | —       | content between the buttons, before the position, e.g. the current participant's name |
+| `compact`       | `false` | puts chevron-only buttons into one centered box around `children` and the position |
+| `children`      | —       | content of the compact box, e.g. the current participant's name |
 
 The previous button is disabled on the first participant and the next button on the last, so
-reaching the end of the list is visible. With a single participant, or when `currentId` is not in
-`participants`, the buttons and the position are left out; `children` still render.
-
-The middle is only as wide as its content and stays centered; the buttons share the rest. From a
-`40rem` wide row on, the middle takes at most 60% so the neighbors' names stay readable; below
-that, where the buttons only fit their chevrons, it may take everything else. Make its content truncate (e.g. `truncate` on the name) so a long name is cut off
-inside the middle instead of overflowing it.
+reaching the end of the list is visible.
 
 ### Sticky header
 
 `StickyHeader` docks below the management console's header while the page scrolls, so previous /
 next stays reachable on long detail pages. Its children are a function of the docked state, and
-the optional `expandedContent` collapses once it docks. The page layout never depends on the docked
-state, so docking does not shift the content below.
-
-The docked bar has a background and a shadow of its own. With `floating` it has neither, so its
-content floats over the page. Paired with `ParticipantNavigation`'s `compact`, the full navigation
-with the neighbors' names stays at the top of the page, where there is room, and docks as one small
-pill: previous, the current participant and next.
+the optional `expandedContent` collapses once it docks. The docked bar has a background and a
+shadow of its own; with `floating` it has neither, e.g. for a compact `ParticipantNavigation`,
+which brings its own box.
 
 ```tsx
 <StickyHeader floating expandedContent={<ParticipantProfile participant={participant} />}>
@@ -127,7 +116,7 @@ pill: previous, the current participant and next.
       onNavigate={navigateToParticipation}
       compact={docked}
     >
-      {docked && <span className='truncate font-semibold'>{participantName}</span>}
+      <span className='truncate font-semibold'>{participantName}</span>
     </ParticipantNavigation>
   )}
 </StickyHeader>
@@ -146,6 +135,10 @@ second argument.
   }
 />
 ```
+
+`resolveNavigationOrder(snapshotIds, liveIds, currentId)` picks the order on the detail page: the
+table's order, without ids that no longer exist, as long as it still contains the current
+participant, and the live order otherwise (e.g. when the page was opened in a new tab).
 
 ---
 
