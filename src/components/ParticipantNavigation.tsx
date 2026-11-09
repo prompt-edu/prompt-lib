@@ -115,7 +115,7 @@ export const ParticipantNavigation = <T extends NavigableParticipant>({
       aria-label={canNavigate ? 'Participant navigation' : undefined}
       className={cn('flex justify-center', className)}
     >
-      <div className='flex h-10 min-w-0 max-w-full items-center gap-1 rounded-md border border-input bg-background px-1 shadow-sm'>
+      <div className='pointer-events-auto flex h-10 min-w-0 max-w-full items-center gap-1 rounded-md border border-input bg-background px-1 shadow-sm'>
         {canNavigate && renderButton('previous', previous)}
         <div className='flex min-w-0 items-center gap-2 px-2'>
           {children && (

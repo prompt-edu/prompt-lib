@@ -104,8 +104,8 @@ reaching the end of the list is visible.
 `StickyHeader` docks below the management console's header while the page scrolls, so previous /
 next stays reachable on long detail pages. Its children are a function of the docked state, and
 the optional `expandedContent` collapses once it docks. The docked bar has a background and a
-shadow of its own; with `floating` it has neither, e.g. for a compact `ParticipantNavigation`,
-which brings its own box.
+shadow of its own; with `floating` it has neither and lets clicks through to the page, e.g. for a
+compact `ParticipantNavigation`, whose box opts back in with `pointer-events-auto`.
 
 ```tsx
 <StickyHeader floating expandedContent={<ParticipantProfile participant={participant} />}>

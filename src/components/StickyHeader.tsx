@@ -112,6 +112,9 @@ export const StickyHeader = ({
         className={cn(
           'z-20 transition-colors duration-300 print:static! print:w-auto!',
           docked && !floating && 'rounded-md bg-background shadow-sm',
+          // The floating bar spans the content column but is see-through around its content,
+          // so clicks there reach the page; opaque content opts back in (pointer-events-auto).
+          docked && floating && 'pointer-events-none',
         )}
       >
         {children(docked)}
