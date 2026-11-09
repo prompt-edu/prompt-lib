@@ -19,10 +19,10 @@ interface ParticipantNavigationProps<T extends NavigableParticipant> {
   onNavigate: (participant: T) => void
   /** Tints each button with the pass status of the participant it leads to. */
   colorByStatus?: boolean
-  /** Chevron-only buttons in one box around `children` and the position, e.g. for a docked header. */
+  /** Chevron-only buttons in one box around `children`, without the position, e.g. for a docked header. */
   compact?: boolean
   className?: string
-  /** Shown before the position in the compact box, e.g. the current participant's name. */
+  /** Shown between the buttons of the compact box, e.g. the current participant's name. */
   children?: ReactNode
 }
 
@@ -89,12 +89,6 @@ export const ParticipantNavigation = <T extends NavigableParticipant>({
     )
   }
 
-  const positionLabel = canNavigate && (
-    <span className='shrink-0 text-sm tabular-nums text-muted-foreground'>
-      {position} / {participants.length}
-    </span>
-  )
-
   if (!compact) {
     return (
       <nav
@@ -102,7 +96,9 @@ export const ParticipantNavigation = <T extends NavigableParticipant>({
         className={cn('grid grid-cols-[1fr_auto_1fr] items-center gap-2', className)}
       >
         {renderButton('previous', previous)}
-        {positionLabel}
+        <span className='text-sm tabular-nums text-muted-foreground'>
+          {position} / {participants.length}
+        </span>
         {renderButton('next', next)}
       </nav>
     )
@@ -117,12 +113,7 @@ export const ParticipantNavigation = <T extends NavigableParticipant>({
     >
       <div className='pointer-events-auto flex h-10 min-w-0 max-w-full items-center gap-1 rounded-md border border-input bg-background px-1 shadow-sm'>
         {canNavigate && renderButton('previous', previous)}
-        <div className='flex min-w-0 items-center gap-2 px-2'>
-          {children && (
-            <div className='flex min-w-0 items-center gap-2 overflow-hidden'>{children}</div>
-          )}
-          {positionLabel}
-        </div>
+        <div className='flex min-w-0 items-center gap-2 overflow-hidden px-2'>{children}</div>
         {canNavigate && renderButton('next', next)}
       </div>
     </Container>
