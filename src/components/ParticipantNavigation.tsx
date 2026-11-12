@@ -25,6 +25,8 @@ interface ParticipantNavigationProps<T extends NavigableParticipant> {
    * the position, e.g. for a docked header.
    */
   compact?: boolean
+  /** Hides the picture in the compact box behind a neutral marker; the text explains why. */
+  pictureHiddenReason?: string
   className?: string
   /** Shown after the name in the compact box from `sm` up, e.g. the participant's badges. */
   children?: ReactNode
@@ -48,6 +50,7 @@ export const ParticipantNavigation = <T extends NavigableParticipant>({
   onNavigate,
   colorByStatus = false,
   compact = false,
+  pictureHiddenReason,
   className,
   children,
 }: ParticipantNavigationProps<T>) => {
@@ -124,6 +127,7 @@ export const ParticipantNavigation = <T extends NavigableParticipant>({
                 courseParticipationId={current.courseParticipationID}
                 firstName={current.student.firstName ?? ''}
                 lastName={current.student.lastName ?? ''}
+                hiddenReason={pictureHiddenReason}
                 size='sm'
                 className='shrink-0'
               />

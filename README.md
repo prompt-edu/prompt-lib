@@ -95,6 +95,7 @@ neighbors' names from `md` up and truncate long ones; below that they show only 
 | `colorByStatus` | `false` | tints each button with the pass status of the participant it leads to |
 | `compact`       | `false` | puts chevron-only buttons into one centered box around the current participant's picture and name, without the position |
 | `children`      | —       | shown after the name in the compact box from `sm` up, e.g. the participant's badges |
+| `pictureHiddenReason` | — | hides the picture in the compact box behind a neutral marker, as `StudentProfile` does; pass the same reason to both |
 
 The previous button is disabled on the first participant and the next button on the last, so
 reaching the end of the list is visible.
