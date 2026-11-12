@@ -166,37 +166,23 @@ yarn build
 
 ## Publishing Packages
 
-The package is published to npm when you create a GitHub release.
+Releases are automated with [semantic-release](https://semantic-release.gitbook.io/). There is no
+manual version bump or GitHub release to create.
 
-### 1. Update Package Version
+PR titles follow [Conventional Commits](https://www.conventionalcommits.org/), and the squash merge
+turns the title into the commit on `main`. After every merge to `main`, the release job reads the
+commits since the last tag and decides the next version:
 
-Ensure `package.json` has the version number matching your intended release tag.
+| Commit                                   | Release | Example                                 |
+| ---------------------------------------- | ------- | --------------------------------------- |
+| `fix:`, `perf:`                          | patch   | `fix(table): keep the selection on sort` |
+| `feat:`                                  | minor   | `feat: add a DatePicker time field`      |
+| `feat!:` or a `BREAKING CHANGE:` footer  | major   | `feat!: drop the legacy table props`     |
+| `chore:`, `docs:`, `ci:`, `refactor:`, … | none    | `docs: explain server-paged tables`      |
 
-```bash
-yarn version patch   # 1.2.3 -> 1.2.4
-# or: yarn version minor  (1.2.3 -> 1.3.0)
-# or: yarn version major  (1.2.3 -> 2.0.0)
-```
-
-Or edit the `package.json` file manually.
-
-### 2. Create a GitHub Release
-
-1. Go to the [Releases page](../../releases)
-2. Click **"Create a new release"**
-3. Create a new tag with the format `v{version}` (for example, `v1.2.3`)
-4. Set the release title and add release notes
-5. Click **"Publish release"**
-
-### 3. Automated Publishing
-
-Once you publish the release, the GitHub Actions workflow:
-
-1. **Validates** that `package.json` matches the release tag
-2. **Builds** the package
-3. **Publishes** `@tumaet/prompt-ui-components` to npm
-
-If there is a version mismatch, the workflow fails with a clear error.
+When a release is due, the job publishes `@tumaet/prompt-ui-components` to npm, commits the new
+version in `package.json` back to `main`, tags it and creates a GitHub release with generated notes.
+A `PR Title` check rejects titles that do not follow the format.
 
 ---
 

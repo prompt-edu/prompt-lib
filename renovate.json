@@ -1,8 +1,7 @@
 {
   "$schema": "https://docs.renovatebot.com/renovate-schema.json",
   "extends": ["config:recommended"],
-  "semanticCommits": "disabled",
-  "commitMessagePrefix": "Dependencies:",
+  "semanticCommits": "enabled",
   "prConcurrentLimit": 3,
   "rangeStrategy": "bump",
   "minimumReleaseAge": "7 days",
