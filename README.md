@@ -93,9 +93,35 @@ neighbors' names from `md` up and truncate long ones; below that they show only 
 | Prop            | Default | Effect                                                              |
 | --------------- | ------- | ------------------------------------------------------------------- |
 | `colorByStatus` | `false` | tints each button with the pass status of the participant it leads to |
+| `compact`       | `false` | puts chevron-only buttons into one centered box around the current participant's picture and name, without the position |
+| `children`      | —       | shown after the name in the compact box from `sm` up, e.g. the participant's badges |
+| `pictureHiddenReason` | — | hides the picture in the compact box behind a neutral marker, as `StudentProfile` does; pass the same reason to both |
 
 The previous button is disabled on the first participant and the next button on the last, so
 reaching the end of the list is visible.
+
+### Sticky header
+
+`StickyHeader` docks below the management console's header while the page scrolls, so previous /
+next stays reachable on long detail pages. Its children are a function of the docked state, and
+the optional `expandedContent` collapses once it docks. The docked bar has a background and a
+shadow of its own; with `floating` it has neither and lets clicks through to the page, e.g. for a
+compact `ParticipantNavigation`, whose box opts back in with `pointer-events-auto`.
+
+```tsx
+<StickyHeader floating expandedContent={<ParticipantProfile participant={participant} />}>
+  {(docked) => (
+    <ParticipantNavigation
+      participants={orderedParticipations}
+      currentId={participant.courseParticipationID}
+      onNavigate={navigateToParticipation}
+      compact={docked}
+    >
+      <ParticipantBadges participant={participant} />
+    </ParticipantNavigation>
+  )}
+</StickyHeader>
+```
 
 When the detail page is opened from a `PromptTable`, the order comes from the table: `onRowClick`
 receives every row as the table shows it (searched, filtered and sorted, across all pages) as its
@@ -110,6 +136,10 @@ second argument.
   }
 />
 ```
+
+`resolveNavigationOrder(snapshotIds, liveIds, currentId)` picks the order on the detail page: the
+table's order, without ids that no longer exist, as long as it still contains the current
+participant, and the live order otherwise (e.g. when the page was opened in a new tab).
 
 ---
 
