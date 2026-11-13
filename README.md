@@ -182,7 +182,10 @@ commits since the last tag and decides the next version:
 
 When a release is due, the job publishes `@tumaet/prompt-ui-components` to npm, commits the new
 version in `package.json` back to `main`, tags it and creates a GitHub release with generated notes.
-A `PR Title` check rejects titles that do not follow the format.
+A `PR Title` check rejects titles that do not follow the format. Both the release and the PR title
+workflows are shared across the organization and live in
+[prompt-edu/.github](https://github.com/prompt-edu/.github); this repo only calls them and keeps its
+own `.releaserc.json`.
 
 ---
 
