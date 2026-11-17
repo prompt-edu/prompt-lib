@@ -143,6 +143,36 @@ participant, and the live order otherwise (e.g. when the page was opened in a ne
 
 ---
 
+## Participation statistics
+
+`PassStatusSummary` is a small donut with the number of participants in the middle and the count
+per pass status next to it. Put it above a phase's participants table.
+
+```tsx
+<PassStatusSummary participations={participations} className='mb-4' />
+```
+
+`ParticipationStatistics` is the detail view: a status card, distributions by study degree, study
+program, semester, gender, and nationality, and a score histogram. The lib never computes scores;
+a phase that has them passes them in, and the score card shows only when `scores` is given.
+`children` are placed first in the same grid, e.g. a phase's own status card.
+
+```tsx
+<ParticipationStatistics
+  participations={participations}
+  studyPrograms={studyPrograms}
+  passStatusLabels={{ [PassStatus.PASSED]: 'Accepted', [PassStatus.FAILED]: 'Rejected' }}
+  scores={participations.flatMap(({ score }) => (score === null ? [] : [score]))}
+  scoreTitle='Application Score'
+/>
+```
+
+`ScoreDistributionCard` shows the histogram on its own. Up to 12 distinct values within a range of
+12 (a 1 to 5 scale, grades) get one bar per value; wider scores are grouped into about 10 even
+ranges.
+
+---
+
 ## Prerequisites
 
 This project uses **Yarn 4** as specified in the `packageManager` field of each `package.json`. To work with this repository, enable Corepack, which will automatically use the correct Yarn version.
