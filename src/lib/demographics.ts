@@ -178,7 +178,7 @@ interface Segment extends DemographicSegment {
 const PASS_STATUS_COLORS: Record<PassStatus, string> = {
   [PassStatus.PASSED]: 'hsl(var(--success))',
   [PassStatus.FAILED]: 'hsl(var(--destructive))',
-  [PassStatus.NOT_ASSESSED]: 'hsl(var(--muted))',
+  [PassStatus.NOT_ASSESSED]: 'hsl(var(--muted-foreground))',
 }
 
 const STUDY_DEGREE_COLORS: Record<StudyDegree, string> = {
@@ -225,7 +225,7 @@ const getSegments = (
       {
         key: 'unknown',
         label: UNKNOWN,
-        color: 'hsl(var(--muted))',
+        color: 'hsl(var(--muted-foreground))',
         matches: (item) => !isOneOf(degrees, item.student.studyDegree),
       },
     ]
