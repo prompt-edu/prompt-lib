@@ -155,6 +155,22 @@ export function groupBySemester<T>(
   return [...semesters, ...groupIfAny(UNKNOWN, unknown)]
 }
 
+export function groupByStudyDegree<T>(
+  items: T[],
+  getStudent: StudentAccessor<T>,
+): DemographicGroup<T>[] {
+  const degrees = Object.values(StudyDegree)
+  const known = degrees.map((degree) =>
+    group(
+      getStudyDegreeString(degree),
+      getStudyDegreeString(degree),
+      items.filter((item) => getStudent(item).studyDegree === degree),
+    ),
+  )
+  const unknown = items.filter((item) => !isOneOf(degrees, getStudent(item).studyDegree))
+  return [...known, ...groupIfAny(UNKNOWN, unknown)]
+}
+
 interface Segment extends DemographicSegment {
   matches: (item: StatisticsParticipation) => boolean
 }
@@ -169,6 +185,21 @@ const STUDY_DEGREE_COLORS: Record<StudyDegree, string> = {
   [StudyDegree.BACHELOR]: 'hsl(var(--primary))',
   [StudyDegree.MASTER]: 'hsl(var(--chart-blue))',
 }
+
+export interface PassStatusCount extends DemographicSegment {
+  count: number
+}
+
+export const getPassStatusCounts = (
+  items: Pick<StatisticsParticipation, 'passStatus'>[],
+  passStatusLabels: Partial<Record<PassStatus, string>> = {},
+): PassStatusCount[] =>
+  Object.values(PassStatus).map((status) => ({
+    key: status,
+    label: passStatusLabels[status] ?? getStatusString(status),
+    color: PASS_STATUS_COLORS[status],
+    count: items.filter((item) => item.passStatus === status).length,
+  }))
 
 const getSegments = (
   stackBy: DemographicStack | undefined,

@@ -4,9 +4,11 @@ import {
   type DemographicGroup,
   formatDemographicShare,
   getDemographicChartData,
+  getPassStatusCounts,
   groupByGender,
   groupByNationality,
   groupBySemester,
+  groupByStudyDegree,
   groupByStudyProgram,
   type StatisticsParticipation,
 } from './demographics'
@@ -241,6 +243,40 @@ describe('getDemographicChartData', () => {
     expect(segments).toEqual([])
     expect(rows).toEqual([
       { shortLabel: 'A', label: 'A', total: 0, share: 0, topSegment: undefined },
+    ])
+  })
+})
+
+describe('groupByStudyDegree', () => {
+  it('keeps both degrees and counts a missing one as Unknown', () => {
+    const items = [
+      participation({ studyDegree: StudyDegree.MASTER }),
+      participation({ studyDegree: StudyDegree.MASTER }),
+      participation(),
+    ]
+
+    expect(summary(groupByStudyDegree(items, byStudent))).toEqual([
+      ['Bachelor', 'Bachelor', 0],
+      ['Master', 'Master', 2],
+      ['Unknown', 'Unknown', 1],
+    ])
+  })
+})
+
+describe('getPassStatusCounts', () => {
+  it('counts every pass status, with optional label overrides', () => {
+    const items = [
+      participation({}, PassStatus.PASSED),
+      participation({}, PassStatus.PASSED),
+      participation({}, PassStatus.FAILED),
+    ]
+
+    const counts = getPassStatusCounts(items, { [PassStatus.PASSED]: 'Accepted' })
+
+    expect(counts.map(({ key, label, count }) => [key, label, count])).toEqual([
+      [PassStatus.PASSED, 'Accepted', 2],
+      [PassStatus.FAILED, 'Failed', 1],
+      [PassStatus.NOT_ASSESSED, 'Not Assessed', 0],
     ])
   })
 })
