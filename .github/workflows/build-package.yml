@@ -2,9 +2,9 @@ name: Quality Package
 
 on:
   pull_request:
-    branches: [main]
+    branches: [ main ]
   push:
-    branches: [main]
+    branches: [ main ]
 
 concurrency:
   group: ${{ github.workflow }}-${{ github.ref }}
@@ -23,7 +23,7 @@ jobs:
       - name: Set up Node
         uses: actions/setup-node@v7
         with:
-          node-version: '26.13.1'
+          node-version: "26.13.1"
 
       - name: Enable Corepack
         run: corepack enable
@@ -61,7 +61,7 @@ jobs:
       - name: Set up Node
         uses: actions/setup-node@v7
         with:
-          node-version: '26.13.1'
+          node-version: "26.13.1"
 
       - name: Enable Corepack
         run: corepack enable
