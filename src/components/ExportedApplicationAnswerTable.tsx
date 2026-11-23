@@ -1,34 +1,15 @@
 import { AlignLeft, CheckSquare } from 'lucide-react'
 import { type ReactNode, useMemo } from 'react'
 import { Badge, Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from '@/components'
-
-// The provided-output DTO transfers `order_num` and sends multi-select answers as arrays,
-// neither of which the declared `ExportedApplicationAnswer` describes.
-interface RuntimeExportedApplicationAnswer {
-  key: string
-  answer: string | string[]
-  type: 'text' | 'multiselect'
-  orderNum?: number
-  order_num?: number
-}
+import {
+  compareByOrder,
+  getAnswerKey,
+  getQuestionName,
+  type RuntimeExportedApplicationAnswer,
+} from '@/lib/exportedApplicationAnswers'
 
 interface ExportedApplicationAnswerTableProps {
   applicationAnswers: RuntimeExportedApplicationAnswer[]
-}
-
-const resolveOrder = (answer: RuntimeExportedApplicationAnswer) => {
-  const order = answer.order_num ?? answer.orderNum
-  return typeof order === 'number' && Number.isFinite(order) ? order : Number.POSITIVE_INFINITY
-}
-
-const compareByOrder = (
-  a: RuntimeExportedApplicationAnswer,
-  b: RuntimeExportedApplicationAnswer,
-) => {
-  const left = resolveOrder(a)
-  const right = resolveOrder(b)
-  if (left === right) return 0
-  return left < right ? -1 : 1
 }
 
 const AnswerBlock = ({ isEmpty, children }: { isEmpty: boolean; children: ReactNode }) => {
@@ -67,11 +48,10 @@ export const ExportedApplicationAnswerTable = ({
           const isMultiSelect = answer.type === 'multiselect'
           const Icon = isMultiSelect ? CheckSquare : AlignLeft
           const label = isMultiSelect ? 'Multi-select' : 'Text'
-          const questionName = answer.key.trim() || `Question ${index + 1}`
+          const questionName = getQuestionName(answer, index)
 
           return (
-            // biome-ignore lint/suspicious/noArrayIndexKey: the DTO carries no question id, access keys may repeat, and the list is static and presentational
-            <li key={index} className='flex gap-3 py-5 first:pt-0 last:pb-0'>
+            <li key={getAnswerKey(answer, index)} className='flex gap-3 py-5 first:pt-0 last:pb-0'>
               <div className='flex h-6 w-6 shrink-0 items-center justify-center rounded-md bg-muted text-xs font-medium text-muted-foreground'>
                 {index + 1}
               </div>
